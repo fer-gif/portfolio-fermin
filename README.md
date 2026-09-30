@@ -1,36 +1,47 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Laboratorio: portfolio interactivo
 
-## Getting Started
+Portfolio de Programador y Data Analyst. No es una vitrina estática: cada proyecto
+"vive" dentro del sitio como un artefacto que el visitante puede usar, y un
+personaje (el científico loco del laboratorio) guía la visita.
 
-First, run the development server:
+Stack: Next.js (App Router) · TypeScript · Tailwind CSS · MDX · deploy en Vercel.
+
+## Estructura
+
+```
+app/
+├─ page.tsx                   ← el laboratorio (home)
+└─ proyectos/[slug]/page.tsx  ← página de cada caso (se genera desde el registro)
+
+proyectos/                    ← un módulo autocontenido por proyecto
+├─ tipos.ts                   ← qué datos describe cada proyecto
+├─ index.ts                   ← registro central
+└─ <slug>/
+   ├─ meta.ts                 ← ficha: título, categoría, rol, enlaces, orden
+   ├─ caso.mdx                ← la historia: problema → proceso → resultado
+   ├─ Artefacto.tsx           ← el componente vivo (se inserta desde caso.mdx)
+   └─ data/                   ← datos procesados que usa el artefacto
+
+components/
+├─ laboratorio/               ← piezas de la escena (marco del artefacto, tarjetas)
+└─ personaje/                 ← el científico loco (animación + diálogo)
+
+public/
+├─ proyectos/<slug>/          ← imágenes de cada caso (capturas, escudos…)
+└─ personaje/                 ← archivos de animación del personaje
+
+mdx-components.tsx            ← componentes disponibles en todos los caso.mdx
+```
+
+## Sumar un proyecto
+
+1. Crear `proyectos/<slug>/` con `meta.ts`, `caso.mdx` y `Artefacto.tsx`.
+2. Registrarlo en `proyectos/index.ts`.
+
+La ruta `/proyectos/<slug>` se genera sola.
+
+## Desarrollo
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
