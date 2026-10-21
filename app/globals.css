@@ -17,3 +17,20 @@ body {
   background: var(--color-lab-fondo);
   color: var(--color-lab-texto);
 }
+
+/* Animaciones de ambiente: viven aunque nadie scrollee. */
+@keyframes parpadeo {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 1; }
+}
+@keyframes subir {
+  from { transform: translateY(0); opacity: 0; }
+  20% { opacity: 0.8; }
+  to { transform: translateY(-100vh); opacity: 0; }
+}
+.luz { animation: parpadeo 2s ease-in-out infinite; }
+.burbuja { animation: subir 9s linear infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .luz, .burbuja { animation: none; }
+}
