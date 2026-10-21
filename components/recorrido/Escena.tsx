@@ -46,6 +46,7 @@ export function Escena({
         start: "top top",
         end: () => `+=${duracion * 100}%`,
         pin: true,
+        pinSpacing: true,
         scrub: 0.6,
         animation: linea,
         onToggle: (st) => {

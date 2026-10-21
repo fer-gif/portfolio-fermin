@@ -26,5 +26,11 @@ export function Recorrido({ children }: { children: ReactNode }) {
     };
   }, []);
 
-  return <DirectorContext value={director}>{children}</DirectorContext>;
+  // El body es flex: ScrollTrigger no reserva espacio de scroll al clavar una
+  // escena cuyo padre es flex, así que las escenas viven en un bloque normal.
+  return (
+    <DirectorContext value={director}>
+      <div className="relative block w-full">{children}</div>
+    </DirectorContext>
+  );
 }

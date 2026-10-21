@@ -10,11 +10,11 @@ export function EscenaPortal() {
 
   useGSAP(
     () => {
-      // Estado inicial explícito: lo que aparece después arranca escondido.
+      // El título se ve desde el primer momento, sin scrollear.
+      // Lo que aparece después arranca escondido.
       gsap.set(".portal", { scale: 0, rotate: -90 });
       linea
-        .fromTo(".titulo", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 1 })
-        .to(".portal", { scale: 1, rotate: 0, duration: 2, ease: "power2.out" }, "+=0.5")
+        .to(".portal", { scale: 1, rotate: 0, duration: 2, ease: "power2.out" })
         .to(".titulo", { opacity: 0, scale: 0.9, duration: 1 }, "<+=1")
         .to(".portal", { scale: 14, duration: 2, ease: "power2.in" })
         .to(".portal", { opacity: 0, duration: 0.5 }, "-=0.3");
