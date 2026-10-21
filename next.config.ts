@@ -1,8 +1,6 @@
 import type { NextConfig } from "next";
-import createMDX from "@next/mdx";
 
 const nextConfig: NextConfig = {
-  pageExtensions: ["ts", "tsx", "md", "mdx"],
   images: {
     remotePatterns: [
       // Escudos de los clubes (API de Fútbol de Necochea)
@@ -13,8 +11,11 @@ const nextConfig: NextConfig = {
       new URL("https://dataene.com.ar/uploads/**"),
     ],
   },
+  // Todo el portfolio vive en una sola página: los links viejos por proyecto
+  // llevan a la mesa correspondiente.
+  async redirects() {
+    return [{ source: "/proyectos/:slug", destination: "/#mesa-:slug", permanent: true }];
+  },
 };
 
-const withMDX = createMDX({});
-
-export default withMDX(nextConfig);
+export default nextConfig;

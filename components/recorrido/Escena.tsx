@@ -89,7 +89,8 @@ export function Escena({
           // En celular reserva lugar arriba (botones fijos) y abajo (personaje).
           "relative h-svh w-full overflow-hidden bg-lab-fondo pt-14 pb-36 sm:pt-0 sm:pb-0",
           // Sombra en el borde superior: se lee como un panel que sube, no como un corte.
-          solapar ? "-mt-[100svh] shadow-[0_-24px_48px_rgba(0,0,0,0.55)]" : "",
+          // (la sombra solo en pantalla grande: en celular cuesta pintarla y no se nota)
+          solapar ? "-mt-[100svh] sm:shadow-[0_-24px_48px_rgba(0,0,0,0.55)]" : "",
           className,
         ].join(" ")}
       >

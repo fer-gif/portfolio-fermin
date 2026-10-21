@@ -14,8 +14,9 @@ export function Recorrido({ children }: { children: ReactNode }) {
   useEffect(() => {
     const lenis = new Lenis({ autoRaf: false, lerp: 0.1 });
     lenis.on("scroll", ScrollTrigger.update);
-    director.conectarNavegacion((escena) =>
-      lenis.scrollTo(`#${escena}`, { duration: 1.4 }),
+    director.conectarNavegacion(
+      (escena) => lenis.scrollTo(`#${escena}`, { duration: 1.4 }),
+      (pausado) => (pausado ? lenis.stop() : lenis.start()),
     );
 
     // Un solo reloj: GSAP mueve a Lenis, y Lenis avisa a ScrollTrigger.
@@ -24,7 +25,7 @@ export function Recorrido({ children }: { children: ReactNode }) {
     gsap.ticker.lagSmoothing(0);
 
     return () => {
-      director.conectarNavegacion(() => {});
+      director.conectarNavegacion(() => {}, () => {});
       gsap.ticker.remove(tick);
       lenis.destroy();
     };

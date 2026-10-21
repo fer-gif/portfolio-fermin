@@ -1,13 +1,12 @@
 "use client";
 
-import Link from "next/link";
 import { useRef } from "react";
 import { gsap, useEscena, useGSAP } from "@/components/recorrido";
 import { ETIQUETA_CATEGORIA, type Proyecto } from "@/proyectos";
 
-// Una mesa del laboratorio: el experimento entra deslizándose, se puede
-// leer de qué va y abrirlo. El personaje comenta al costado.
-export function Mesa({ proyecto, numero }: { proyecto: Proyecto; numero: number }) {
+// Una mesa del laboratorio: el experimento entra deslizándose y es el portal
+// a sus escenas, que vienen justo después en el mismo recorrido.
+export function Mesa({ proyecto, numero, tieneEscenas }: { proyecto: Proyecto; numero: number; tieneEscenas: boolean }) {
   const { linea } = useEscena();
   const ref = useRef<HTMLDivElement>(null);
   const enProceso = proyecto.estado === "en-proceso";
@@ -43,17 +42,14 @@ export function Mesa({ proyecto, numero }: { proyecto: Proyecto; numero: number 
           {proyecto.artefacto}
         </p>
 
-        <footer className="detalle mt-6 flex items-center justify-between">
-          <span className="font-mono text-xs text-lab-tenue">
+        <footer className="detalle mt-6 flex items-center justify-between font-mono text-xs">
+          <span className="text-lab-tenue">
             {proyecto.autoria === "equipo" ? "en equipo" : "individual"}
             {enProceso && " · en proceso"}
           </span>
-          <Link
-            href={`/proyectos/${proyecto.slug}`}
-            className="rounded-full border border-lab-portal px-4 py-2 font-mono text-sm text-lab-portal transition-colors hover:bg-lab-portal hover:text-lab-fondo"
-          >
-            {enProceso ? "espiar →" : "entrar →"}
-          </Link>
+          <span className="text-lab-portal">
+            {tieneEscenas ? "seguí bajando para entrar ↓" : "experimento en construcción"}
+          </span>
         </footer>
       </article>
     </div>

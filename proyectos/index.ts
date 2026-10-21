@@ -5,8 +5,8 @@ import { meta as futbolshop } from "./futbolshop/meta";
 import { meta as zonaFria } from "./zona-fria/meta";
 import { meta as ypf } from "./ypf/meta";
 
-// Registro central: para sumar un proyecto, crear su carpeta
-// (meta.ts, caso.mdx, Artefacto.tsx) y agregarlo acá.
+// Registro central: para sumar un proyecto, crear su carpeta con meta.ts
+// y agregarlo acá. El orden de las mesas sale de `orden`.
 export const proyectos: Proyecto[] = [
   futbolNecochea,
   argentinaBrasil,

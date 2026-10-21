@@ -10,7 +10,7 @@ const SILENCIO: Linea = { texto: "" };
 
 // El científico del laboratorio. Lee del Director en qué escena está el
 // visitante y busca en el guion qué decir, qué pose tomar y de qué lado pararse.
-export function Personaje({ guion }: { guion: Guion }) {
+export function Personaje({ guion, esperarIntro = false }: { guion: Guion; esperarIntro?: boolean }) {
   const escena = useEscenaActual();
   const linea: Linea =
     (escena ? guion.escenas[escena] : undefined) ?? guion.inicial ?? SILENCIO;
@@ -24,6 +24,7 @@ export function Personaje({ guion }: { guion: Guion }) {
         "personaje-contenedor pointer-events-none fixed bottom-2 left-4 z-50 flex flex-col items-start gap-2 sm:flex-row sm:items-end sm:gap-3",
         lado === "derecha" ? "lado-derecha" : "",
         pose === "ausente" ? "ausente" : "",
+        esperarIntro ? "espera-intro" : "",
       ].join(" ")}
       aria-live="polite"
     >

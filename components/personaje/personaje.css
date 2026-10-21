@@ -63,6 +63,19 @@
 .personaje-svg.pose-eureka .brazo-senala { transform: rotate(-160deg); }
 .personaje-svg.pose-eureka .brazo-frasco { transform: rotate(160deg); }
 
+/* empujando: inclinado hacia adelante, los dos brazos extendidos, cara de esfuerzo */
+.personaje-svg.pose-empujando { transform: rotate(14deg); transform-origin: bottom center; }
+.personaje-svg.pose-empujando .brazo-senala { transform: rotate(-80deg); }
+.personaje-svg.pose-empujando .brazo-frasco { transform: rotate(-100deg); }
+.personaje-svg.pose-empujando .frasco { opacity: 0; }
+.personaje-svg.pose-empujando .ceja { transform: translateY(2px); }
+.personaje-svg.pose-empujando .boca-o { opacity: 1; }
+.personaje-svg.pose-empujando .boca-sonrisa { opacity: 0; }
+
+/* El personaje fijo espera a que termine la intro para aparecer. */
+.personaje-contenedor.espera-intro { opacity: 0; transition: opacity 0.6s ease; }
+html.intro-lista .personaje-contenedor.espera-intro { opacity: 1; }
+
 /* --- dónde está en la pantalla --- */
 .personaje-contenedor {
   transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);

@@ -17,13 +17,24 @@ export function crearDirector() {
   let estado: EstadoRecorrido = { escena: null, progreso: 0 };
   const oyentes = new Set<Oyente>();
   let navegar: (escena: string) => void = () => {};
+  let pausar: (pausado: boolean) => void = () => {};
+  // Los hijos (la intro) pueden pedir la pausa antes de que exista el scroll
+  // suave: se recuerda y se aplica al conectar.
+  let pausado = false;
 
   return {
     /** Lleva al visitante al inicio de una escena. */
     irA: (escena: string) => navegar(escena),
+    /** Frena o libera el scroll (por ejemplo, durante la intro). */
+    pausarScroll(valor: boolean) {
+      pausado = valor;
+      pausar(valor);
+    },
     /** <Recorrido> enchufa acá el scroll suave una vez que existe. */
-    conectarNavegacion(fn: typeof navegar) {
-      navegar = fn;
+    conectarNavegacion(irA: typeof navegar, pausarScroll: typeof pausar) {
+      navegar = irA;
+      pausar = pausarScroll;
+      pausar(pausado);
     },
     obtener: () => estado,
     fijar(parcial: Partial<EstadoRecorrido>) {

@@ -1,67 +1,63 @@
 # Laboratorio: portfolio interactivo
 
-Portfolio de Programador y Data Analyst. No es una vitrina estática: cada proyecto
-"vive" dentro del sitio como un artefacto que el visitante puede usar, y un
-personaje (el científico loco del laboratorio) guía la visita.
+Portfolio de Programador y Data Analyst. No es una vitrina estática: todo el
+sitio es **un solo recorrido** por un laboratorio, guiado por un científico
+loco (el personaje), donde cada proyecto es un experimento que se puede usar.
 
-Stack: Next.js (App Router) · TypeScript · Tailwind CSS · MDX · GSAP + ScrollTrigger · Lenis.
+Stack: Next.js (App Router) · TypeScript · Tailwind CSS · GSAP + ScrollTrigger · Lenis.
 
 Publicado en https://portfolio-fermin.vercel.app (cada push a `main` se despliega solo).
-Prototipo del recorrido guiado: https://portfolio-fermin.vercel.app/prototipo
 
-## Estructura
+## Cómo está armado
 
 ```
-app/
-├─ page.tsx                   ← el laboratorio (home)
-└─ proyectos/[slug]/page.tsx  ← página de cada caso (se genera desde el registro)
-
-proyectos/                    ← un módulo autocontenido por proyecto
-├─ tipos.ts                   ← qué datos describe cada proyecto
-├─ index.ts                   ← registro central
-└─ <slug>/
-   ├─ meta.ts                 ← ficha: título, categoría, rol, enlaces, orden
-   ├─ caso.mdx                ← la historia: problema → proceso → resultado
-   ├─ Artefacto.tsx           ← el componente vivo (se inserta desde caso.mdx)
-   └─ data/                   ← datos procesados que usa el artefacto
+app/page.tsx                  ← el recorrido completo: intro → entrada → mesas → salida
+app/globals.css               ← paleta del laboratorio y animaciones de ambiente
 
 components/
 ├─ recorrido/                 ← motor del scrollytelling: Recorrido, Escena, Director, barra
-├─ laboratorio/               ← piezas de la escena (marco del artefacto, tarjetas)
-└─ personaje/                 ← el científico (SVG v0, poses, globo de diálogo, guion)
+├─ laboratorio/               ← la carcasa: Cortina (intro), EscenaEntrada, Mesa, EscenaSalida,
+│                                MenuLaboratorio ("saltar a"), FichaTecnica, Ambiente
+└─ personaje/                 ← el científico: SVG v0, poses, globo de diálogo, tipo Guion
 
-public/
-├─ proyectos/<slug>/          ← imágenes de cada caso (capturas, escudos…)
-└─ personaje/                 ← archivos de animación del personaje
+proyectos/                    ← un módulo por proyecto
+├─ tipos.ts · index.ts        ← ficha de cada proyecto y registro central (orden de las mesas)
+└─ <slug>/
+   ├─ meta.ts                 ← título, categoría, rol, créditos, enlaces, orden
+   ├─ escenas.tsx             ← (si el proyecto ya "vive") sus escenas, su guion y sus dimensiones
+   ├─ escenas/                ← los componentes de cada escena
+   └─ data/                   ← datos procesados
 
-mdx-components.tsx            ← componentes disponibles en todos los caso.mdx
+lib/perfil.ts                 ← nombre, presentación y contactos
+public/proyectos/<slug>/      ← imágenes de cada proyecto
 ```
 
 ## Cómo funciona el recorrido
 
-Cada página es un `<Recorrido>` con varias `<Escena>`. Una escena se queda
-clavada en pantalla y el scroll avanza su línea de tiempo (GSAP ScrollTrigger +
-Lenis). Lo que hay adentro suma animaciones con `useEscena().linea`. El
-`Director` sabe en qué escena está el visitante; el `<Personaje>` lee de ahí
-su `guion` (texto, pose y lado por escena).
+Cada `<Escena>` se queda clavada en pantalla y el scroll avanza su línea de
+tiempo (GSAP ScrollTrigger + Lenis). Lo que hay adentro suma animaciones con
+`useEscena().linea`. El `Director` sabe en qué escena está el visitante; el
+`<Personaje>` lee de ahí su `guion` (texto, pose y lado por escena).
 
 - La primera escena lleva `solapar={false}`; la última, `cubierta={false}`.
   Las demás suben y cubren a la anterior, sin scroll común entre escenas.
 - Las escenas tienen fondo opaco y reservan espacio en celular para los
   botones fijos (arriba) y el personaje (abajo).
+- La `Cortina` es la intro (el científico empuja la puerta). Se ve una vez por
+  sesión y se saltea con `#ancla` o con "reducir movimiento".
 - Ojo: ScrollTrigger no reserva espacio de pin si el padre es `display: flex`.
   Por eso `<Recorrido>` envuelve todo en un bloque normal.
 
 ## Sumar un proyecto
 
-1. Crear `proyectos/<slug>/` con `meta.ts` y, al principio, `caso.mdx` + `Artefacto.tsx`
-   (molde genérico).
-2. Registrarlo en `proyectos/index.ts`.
-3. Cuando el proyecto tenga su experiencia propia, crear `Pagina.tsx` (un
-   `<Recorrido>` con sus escenas) y anotarlo en `app/proyectos/[slug]/page.tsx`.
-   `futbol-necochea/` es el ejemplo completo.
+1. Crear `proyectos/<slug>/meta.ts` y registrarlo en `proyectos/index.ts`.
+   Con eso ya aparece su mesa en el laboratorio.
+2. Cuando tenga experiencia propia, crear `proyectos/<slug>/escenas.tsx` que
+   exporte `Escenas`, `guion` y `dimensiones` (ver `futbol-necochea/` o
+   `zona-fria/`), y anotarlo en `modulos` dentro de `app/page.tsx`.
 
-La ruta `/proyectos/<slug>` se genera sola.
+Los ids de escena van con el slug adelante (`zona-fria-calculadora`); la mesa
+es `mesa-<slug>`. `/proyectos/<slug>` redirige a `/#mesa-<slug>`.
 
 ## Desarrollo
 

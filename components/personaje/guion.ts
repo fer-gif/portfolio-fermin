@@ -6,6 +6,7 @@ export type Pose =
   | "senalando"
   | "sorprendido"
   | "eureka"
+  | "empujando" // inclinado, con los dos brazos adelante (la intro)
   | "ausente"; // sale de pantalla
 
 export type Lado = "izquierda" | "derecha";
