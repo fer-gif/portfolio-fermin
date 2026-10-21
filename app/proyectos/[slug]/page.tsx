@@ -3,6 +3,12 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { obtenerProyecto, proyectos } from "@/proyectos";
 
+// Proyectos con experiencia propia (carcasa mínima + recorrido libre).
+// Los demás usan el molde genérico con su caso.mdx mientras no tengan la suya.
+const paginasPropias = {
+  "futbol-necochea": () => import("@/proyectos/futbol-necochea/Pagina"),
+} as const;
+
 export function generateStaticParams() {
   return proyectos.map((p) => ({ slug: p.slug }));
 }
@@ -25,6 +31,11 @@ export default async function PaginaProyecto({
   const { slug } = await params;
   const proyecto = obtenerProyecto(slug);
   if (!proyecto) notFound();
+
+  if (slug in paginasPropias) {
+    const { default: Pagina } = await paginasPropias[slug as keyof typeof paginasPropias]();
+    return <Pagina />;
+  }
 
   const { default: Caso } = await import(`@/proyectos/${slug}/caso.mdx`);
 

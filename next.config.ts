@@ -9,6 +9,8 @@ const nextConfig: NextConfig = {
       new URL(
         "https://estclirfknhzlqxhiafn.supabase.co/storage/v1/object/public/club-logos/**",
       ),
+      // Imágenes de las notas de Data eNe (dimensión Diarios)
+      new URL("https://dataene.com.ar/uploads/**"),
     ],
   },
 };

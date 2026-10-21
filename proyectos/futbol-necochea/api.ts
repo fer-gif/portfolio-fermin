@@ -9,7 +9,22 @@ export const ENDPOINTS = {
   posiciones: `${BASE}/prode/standings`,
   goleadores: `${BASE}/goleadores`,
   partidos: `${BASE}/widget`,
+  noticias: `${BASE}/news`,
 } as const;
+
+export interface Club {
+  nombre: string;
+  logo: string;
+}
+
+export interface Noticia {
+  id: string;
+  url: string;
+  title: string;
+  image: string;
+  description: string;
+  siteName: string;
+}
 
 export interface Posicion {
   posicion: number;
@@ -69,6 +84,23 @@ async function pedir<T>(url: string): Promise<T | null> {
 
 export function obtenerPosiciones() {
   return pedir<RespuestaPosiciones>(ENDPOINTS.posiciones);
+}
+
+/** Los clubes de la liga con su escudo, sacados de la tabla. */
+export async function obtenerClubes(): Promise<Club[]> {
+  const r = await obtenerPosiciones();
+  if (!r) return [];
+  return [...r.zonaA, ...r.zonaB].map((f) => ({ nombre: f.equipo, logo: f.logo }));
+}
+
+/** Notas de prensa que usan los datos. La API repite notas: se deduplican por URL. */
+export async function obtenerNoticias(maximo = 4): Promise<Noticia[]> {
+  const r = await pedir<{ noticias: Noticia[] }>(ENDPOINTS.noticias);
+  if (!r) return [];
+  const vistas = new Set<string>();
+  return r.noticias
+    .filter((n) => !vistas.has(n.url) && vistas.add(n.url))
+    .slice(0, maximo);
 }
 
 export async function obtenerGoleadores(): Promise<Goleador[] | null> {
