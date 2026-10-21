@@ -50,11 +50,11 @@ export function Junin() {
     <div ref={ref} className="grid h-full place-items-center px-4">
       <div className="w-full max-w-2xl">
         <p className="mb-6 font-mono text-xs text-lab-tenue sm:text-sm">Partido de Junín · invierno sin Zona Fría</p>
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid grid-cols-2 gap-3 sm:gap-4">
           {CIFRAS.map((c) => (
-            <div key={c.etiqueta} className="cifra rounded-xl border border-lab-borde bg-lab-panel p-4 sm:p-5">
-              <span className="numero block font-mono text-3xl font-bold tabular-nums text-lab-portal sm:text-4xl">0</span>
-              <span className="mt-1 block text-sm text-lab-tenue">{c.etiqueta}</span>
+            <div key={c.etiqueta} className="cifra rounded-xl border border-lab-borde bg-lab-panel p-3 sm:p-5">
+              <span className="numero block font-mono text-xl font-bold tabular-nums text-lab-portal sm:text-4xl">0</span>
+              <span className="mt-1 block text-xs text-lab-tenue sm:text-sm">{c.etiqueta}</span>
             </div>
           ))}
         </div>
