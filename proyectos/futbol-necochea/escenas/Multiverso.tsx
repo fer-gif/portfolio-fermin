@@ -27,10 +27,12 @@ export function Multiverso({ clubes }: { clubes: Club[] }) {
 
   useGSAP(
     () => {
+      // En pantallas angostas las versiones se esparcen menos para no salirse.
+      const factor = window.innerWidth < 640 ? 0.6 : 1;
       gsap.set(".variante", {
         opacity: 0,
         scale: 0.6,
-        x: (i: number) => `${POSICIONES[i].x}vw`,
+        x: (i: number) => `${POSICIONES[i].x * factor}vw`,
         y: (i: number) => `${POSICIONES[i].y}vh`,
       });
       gsap.set(".final", { opacity: 0, scale: 0.5 });
@@ -40,7 +42,7 @@ export function Multiverso({ clubes }: { clubes: Club[] }) {
         .to(".variante", { x: 0, y: 0, duration: 2, ease: "power3.inOut", stagger: 0.05 }, "+=1")
         .to(".variante", { opacity: 0, scale: 0.3, duration: 0.5 }, "-=0.4")
         .to(".final", { opacity: 1, scale: 1, duration: 1, ease: "back.out(2)" }, "-=0.2")
-        .to(".final", { y: "-22vh", duration: 1 }, "+=0.8")
+        .to(".final", { y: window.innerWidth < 640 ? "-16vh" : "-22vh", duration: 1 }, "+=0.8")
         .to(".maquina", { opacity: 1, y: 0, duration: 1 }, "<+=0.3")
         .to({}, { duration: 1.5 });
     },
@@ -70,7 +72,7 @@ export function Multiverso({ clubes }: { clubes: Club[] }) {
         </span>
       </div>
 
-      <div className="maquina absolute inset-0 m-auto h-fit w-full max-w-md translate-y-[12vh] rounded-xl border border-lab-borde bg-lab-panel p-5">
+      <div className="maquina absolute inset-0 m-auto h-fit w-full max-w-md translate-y-[10vh] rounded-xl border border-lab-borde bg-lab-panel p-4 sm:translate-y-[12vh] sm:p-5">
         <label className="block font-mono text-xs uppercase tracking-wider text-lab-portal">
           Probá la máquina: escribí un club como te salga
         </label>

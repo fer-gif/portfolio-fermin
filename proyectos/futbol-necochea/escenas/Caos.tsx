@@ -17,6 +17,14 @@ const POSICIONES = [
   { x: 24, y: 22, r: -3 },
 ];
 
+// En celular no entran dos columnas anchas: se apilan en zigzag.
+const POSICIONES_MOVIL = [
+  { x: -14, y: -26, r: -4 },
+  { x: 14, y: -9, r: 3 },
+  { x: -14, y: 8, r: 2 },
+  { x: 14, y: 25, r: -3 },
+];
+
 // Dimensión Caos: así venían los datos. Los fragmentos caen desordenados
 // y al final tiemblan: ningún sistema puede leer esto.
 export function Caos() {
@@ -25,17 +33,18 @@ export function Caos() {
 
   useGSAP(
     () => {
+      const posiciones = window.innerWidth < 640 ? POSICIONES_MOVIL : POSICIONES;
       gsap.set(".fragmento", {
         opacity: 0,
         y: "-60vh",
-        x: (i: number) => `${POSICIONES[i].x}vw`,
-        rotate: (i: number) => POSICIONES[i].r * 4,
+        x: (i: number) => `${posiciones[i].x}vw`,
+        rotate: (i: number) => posiciones[i].r * 4,
       });
       linea
         .to(".fragmento", {
           opacity: 1,
-          y: (i: number) => `${POSICIONES[i].y}vh`,
-          rotate: (i: number) => POSICIONES[i].r,
+          y: (i: number) => `${posiciones[i].y}vh`,
+          rotate: (i: number) => posiciones[i].r,
           duration: 1.2,
           ease: "bounce.out",
           stagger: 0.35,
@@ -48,13 +57,13 @@ export function Caos() {
 
   return (
     <div ref={ref} className="relative grid h-full place-items-center overflow-hidden">
-      <p className="absolute top-14 px-4 text-center font-mono text-sm text-lab-tenue sm:top-10">
+      <p className="absolute top-4 px-4 text-center font-mono text-xs text-lab-tenue sm:top-10 sm:text-sm">
         Dimensión Caos · así existían los datos
       </p>
       {fragmentos.map((f, i) => (
         <div
           key={i}
-          className={`fragmento absolute inset-0 m-auto h-fit w-64 border p-3 text-sm shadow-lg ${ESTILO[f.tipo]}`}
+          className={`fragmento absolute inset-0 m-auto h-fit w-56 border p-2.5 text-xs shadow-lg sm:w-64 sm:p-3 sm:text-sm ${ESTILO[f.tipo]}`}
         >
           <span className="mb-1 block font-mono text-[10px] uppercase tracking-wider text-lab-tenue">{f.tipo}</span>
           {f.texto}

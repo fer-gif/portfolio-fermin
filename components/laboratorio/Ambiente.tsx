@@ -2,7 +2,8 @@
 // Solo CSS, para que el sitio nunca parezca una página quieta.
 export function Ambiente() {
   return (
-    <div aria-hidden className="pointer-events-none fixed inset-0 z-0">
+    // Va por encima de las escenas (son opacas), así que es sutil a propósito.
+    <div aria-hidden className="pointer-events-none fixed inset-0 z-10 opacity-40">
       <span className="luz absolute top-6 right-6 size-2 rounded-full bg-lab-portal" />
       <span className="luz absolute top-6 right-12 size-2 rounded-full bg-amber-400 [animation-delay:0.7s]" />
       <span className="luz absolute top-6 right-18 size-2 rounded-full bg-rose-500 [animation-delay:1.3s]" />

@@ -22,13 +22,14 @@ export function Diarios({ noticias }: { noticias: Noticia[] }) {
   return (
     <div ref={ref} className="grid h-full place-items-center px-4">
       <div className="w-full max-w-4xl">
-        <p className="mb-6 text-center font-mono text-sm text-lab-tenue">
+        <p className="mb-4 text-center font-mono text-xs text-lab-tenue sm:mb-6 sm:text-sm">
           Dimensión Diarios · así llegan los datos a la gente
         </p>
         {noticias.length === 0 && (
           <p className="text-center text-sm text-lab-tenue">Las rotativas están paradas: la API no respondió.</p>
         )}
-        <div className="grid gap-4 sm:grid-cols-2">
+        {/* En celular entra una nota; en pantalla ancha, las cuatro. */}
+        <div className="grid gap-4 sm:grid-cols-2 [&>*:nth-child(n+2)]:hidden sm:[&>*:nth-child(n+2)]:block">
           {noticias.map((n) => (
             <a
               key={n.id}

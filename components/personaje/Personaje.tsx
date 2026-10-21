@@ -27,9 +27,9 @@ export function Personaje({ guion }: { guion: Guion }) {
       ].join(" ")}
       aria-live="polite"
     >
-      <PersonajeSVG pose={pose} className="order-2 h-28 w-auto shrink-0 sm:order-1 sm:h-40" />
+      <PersonajeSVG pose={pose} className="order-2 h-20 w-auto shrink-0 sm:order-1 sm:h-40" />
       {linea.texto && (
-        <div className="order-1 max-w-[75vw] rounded-2xl rounded-bl-sm border border-lab-borde bg-lab-panel/95 px-4 py-3 text-sm leading-snug backdrop-blur sm:order-2 sm:mb-6 sm:max-w-xs sm:rounded-bl-2xl sm:rounded-tl-sm">
+        <div className="order-1 max-w-[80vw] rounded-2xl rounded-bl-sm border border-lab-borde bg-lab-panel/95 px-3 py-2 text-xs leading-snug backdrop-blur sm:order-2 sm:mb-6 sm:max-w-xs sm:rounded-bl-2xl sm:rounded-tl-sm sm:px-4 sm:py-3 sm:text-sm">
           {visible}
           {escribiendo && <span className="personaje-cursor text-lab-portal">▍</span>}
         </div>

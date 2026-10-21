@@ -40,13 +40,13 @@ export default function Prototipo() {
       <Ambiente />
       <Personaje guion={guion} />
 
-      <Escena id="portal" duracion={2}>
+      <Escena id="portal" duracion={2} solapar={false}>
         <EscenaPortal />
       </Escena>
       <Escena id="multiverso" duracion={2.5}>
         <EscenaMultiverso />
       </Escena>
-      <Escena id="datos" duracion={2}>
+      <Escena id="datos" duracion={2} cubierta={false}>
         <EscenaDatos />
       </Escena>
 

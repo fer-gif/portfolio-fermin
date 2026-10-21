@@ -42,18 +42,18 @@ export function MonitorAPI({ datos }: { datos: DatosAPI }) {
 
   return (
     <div ref={ref} className="grid h-full place-items-center px-4 [perspective:1200px]">
-      <div className="monitor flex max-h-[80svh] w-full max-w-3xl flex-col overflow-hidden rounded-xl border border-lab-borde bg-lab-panel">
+      <div className="monitor flex max-h-full w-full max-w-3xl flex-col overflow-hidden rounded-xl border border-lab-borde bg-lab-panel sm:max-h-[80svh]">
         <header className="flex flex-wrap items-center gap-1 border-b border-lab-borde px-3 py-2">
           <span className="mr-2 size-2 rounded-full bg-lab-portal" aria-hidden />
           <span className="mr-auto font-mono text-xs uppercase tracking-wider text-lab-portal">
-            Dimensión API · {datos.liga ?? "en vivo"}
+            Dimensión API<span className="hidden md:inline"> · {datos.liga ?? "en vivo"}</span>
           </span>
           {PESTANAS.map((p) => (
             <button
               key={p.id}
               type="button"
               onClick={() => setPestana(p.id)}
-              className={`rounded-md px-2.5 py-1 font-mono text-xs transition-colors ${
+              className={`rounded-md px-2 py-1 font-mono text-[11px] transition-colors sm:px-2.5 sm:text-xs ${
                 pestana === p.id ? "bg-lab-borde text-lab-texto" : "text-lab-tenue hover:text-lab-texto"
               }`}
             >
@@ -62,7 +62,7 @@ export function MonitorAPI({ datos }: { datos: DatosAPI }) {
           ))}
         </header>
 
-        <div className="overflow-y-auto p-5" data-lenis-prevent>
+        <div className="min-h-0 overflow-y-auto p-4 sm:p-5" data-lenis-prevent>
           {!hayDatos && (
             <p className="text-sm text-lab-tenue">La API no respondió. El portal se reabre en unos minutos.</p>
           )}

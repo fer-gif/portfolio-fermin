@@ -64,7 +64,7 @@ export default async function PaginaFutbol() {
       <MenuLaboratorio destinos={destinos} />
       <Personaje guion={guion} />
 
-      <Escena id="portal" duracion={1.6}>
+      <Escena id="portal" duracion={1.6} solapar={false}>
         <EscenaPortal
           etiqueta="Experimento 01 · caso principal"
           titulo={meta.titulo}
@@ -96,7 +96,7 @@ export default async function PaginaFutbol() {
         <Diarios noticias={noticias} />
       </Escena>
 
-      <Escena id="ficha" duracion={0.8}>
+      <Escena id="ficha" duracion={0.8} cubierta={false}>
         <Ficha proyecto={meta} />
       </Escena>
     </Recorrido>

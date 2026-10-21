@@ -59,7 +59,7 @@ export default function Laboratorio() {
       <MenuLaboratorio destinos={destinos} />
       <Personaje guion={guion} />
 
-      <Escena id="entrada" duracion={1.2}>
+      <Escena id="entrada" duracion={1.2} solapar={false}>
         <EscenaEntrada nombre={perfil.nombre} titulo={perfil.titulo} />
       </Escena>
 
@@ -69,7 +69,7 @@ export default function Laboratorio() {
         </Escena>
       ))}
 
-      <Escena id="salida" duracion={0.8}>
+      <Escena id="salida" duracion={0.8} cubierta={false}>
         <EscenaSalida
           nombre={perfil.nombre}
           presentacion={perfil.presentacion}
