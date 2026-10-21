@@ -56,21 +56,27 @@ export function Cortina() {
 
   return (
     <div ref={ref} className="intro-capa fixed inset-0 z-40 overflow-hidden" aria-hidden>
-      {/* la puerta del laboratorio */}
-      <div className="intro-puerta absolute inset-0 border-l border-lab-borde bg-lab-panel">
+      {/* la puerta del laboratorio: verde portal, bien distinta del fondo oscuro que revela */}
+      <div className="intro-puerta absolute inset-0 bg-lab-portal">
         <div
-          className="absolute inset-0 opacity-40"
+          className="absolute inset-0 opacity-25"
           style={{
             backgroundImage:
-              "linear-gradient(var(--color-lab-borde) 1px, transparent 1px), linear-gradient(90deg, var(--color-lab-borde) 1px, transparent 1px)",
-            backgroundSize: "48px 48px",
+              "linear-gradient(#0b0f0c 1px, transparent 1px), linear-gradient(90deg, #0b0f0c 1px, transparent 1px)",
+            backgroundSize: "56px 56px",
           }}
         />
-        <div className="absolute inset-y-0 left-0 w-1 bg-lab-portal/70 shadow-[0_0_24px_4px_rgba(126,227,91,0.35)]" />
+        <p className="absolute inset-x-0 top-[18vh] text-center font-mono text-[9vw] font-bold uppercase tracking-[0.2em] text-lab-fondo/80 sm:text-[6vw]">
+          Laboratorio
+        </p>
+        <p className="absolute inset-x-0 top-[18vh] mt-[11vw] text-center font-mono text-xs uppercase tracking-[0.3em] text-lab-fondo/60 sm:mt-[7.5vw] sm:text-sm">
+          puerta cerrada · empujar
+        </p>
+        <div className="absolute inset-y-0 left-0 w-2 bg-lab-fondo/70" />
       </div>
       <PersonajeSVG
         pose="empujando"
-        className="intro-personaje absolute bottom-[14vh] left-0 h-[34vh] w-auto sm:h-[42vh]"
+        className="intro-personaje absolute bottom-[10vh] left-0 h-[44vh] w-auto sm:h-[52vh]"
       />
     </div>
   );
