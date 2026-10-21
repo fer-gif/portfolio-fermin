@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 420" width="720" height="1260">
+  <rect width="240" height="420" fill="#0b0f0c"/>
+  <defs>
+    <clipPath id="ojoI"><circle cx="97" cy="98" r="15"/></clipPath>
+    <clipPath id="ojoD"><circle cx="126" cy="98" r="15"/></clipPath>
+  </defs>
+  <g stroke="#1e2326" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round">
+    <!-- piernas largas y finas, una apenas adelantada -->
+    <path d="M94 258 L110 258 L104 392 L86 392 Z" fill="#2b3640"/>
+    <path d="M114 258 L130 258 L136 392 L118 392 Z" fill="#2b3640"/>
+    <path d="M80 390 L108 390 Q112 398 106 402 L78 402 Q74 396 80 390 Z" fill="#15191d"/>
+    <path d="M116 390 L144 390 Q150 396 146 402 L118 402 Q112 398 116 390 Z" fill="#15191d"/>
+    <!-- camisa celeste y cinturón -->
+    <path d="M96 178 L126 178 L121 262 L101 262 Z" fill="#cfe3f5"/>
+    <rect x="98" y="252" width="26" height="9" fill="#1f262c"/>
+    <rect x="107" y="250" width="9" height="12" rx="1.5" fill="#7ee35b"/>
+    <!-- guardapolvo angosto y largo, hombros caídos -->
+    <path d="M80 186 Q90 176 102 178 L105 194 L102 316 L74 318 Q70 250 80 186 Z" fill="#e9eef2"/>
+    <path d="M142 186 Q132 176 120 178 L117 194 L120 316 L148 318 Q152 250 142 186 Z" fill="#e9eef2"/>
+    <path d="M90 180 L103 178 L104 210 Z" fill="#d5dde3"/>
+    <path d="M132 180 L119 178 L118 210 Z" fill="#d5dde3"/>
+    <!-- mangas finas, separadas del cuerpo -->
+    <path d="M70 190 L86 192 L74 300 L56 298 Z" fill="#e9eef2"/>
+    <path d="M152 190 L136 192 L148 300 L166 298 Z" fill="#e9eef2"/>
+    <circle cx="62" cy="310" r="9" fill="#f1c9a5"/>
+    <circle cx="160" cy="310" r="9" fill="#f1c9a5"/>
+    <!-- frasco -->
+    <path d="M52 314 h12 v10 l10 20 h-32 l10 -20 z" fill="#cfe9ff" fill-opacity="0.85"/>
+    <path d="M48 334 l-4 10 h32 l-4 -10 z" fill="#7ee35b"/>
+    <!-- cuello largo -->
+    <path d="M102 146 L120 146 L122 182 L100 182 Z" fill="#f1c9a5"/>
+    <!-- pelo: masa celeste en puntas hacia arriba y atrás -->
+    <path d="M70 92 L46 84 L62 66 L34 44 L68 50 L56 14 L86 38 L96 2 L110 36 L126 0 L132 38 L158 8 L152 44 L186 28 L168 60 L196 70 L166 80 L162 96 Z" fill="#bcd7f3"/>
+    <!-- cabeza: frente ancha, mentón angosto -->
+    <path d="M66 74 Q64 26 110 24 Q156 26 154 74 L150 108 Q142 150 111 156 Q80 150 70 108 Z" fill="#f1c9a5"/>
+    <!-- anteojos en la frente -->
+    <rect x="72" y="46" width="76" height="8" rx="3" fill="#3a4a3f"/>
+    <circle cx="93" cy="50" r="10" fill="#7ee35b"/>
+    <circle cx="127" cy="50" r="10" fill="#7ee35b"/>
+    <!-- ojos grandes pegados, pupilas chicas -->
+    <circle cx="97" cy="98" r="15" fill="#ffffff"/>
+    <circle cx="126" cy="98" r="15" fill="#ffffff"/>
+    <rect x="80" y="80" width="34" height="12" fill="#f1c9a5" clip-path="url(#ojoI)" stroke="none"/>
+    <rect x="109" y="80" width="34" height="12" fill="#f1c9a5" clip-path="url(#ojoD)" stroke="none"/>
+    <path d="M83 92 L111 92" fill="none"/>
+    <path d="M112 92 L140 92" fill="none"/>
+    <circle cx="100" cy="101" r="3" fill="#1a1a1a" stroke="none"/>
+    <circle cx="129" cy="101" r="3" fill="#1a1a1a" stroke="none"/>
+    <!-- uniceja gruesa, fruncida -->
+    <path d="M76 78 L98 84 L112 90 L126 84 L146 78" fill="none" stroke-width="6"/>
+    <!-- nariz grande y angulosa -->
+    <path d="M113 94 Q128 112 118 126 Q110 128 106 122" fill="#e3b48f"/>
+    <!-- boca torcida, arrugas -->
+    <path d="M92 136 Q110 144 130 134" fill="none"/>
+    <path d="M140 118 q6 8 1 18" fill="none" stroke-width="2"/>
+    <path d="M78 122 q-6 8 -1 16" fill="none" stroke-width="2"/>
+  </g>
+</svg>

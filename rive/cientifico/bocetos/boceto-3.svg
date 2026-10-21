@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 430" width="810" height="1290">
+  <rect width="270" height="430" fill="#0b0f0c"/>
+  <defs>
+    <clipPath id="ojoI"><circle cx="106" cy="104" r="16"/></clipPath>
+    <clipPath id="ojoD"><circle cx="137" cy="104" r="17"/></clipPath>
+    <clipPath id="boca"><path d="M96 142 Q120 166 146 140 Q124 150 96 142 Z"/></clipPath>
+  </defs>
+  <g stroke="#1e2326" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round">
+    <!-- piernas largas, pantalón marrón, zapatos con punta -->
+    <path d="M102 262 L118 262 L112 396 L94 396 Z" fill="#6e4a2e"/>
+    <path d="M122 262 L138 262 L144 396 L126 396 Z" fill="#6e4a2e"/>
+    <path d="M90 394 L114 394 Q118 404 110 408 L72 408 Q68 402 76 398 Z" fill="#15191d"/>
+    <path d="M124 394 L148 394 Q162 398 166 402 Q168 408 160 408 L124 408 Q120 404 124 394 Z" fill="#15191d"/>
+    <!-- camisa celeste y cinturón -->
+    <path d="M104 182 L134 182 L129 266 L109 266 Z" fill="#a9cdee"/>
+    <rect x="106" y="256" width="26" height="9" fill="#1f262c"/>
+    <rect x="115" y="254" width="9" height="12" rx="1.5" fill="#d8b24a"/>
+    <!-- guardapolvo largo, abierto, con el ruedo flameando -->
+    <path d="M86 192 Q96 178 110 182 L113 198 L110 322 L76 328 Q74 256 86 192 Z" fill="#e9eef2"/>
+    <path d="M152 192 Q142 178 128 182 L125 198 L128 322 L162 328 Q164 256 152 192 Z" fill="#e9eef2"/>
+    <path d="M98 184 L111 182 L112 216 Z" fill="#d5dde3"/>
+    <path d="M140 184 L127 182 L126 216 Z" fill="#d5dde3"/>
+    <!-- cuello levantado -->
+    <path d="M96 186 L104 170 L110 182 Z" fill="#e9eef2"/>
+    <path d="M142 186 L134 170 L128 182 Z" fill="#e9eef2"/>
+    <!-- bolsillo -->
+    <path d="M134 262 h18 v16 h-18 z" fill="none" stroke-width="1.8"/>
+    <!-- mangas -->
+    <path d="M76 196 L92 198 L80 306 L62 304 Z" fill="#e9eef2"/>
+    <path d="M162 196 L146 198 L158 306 L176 304 Z" fill="#e9eef2"/>
+    <!-- mano derecha con dedos -->
+    <path d="M158 304 h18 q4 0 4 4 v8 q0 4 -4 4 h-18 q-4 0 -4 -4 v-8 q0 -4 4 -4 z" fill="#f1c9a5"/>
+    <rect x="159" y="318" width="5" height="12" rx="2.5" fill="#f1c9a5"/>
+    <rect x="165" y="319" width="5" height="13" rx="2.5" fill="#f1c9a5"/>
+    <rect x="171" y="318" width="5" height="12" rx="2.5" fill="#f1c9a5"/>
+    <rect x="177" y="310" width="5" height="10" rx="2.5" fill="#f1c9a5"/>
+    <!-- frasco -->
+    <path d="M60 318 h12 v10 l10 20 h-32 l10 -20 z" fill="#cfe9ff" fill-opacity="0.85"/>
+    <path d="M56 338 l-4 10 h32 l-4 -10 z" fill="#7ee35b"/>
+    <!-- mano izquierda agarrando el cuello del frasco -->
+    <path d="M58 302 h18 q4 0 4 4 v6 q0 4 -4 4 h-18 q-4 0 -4 -4 v-6 q0 -4 4 -4 z" fill="#f1c9a5"/>
+    <rect x="58" y="314" width="5" height="9" rx="2.5" fill="#f1c9a5"/>
+    <rect x="64" y="316" width="5" height="10" rx="2.5" fill="#f1c9a5"/>
+    <rect x="70" y="316" width="5" height="10" rx="2.5" fill="#f1c9a5"/>
+    <!-- cuello largo -->
+    <path d="M108 150 L128 152 L130 186 L108 186 Z" fill="#f1c9a5"/>
+    <!-- pelo: llama barrida hacia atrás y arriba -->
+    <path d="M78 102 L52 100 L62 80 L40 64 L68 58 L50 30 L84 44 L82 8 L108 38 L124 -4 L134 36 L160 2 L158 42 L204 12 L182 56 L232 44 L196 74 L236 92 L190 98 L180 112 Z" fill="#a8d0f0"/>
+    <!-- cabeza -->
+    <path d="M74 80 Q72 30 120 28 Q168 30 166 80 L162 114 Q152 158 121 164 Q90 158 78 114 Z" fill="#f1c9a5"/>
+    <!-- anteojos en la frente -->
+    <rect x="80" y="50" width="80" height="8" rx="3" fill="#3a4a3f"/>
+    <circle cx="102" cy="54" r="10" fill="#7ee35b"/>
+    <circle cx="138" cy="54" r="10" fill="#7ee35b"/>
+    <!-- ojos: el derecho más abierto que el izquierdo -->
+    <circle cx="106" cy="104" r="16" fill="#ffffff"/>
+    <circle cx="137" cy="104" r="17" fill="#ffffff"/>
+    <rect x="88" y="86" width="36" height="9" fill="#f1c9a5" clip-path="url(#ojoI)" stroke="none"/>
+    <rect x="118" y="85" width="38" height="4" fill="#f1c9a5" clip-path="url(#ojoD)" stroke="none"/>
+    <path d="M91 95 L121 95" fill="none"/>
+    <path d="M121 89 L153 89" fill="none"/>
+    <circle cx="110" cy="109" r="2.8" fill="#1a1a1a" stroke="none"/>
+    <circle cx="140" cy="106" r="2.8" fill="#1a1a1a" stroke="none"/>
+    <!-- uniceja gruesa, una punta levantada -->
+    <path d="M86 88 L108 92 L122 96 L138 86 L160 74" fill="none" stroke-width="6"/>
+    <!-- nariz grande y angulosa -->
+    <path d="M122 100 Q138 118 128 132 Q120 134 116 128" fill="#e3b48f"/>
+    <!-- sonrisa enorme con dientes -->
+    <path d="M96 142 Q120 166 146 140 Q124 150 96 142 Z" fill="#ffffff"/>
+    <g clip-path="url(#boca)" stroke-width="1.6"><path d="M106 140 v14 M116 142 v16 M126 142 v16 M136 140 v14"/></g>
+    <path d="M96 142 Q120 166 146 140" fill="none"/>
+    <!-- arrugas -->
+    <path d="M150 124 q6 8 1 18" fill="none" stroke-width="2"/>
+    <path d="M86 128 q-6 8 -1 16" fill="none" stroke-width="2"/>
+  </g>
+</svg>
