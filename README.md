@@ -60,8 +60,10 @@ rive . --screenshot=build/eureka.png --data=pose=eureka --advance=40 --viewport=
 rive . --once && cp build/cientifico.riv ../../public/personaje/cientifico.riv
 ```
 
-Pendiente: el motor WASM de Rive se descarga de unpkg en tiempo de ejecución;
-conviene servirlo desde el propio sitio.
+El motor WASM de Rive se sirve desde `public/personaje/rive.wasm` (copia de
+`node_modules/@rive-app/canvas/rive.wasm`): al actualizar el paquete, volver a
+copiarlo. Al cambiar el `.riv`, subir `VERSION` en `PersonajeRive.tsx` para
+que el navegador no use la copia en caché.
 
 ## Cómo funciona el recorrido
 
