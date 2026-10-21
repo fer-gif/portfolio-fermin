@@ -2,7 +2,7 @@
 
 import { useEscenaActual } from "@/components/recorrido";
 import type { Guion, Linea } from "./guion";
-import { PersonajeSVG } from "./PersonajeSVG";
+import { PersonajeRive } from "./PersonajeRive";
 import { useMaquinaDeEscribir } from "./useMaquinaDeEscribir";
 import "./personaje.css";
 
@@ -28,7 +28,7 @@ export function Personaje({ guion, esperarIntro = false }: { guion: Guion; esper
       ].join(" ")}
       aria-live="polite"
     >
-      <PersonajeSVG pose={pose} className="order-2 h-20 w-auto shrink-0 sm:order-1 sm:h-40" />
+      <PersonajeRive pose={pose} className="order-2 h-24 shrink-0 sm:order-1 sm:h-44" />
       {linea.texto && (
         <div className="order-1 max-w-[80vw] rounded-2xl rounded-bl-sm border border-lab-borde bg-lab-panel/95 px-3 py-2 text-xs leading-snug backdrop-blur sm:order-2 sm:mb-6 sm:max-w-xs sm:rounded-bl-2xl sm:rounded-tl-sm sm:px-4 sm:py-3 sm:text-sm">
           {visible}

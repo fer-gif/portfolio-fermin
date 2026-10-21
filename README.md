@@ -30,7 +30,38 @@ proyectos/                    ← un módulo por proyecto
 
 lib/perfil.ts                 ← nombre, presentación y contactos
 public/proyectos/<slug>/      ← imágenes de cada proyecto
+public/personaje/cientifico.riv ← el personaje compilado (sale de rive/cientifico)
+
+rive/cientifico/              ← el personaje como proyecto Rive CLI
+├─ generar.mjs                ← genera scene.rml (geometría, animaciones, poses, view model)
+├─ scene.rml                  ← el archivo Rive en texto (RML), generado
+└─ rive.yaml · AGENTS.md      ← config del CLI e instrucciones para agentes
 ```
+
+## El personaje en Rive
+
+El científico es un archivo Rive escrito como texto (RML) y compilado con el
+[Rive CLI](https://rive.app/docs/cli). `generar.mjs` construye la escena:
+cuerpo que respira, pelo que se mece, párpados que parpadean, burbujas en el
+frasco, y cuatro poses (quieto, señalando, sorprendido, eureka) mezcladas
+por una máquina de estados que lee la propiedad `pose` del view model
+`Personaje`. El sitio la cambia con `useViewModelInstanceEnum` en
+`components/personaje/PersonajeRive.tsx`; mientras el `.riv` carga se ve el
+SVG de `PersonajeSVG.tsx`. La intro (`Cortina`) sigue usando el dibujo SVG
+de la pose de empuje.
+
+Para tocar el personaje (requiere el CLI: `irm https://releases.rive.app/cli/install.ps1 | iex`):
+
+```bash
+cd rive/cientifico
+node generar.mjs                                  # escribe scene.rml
+rive . --verify && rive inspect . --summary       # compila y lista problemas
+rive . --screenshot=build/eureka.png --data=pose=eureka --advance=40 --viewport=800x680 --fit=contain
+rive . --once && cp build/cientifico.riv ../../public/personaje/cientifico.riv
+```
+
+Pendiente: el motor WASM de Rive se descarga de unpkg en tiempo de ejecución;
+conviene servirlo desde el propio sitio.
 
 ## Cómo funciona el recorrido
 
