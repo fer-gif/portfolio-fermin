@@ -4,11 +4,9 @@ import { useRef, useState } from "react";
 import { gsap, useDirector, useGSAP } from "@/components/recorrido";
 import { PersonajeEmpujando } from "@/components/personaje/PersonajeEmpujando";
 
-const CLAVE_SESION = "intro-vista";
-
 // La intro: la puerta del laboratorio tapa todo y el científico entra y la
-// empuja hasta sacarla de la pantalla. Se ve una vez por sesión; si el
-// visitante llega con un #ancla o pide reducir movimiento, se saltea.
+// empuja hasta sacarla de la pantalla. Se ve en cada carga; si el visitante
+// llega con un #ancla o pide reducir movimiento, se saltea.
 export function Cortina() {
   const ref = useRef<HTMLDivElement>(null);
   const director = useDirector();
@@ -20,17 +18,10 @@ export function Cortina() {
         document.documentElement.classList.add("intro-lista");
         director.pausarScroll(false);
         setVisible(false);
-        try {
-          sessionStorage.setItem(CLAVE_SESION, "1");
-        } catch {}
       };
 
-      let yaVista = false;
-      try {
-        yaVista = sessionStorage.getItem(CLAVE_SESION) === "1";
-      } catch {}
       const saltar =
-        yaVista || window.location.hash !== "" || window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        window.location.hash !== "" || window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       if (saltar) {
         terminar();
         return;
