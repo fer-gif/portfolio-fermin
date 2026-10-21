@@ -35,17 +35,18 @@ export function PersonajeEmpujando({ className = "" }: { className?: string }) {
       <g>
         <path
           className="pelo"
-          d="M86 38 L62 12 L84 24 L80 2 L96 20 L102 0 L110 20 L122 6 L120 26 L136 16 L128 42 Z"
-          fill="#cfd8e3"
+          d="M84 40 L56 14 L82 26 L74 0 L94 20 L104 -4 L110 20 L126 2 L122 26 L142 12 L132 36 L150 34 L130 46 Z"
+          fill="#bbd1ea"
         />
         <ellipse cx="108" cy="36" rx="24" ry="25" fill="#f1c9a5" />
         {/* anteojos en la frente */}
         <rect x="86" y="14" width="42" height="5" rx="2" fill="#3a4a3f" transform="rotate(8 107 16)" />
         <circle cx="98" cy="17" r="6" fill="#7ee35b" stroke="#3a4a3f" strokeWidth="2" />
         <circle cx="118" cy="20" r="6" fill="#7ee35b" stroke="#3a4a3f" strokeWidth="2" />
-        {/* cejas fruncidas */}
-        <path d="M98 28 l10 3" stroke="#3a4a3f" strokeWidth="2.2" strokeLinecap="round" />
-        <path d="M116 30 l10 -1" stroke="#3a4a3f" strokeWidth="2.2" strokeLinecap="round" />
+        {/* uniceja fruncida */}
+        <path d="M94 27 L108 31 L120 30 L130 26" stroke="#3a4a3f" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+        {/* nariz */}
+        <path d="M114 36 L121 46 L112 46 Z" fill="#dfae8a" />
         {/* ojos mirando a la derecha */}
         <circle cx="106" cy="37" r="5.5" fill="#fff" />
         <circle cx="122" cy="38" r="5.5" fill="#fff" />

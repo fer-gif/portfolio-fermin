@@ -1,6 +1,10 @@
 // Genera scene.rml: el científico del laboratorio como archivo Rive.
-// La geometría viene del PersonajeSVG (viewBox 120x150) escalada x2.
 // Correr: node generar.mjs  →  luego  rive . --verify
+//
+// Coordenadas: la figura ocupa 240x300 y va centrada en un artboard de 400x340.
+// La cabeza es un nodo con pivote en el cuello (120,150); sus hijos usan
+// coordenadas locales. Los ojos son otro nodo (centro de los ojos) para poder
+// agrandarlos. Orden de declaración = de adelante hacia atrás.
 import { writeFileSync } from "node:fs";
 
 // ---------- utilidades ----------
@@ -9,7 +13,7 @@ const id = () => `0:${siguiente++}`;
 const rad = (grados) => (grados * Math.PI) / 180;
 const f = (n) => Number(n.toFixed(3)).toString();
 
-// Sentido horario (coordenadas con y hacia abajo): suma del shoelace > 0.
+// Sentido horario (y hacia abajo): suma del shoelace > 0.
 function esHorario(puntos) {
   let s = 0;
   for (let i = 0; i < puntos.length; i++) {
@@ -24,89 +28,116 @@ const fill = (color) => `<Fill name="Fill"><SolidColor colorValue="${color}" nam
 const stroke = (color, grosor) =>
   `<Stroke thickness="${grosor}" cap="round" join="round" name="Stroke"><SolidColor colorValue="${color}" name="Color"/></Stroke>`;
 
-// Polígono cerrado (coordenadas locales al padre).
-function poligono(nombre, puntos, color, extra = "") {
-  const vs = puntos.map(([x, y]) => `<StraightVertex x="${f(x)}" y="${f(y)}"/>`).join("");
-  return `<Shape name="${nombre}"${extra}><PointsPath isClosed="true" isClockwise="${esHorario(puntos)}" name="Path">${vs}</PointsPath>${fill(color)}</Shape>`;
+// Polígono cerrado; `radio` redondea todos los vértices.
+function poligono(nombre, puntos, color, { radio = 0, extra = "", pintura } = {}) {
+  const vs = puntos.map(([x, y]) => `<StraightVertex x="${f(x)}" y="${f(y)}"${radio ? ` radius="${radio}"` : ""}/>`).join("");
+  return `<Shape name="${nombre}"${extra}><PointsPath isClosed="true" isClockwise="${esHorario(puntos)}" name="Path">${vs}</PointsPath>${pintura ?? fill(color)}</Shape>`;
 }
 
 // Rectángulo centrado en (x, y).
-function rect(nombre, x, y, w, h, color, radio = 0, extra = "") {
-  return `<Shape x="${f(x)}" y="${f(y)}" name="${nombre}"${extra}><Rectangle width="${w}" height="${h}" cornerRadiusTL="${radio}" name="Path"/>${fill(color)}</Shape>`;
+function rect(nombre, x, y, w, h, color, radio = 0, extra = "", origenArriba = false) {
+  return `<Shape x="${f(x)}" y="${f(y)}" name="${nombre}"${extra}><Rectangle width="${w}" height="${h}" cornerRadiusTL="${radio}"${origenArriba ? ' originY="0"' : ""} name="Path"/>${fill(color)}</Shape>`;
 }
 
 function elipse(nombre, x, y, w, h, color, extra = "", pintura = fill(color)) {
   return `<Shape x="${f(x)}" y="${f(y)}" name="${nombre}"${extra}><Ellipse width="${w}" height="${h}" name="Path"/>${pintura}</Shape>`;
 }
 
-// Trazo abierto con un vértice suave en el medio (sonrisa).
+// Trazo abierto por puntos; los del medio se redondean con `radio`.
+function trazo(nombre, puntos, color, grosor, radio = 8, extra = "") {
+  const vs = puntos
+    .map(([x, y], i) => `<StraightVertex x="${f(x)}" y="${f(y)}"${i > 0 && i < puntos.length - 1 ? ` radius="${radio}"` : ""}/>`)
+    .join("");
+  return `<Shape name="${nombre}"${extra}><PointsPath isClosed="false" name="Path">${vs}</PointsPath>${stroke(color, grosor)}</Shape>`;
+}
+
+// Trazo abierto con un vértice curvo en el medio (sonrisa).
 function arco(nombre, [a, m, b], color, grosor, curva = 10, extra = "") {
   return `<Shape name="${nombre}"${extra}><PointsPath isClosed="false" name="Path"><StraightVertex x="${f(a[0])}" y="${f(a[1])}"/><CubicMirroredVertex x="${f(m[0])}" y="${f(m[1])}" rotation="0" distance="${curva}"/><StraightVertex x="${f(b[0])}" y="${f(b[1])}"/></PointsPath>${stroke(color, grosor)}</Shape>`;
 }
 
-// Trazo abierto en "^" con la punta redondeada (cejas).
-function ceja(nombre, [a, m, b], color, grosor, radio = 8) {
-  return `<Shape name="${nombre}"><PointsPath isClosed="false" name="Path"><StraightVertex x="${f(a[0])}" y="${f(a[1])}"/><StraightVertex x="${f(m[0])}" y="${f(m[1])}" radius="${radio}"/><StraightVertex x="${f(b[0])}" y="${f(b[1])}"/></PointsPath>${stroke(color, grosor)}</Shape>`;
-}
-
 // ---------- colores ----------
-const PIEL = "FFF1C9A5", BATA = "FFE9EEF2", BATA_SOMBRA = "FFD5DDE3", VERDE = "FF7EE35B";
-const PELO = "FFCFD8E3", OSCURO = "FF3A4A3F", PANTALON = "FF2B3640", ZAPATO = "FF15191D";
-const BOCA = "FF7A4A3A", BLANCO = "FFFFFFFF", NEGRO = "FF1A1A1A", VIDRIO = "D9CFE9FF", BURBUJA = "FFE6FFE0";
+const PIEL = "FFF1C9A5", PIEL_SOMBRA = "FFDFAE8A", OJERA = "FFC9956F";
+const BATA = "FFE9EEF2", BATA_SOMBRA = "FFD5DDE3", CAMISA = "FFCFE3F5", VERDE = "FF7EE35B";
+const PELO = "FFBBD1EA", OSCURO = "FF3A4A3F", PANTALON = "FF2B3640", ZAPATO = "FF15191D", CINTO = "FF1F262C";
+const BOCA = "FF6E4034", BLANCO = "FFFFFFFF", NEGRO = "FF1A1A1A", VIDRIO = "D9CFE9FF", BURBUJA = "FFE6FFE0";
 
 // ---------- ids que se referencian ----------
 const ID = {
   artboard: id(), estilo: id(), maquina: id(), vm: id(), vmInstancia: id(), vmPose: id(), enumPose: id(),
-  cuerpo: id(), cabeza: id(), pelo: id(), ojos: id(), parpadoIzq: id(), parpadoDer: id(), cejas: id(),
-  boca: id(), sonrisa: id(), bocaO: id(), brazoSenala: id(), brazoFrasco: id(), burbuja1: id(), burbuja2: id(),
+  cuerpo: id(), cabeza: id(), pelo: id(), ojos: id(), cejas: id(),
+  pesadoIzq: id(), pesadoDer: id(), parpadoIzq: id(), parpadoDer: id(),
+  boca: id(), bocaPlana: id(), bocaO: id(), bocaSonrisa: id(),
+  brazoSenala: id(), brazoFrasco: id(), burbuja1: id(), burbuja2: id(),
   animVida: id(), animParpadeo: id(),
   capaVida: id(), capaParpadeo: id(), capaPose: id(), estadoVida: id(), estadoParpadeo: id(),
 };
 
+// Cada pose: brazos (grados), tamaño de ojos, párpados pesados (0 = abiertos,
+// 1 = cerrados), altura de la ceja y boca.
 const POSES = [
-  { clave: "quieto", etiqueta: "Quieto", senala: 0, frasco: 0, ojos: 1, cejas: 0, boca: "sonrisa" },
-  { clave: "senalando", etiqueta: "Señalando", senala: -105, frasco: 0, ojos: 1, cejas: 0, boca: "sonrisa" },
-  { clave: "sorprendido", etiqueta: "Sorprendido", senala: 0, frasco: 0, ojos: 1.25, cejas: -6, boca: "o" },
-  { clave: "eureka", etiqueta: "Eureka", senala: -160, frasco: 160, ojos: 1.25, cejas: -6, boca: "o" },
+  { clave: "quieto", etiqueta: "Quieto", senala: 0, frasco: 0, ojos: 1, pesado: 0.42, cejas: 0, boca: "plana" },
+  { clave: "senalando", etiqueta: "Señalando", senala: -105, frasco: 0, ojos: 1, pesado: 0.3, cejas: -2, boca: "sonrisa" },
+  { clave: "sorprendido", etiqueta: "Sorprendido", senala: 0, frasco: 0, ojos: 1.2, pesado: 0, cejas: -9, boca: "o" },
+  { clave: "eureka", etiqueta: "Eureka", senala: -160, frasco: 160, ojos: 1.15, pesado: 0, cejas: -7, boca: "sonrisa" },
 ];
 for (const p of POSES) { p.valorId = id(); p.animId = id(); p.estadoId = id(); }
 
-// ---------- la escena (orden de declaración = de adelante hacia atrás) ----------
-// Cabeza: nodo con pivote en el cuello (120,150); hijos en coordenadas locales.
+// ---------- el pelo: puntas barridas hacia la derecha ----------
+// Centro de la cabeza en coordenadas del nodo Cabeza: (0,-50).
+function pelo() {
+  const cx = 0, cy = -50, base = 44;
+  const puntas = [[-170, 68], [-152, 86], [-132, 100], [-110, 110], [-88, 108], [-66, 100], [-45, 92], [-25, 80], [-6, 66]];
+  const punto = (ang, r) => [cx + r * Math.cos(rad(ang)), cy + r * Math.sin(rad(ang))];
+  const pts = [punto(-182, base)];
+  puntas.forEach(([ang, r], i) => {
+    pts.push(punto(ang + 4, r)); // la punta, apenas inclinada hacia la derecha
+    const sig = puntas[i + 1]?.[0] ?? 8;
+    pts.push(punto((ang + sig) / 2, base));
+  });
+  return poligono("Pelo", pts, PELO);
+}
+
+// ---------- la cabeza ----------
 const cabeza = `
 <Node x="120" y="150" name="Cabeza" id="${ID.cabeza}">
   <Node name="Cejas" id="${ID.cejas}">
-    ${ceja("Ceja izq", [[-36, -69], [-22, -76], [-8, -70]], OSCURO, 4.4)}
-    ${ceja("Ceja der", [[8, -70], [22, -76], [36, -69]], OSCURO, 4.4)}
+    ${trazo("Uniceja", [[-40, -74], [-20, -70], [0, -66], [20, -70], [40, -74]], OSCURO, 5.5, 6)}
   </Node>
   <Node y="-50" name="Ojos" id="${ID.ojos}">
-    ${rect("Párpado izq", -20, -14, 30, 29, PIEL, 0, ` id="${ID.parpadoIzq}"`).replace('name="Path"', 'originY="0" name="Path"')}
-    ${rect("Párpado der", 20, -14, 30, 29, PIEL, 0, ` id="${ID.parpadoDer}"`).replace('name="Path"', 'originY="0" name="Path"')}
-    ${elipse("Pupila izq", -17, 2, 10.4, 10.4, NEGRO)}
-    ${elipse("Pupila der", 23, 2, 10.4, 10.4, NEGRO)}
-    ${elipse("Ojo izq", -20, 0, 26, 26, BLANCO)}
-    ${elipse("Ojo der", 20, 0, 26, 26, BLANCO)}
+    ${rect("Párpado izq", -20, -15, 32, 31, PIEL, 0, ` id="${ID.parpadoIzq}"`, true)}
+    ${rect("Párpado der", 20, -15, 32, 31, PIEL, 0, ` id="${ID.parpadoDer}"`, true)}
+    ${rect("Párpado pesado izq", -20, -15, 32, 31, PIEL, 0, ` id="${ID.pesadoIzq}"`, true)}
+    ${rect("Párpado pesado der", 20, -15, 32, 31, PIEL, 0, ` id="${ID.pesadoDer}"`, true)}
+    ${elipse("Pupila izq", -17, 3, 8, 8, NEGRO)}
+    ${elipse("Pupila der", 24, 3, 8, 8, NEGRO)}
+    ${elipse("Ojo izq", -20, 0, 29, 29, BLANCO)}
+    ${elipse("Ojo der", 20, 0, 29, 29, BLANCO)}
+    ${trazo("Ojera izq", [[-30, 16], [-20, 19], [-10, 16]], OJERA, 2.2, 4)}
+    ${trazo("Ojera der", [[10, 16], [20, 19], [30, 16]], OJERA, 2.2, 4)}
   </Node>
-  <Solo y="-24" activeComponentId="${ID.sonrisa}" name="Boca" id="${ID.boca}">
-    ${arco("Sonrisa", [[-18, 0], [0, 8], [18, 0]], BOCA, 4.4, 10, ` id="${ID.sonrisa}"`)}
-    ${elipse("O", 0, 4, 16, 20, BOCA, ` id="${ID.bocaO}"`)}
+  ${poligono("Nariz", [[-1, -44], [10, -26], [-8, -24]], PIEL_SOMBRA, { radio: 4 })}
+  <Solo y="-12" activeComponentId="${ID.bocaPlana}" name="Boca" id="${ID.boca}">
+    ${trazo("Plana", [[-17, 0], [0, 2], [17, -2]], BOCA, 4, 6, ` id="${ID.bocaPlana}"`)}
+    ${elipse("O", 0, 4, 14, 18, BOCA, ` id="${ID.bocaO}"`)}
+    ${arco("Sonrisa", [[-20, -2], [0, 10], [20, -2]], BOCA, 4.2, 12, ` id="${ID.bocaSonrisa}"`)}
   </Solo>
-  ${elipse("Lente izq", -22, -92, 26, 26, VERDE, "", fill(VERDE) + stroke(OSCURO, 4))}
-  ${elipse("Lente der", 22, -92, 26, 26, VERDE, "", fill(VERDE) + stroke(OSCURO, 4))}
-  ${rect("Anteojos", 0, -91, 88, 10, OSCURO, 4)}
-  ${elipse("Mentón", 0, -10, 56, 24, "59B8B1A7")}
-  ${elipse("Cara", 0, -50, 100, 108, PIEL)}
+  ${elipse("Lente izq", -22, -94, 26, 26, VERDE, "", fill(VERDE) + stroke(OSCURO, 4))}
+  ${elipse("Lente der", 22, -94, 26, 26, VERDE, "", fill(VERDE) + stroke(OSCURO, 4))}
+  ${rect("Anteojos", 0, -93, 88, 10, OSCURO, 4)}
+  ${elipse("Cara", 0, -50, 98, 114, PIEL)}
   <Node y="-62" name="Pelo" id="${ID.pelo}">
-    ${poligono("Pelo", [[-60, 0], [-76, -60], [-44, -28], [-36, -80], [-12, -32], [4, -88], [20, -32], [44, -76], [44, -28], [76, -60], [60, 0]], PELO)}
+    <Node y="62">${pelo()}</Node>
   </Node>
 </Node>`;
 
-// Brazos: nodos con pivote en el hombro.
+// ---------- brazos: nodos con pivote en el hombro ----------
 const brazoSenala = `
 <Node x="176" y="148" name="Brazo señala" id="${ID.brazoSenala}">
-  ${rect("Dedo", 1, 85, 6, 18, PIEL, 3)}
+  ${rect("Dedo", 1, 86, 6, 18, PIEL, 3)}
   ${elipse("Mano", 0, 80, 22, 22, PIEL)}
-  ${rect("Brazo", 0, 38, 24, 76, BATA, 12)}
+  ${rect("Puño", 0, 66, 26, 10, BATA_SOMBRA, 3)}
+  ${rect("Manga", 0, 38, 24, 76, BATA, 12)}
 </Node>`;
 
 const brazoFrasco = `
@@ -118,20 +149,27 @@ const brazoFrasco = `
     ${poligono("Vidrio", [[-8, 44], [8, 44], [8, 60], [24, 92], [-24, 92], [-8, 60]], VIDRIO)}
   </Node>
   ${elipse("Mano", 0, 80, 22, 22, PIEL)}
-  ${rect("Brazo", 0, 38, 24, 76, BATA, 12)}
+  ${rect("Puño", 0, 66, 26, 10, BATA_SOMBRA, 3)}
+  ${rect("Manga", 0, 38, 24, 76, BATA, 12)}
 </Node>`;
 
-const bata = `
-${poligono("Corbata", [[108, 144], [132, 144], [124, 208], [116, 208]], VERDE)}
-${poligono("Solapa izq", [[72, 144], [108, 144], [104, 220]], BATA_SOMBRA)}
-${poligono("Solapa der", [[168, 144], [132, 144], [136, 220]], BATA_SOMBRA)}
-${poligono("Bata", [[72, 144], [168, 144], [180, 248], [60, 248]], BATA)}`;
+// ---------- torso: guardapolvo abierto, camisa, cinturón ----------
+// El guardapolvo va abierto: entre las dos mitades se ven la camisa, el
+// cinturón con hebilla verde y el pantalón.
+const torso = `
+${poligono("Solapa izq", [[98, 146], [116, 146], [116, 184]], BATA_SOMBRA)}
+${poligono("Solapa der", [[142, 146], [124, 146], [124, 184]], BATA_SOMBRA)}
+${poligono("Bata izq", [[66, 146], [116, 146], [116, 184], [108, 272], [56, 272]], BATA)}
+${poligono("Bata der", [[174, 146], [124, 146], [124, 184], [132, 272], [184, 272]], BATA)}
+${rect("Hebilla", 120, 241, 14, 12, VERDE, 2)}
+${rect("Cinturón", 120, 241, 116, 10, CINTO)}
+${poligono("Camisa", [[100, 146], [140, 146], [134, 236], [106, 236]], CAMISA)}`;
 
 const piernas = `
-${rect("Zapato izq", 98, 288, 36, 16, ZAPATO, 6)}
-${rect("Zapato der", 142, 288, 36, 16, ZAPATO, 6)}
-${rect("Pierna izq", 98, 264, 28, 56, PANTALON, 8)}
-${rect("Pierna der", 142, 264, 28, 56, PANTALON, 8)}`;
+${rect("Zapato izq", 104, 290, 36, 14, ZAPATO, 6)}
+${rect("Zapato der", 136, 290, 36, 14, ZAPATO, 6)}
+${rect("Pierna izq", 108, 262, 28, 58, PANTALON, 6)}
+${rect("Pierna der", 132, 262, 28, 58, PANTALON, 6)}`;
 
 // ---------- animaciones ----------
 const ease = `<CubicEaseInterpolator x1="0.42" y1="0" x2="0.58" y2="1"/>`;
@@ -150,15 +188,16 @@ const animVida = `
   ${keyed(ID.burbuja2, "opacity", kf(0, 0, "hold") + kf(0.9, 54, "linear") + kf(0, 162, "hold") + kf(0.9, 174, "linear") + kf(0.5, 240, "hold"))}
 </LinearAnimation>`;
 
-// Parpadeo: cada 4,6 s los párpados bajan y suben.
+// Parpadeo: cada 4,6 s los párpados bajan, quedan cerrados un instante y suben (capa propia).
 const parpadeo = (objeto) =>
-  keyed(objeto, "scaleY", kf(0, 0, "hold") + kf(0, 248, "linear") + kf(1, 254, "linear") + kf(0, 262, "hold") + kf(0, 276, "hold"));
+  keyed(objeto, "scaleY", kf(0, 0, "hold") + kf(0, 248, "linear") + kf(1, 253, "linear") + kf(1, 258, "linear") + kf(0, 264, "hold") + kf(0, 276, "hold"));
 const animParpadeo = `
 <LinearAnimation loopValue="loop" duration="276" name="Parpadeo" id="${ID.animParpadeo}">
   ${parpadeo(ID.parpadoIzq)}${parpadeo(ID.parpadoDer)}
 </LinearAnimation>`;
 
 // Poses: un cuadro cada una; la transición entre estados hace la mezcla.
+const idBoca = { plana: ID.bocaPlana, o: ID.bocaO, sonrisa: ID.bocaSonrisa };
 const animPoses = POSES.map(
   (p) => `
 <LinearAnimation duration="1" name="Pose ${p.etiqueta}" id="${p.animId}">
@@ -166,8 +205,10 @@ const animPoses = POSES.map(
   ${keyed(ID.brazoFrasco, "rotation", kf(rad(p.frasco), 0, "hold"))}
   ${keyed(ID.ojos, "scaleX", kf(p.ojos, 0, "hold"))}
   ${keyed(ID.ojos, "scaleY", kf(p.ojos, 0, "hold"))}
+  ${keyed(ID.pesadoIzq, "scaleY", kf(p.pesado, 0, "hold"))}
+  ${keyed(ID.pesadoDer, "scaleY", kf(p.pesado, 0, "hold"))}
   ${keyed(ID.cejas, "y", kf(p.cejas, 0, "hold"))}
-  <KeyedObject objectId="${ID.boca}"><KeyedProperty property="activeComponentId"><KeyFrameId value="${p.boca === "o" ? ID.bocaO : ID.sonrisa}" frame="0" interpolationType="hold"/></KeyedProperty></KeyedObject>
+  <KeyedObject objectId="${ID.boca}"><KeyedProperty property="activeComponentId"><KeyFrameId value="${idBoca[p.boca]}" frame="0" interpolationType="hold"/></KeyedProperty></KeyedObject>
 </LinearAnimation>`,
 ).join("");
 
@@ -221,17 +262,15 @@ const datos = `
   </ViewModelInstance>
 </ViewModel>`;
 
-// El artboard tiene aire alrededor para los brazos levantados y el pelo:
-// la figura (240x300) va centrada dentro de 400x340.
 const rml = `<Rive version="1" kind="fragment">
 <Artboard defaultStateMachineId="${ID.maquina}" viewModelId="${ID.vm}" styleId="${ID.estilo}" width="400" height="340" name="Cientifico" id="${ID.artboard}">
   <LayoutComponentStyle name="Artboard Style" id="${ID.estilo}"/>
-  <Node x="80" y="34" name="Raíz">
+  <Node x="80" y="30" name="Raíz">
   <Node name="Cuerpo" id="${ID.cuerpo}">
     ${cabeza}
     ${brazoSenala}
     ${brazoFrasco}
-    ${bata}
+    ${torso}
     ${piernas}
   </Node>
   </Node>

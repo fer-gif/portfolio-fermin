@@ -1,81 +1,153 @@
 <Rive version="1" kind="fragment">
 <Artboard defaultStateMachineId="0:12" viewModelId="0:13" styleId="0:11" width="400" height="340" name="Cientifico" id="0:10">
   <LayoutComponentStyle name="Artboard Style" id="0:11"/>
-  <Node x="80" y="34" name="Raíz">
+  <Node x="80" y="30" name="Raíz">
   <Node name="Cuerpo" id="0:17">
     
 <Node x="120" y="150" name="Cabeza" id="0:18">
-  <Node name="Cejas" id="0:23">
-    <Shape name="Ceja izq"><PointsPath isClosed="false" name="Path"><StraightVertex x="-36" y="-69"/><StraightVertex x="-22" y="-76" radius="8"/><StraightVertex x="-8" y="-70"/></PointsPath><Stroke thickness="4.4" cap="round" join="round" name="Stroke"><SolidColor colorValue="FF3A4A3F" name="Color"/></Stroke></Shape>
-    <Shape name="Ceja der"><PointsPath isClosed="false" name="Path"><StraightVertex x="8" y="-70"/><StraightVertex x="22" y="-76" radius="8"/><StraightVertex x="36" y="-69"/></PointsPath><Stroke thickness="4.4" cap="round" join="round" name="Stroke"><SolidColor colorValue="FF3A4A3F" name="Color"/></Stroke></Shape>
+  <Node name="Cejas" id="0:21">
+    <Shape name="Uniceja"><PointsPath isClosed="false" name="Path"><StraightVertex x="-40" y="-74"/><StraightVertex x="-20" y="-70" radius="6"/><StraightVertex x="0" y="-66" radius="6"/><StraightVertex x="20" y="-70" radius="6"/><StraightVertex x="40" y="-74"/></PointsPath><Stroke thickness="5.5" cap="round" join="round" name="Stroke"><SolidColor colorValue="FF3A4A3F" name="Color"/></Stroke></Shape>
   </Node>
   <Node y="-50" name="Ojos" id="0:20">
-    <Shape x="-20" y="-14" name="Párpado izq" id="0:21"><Rectangle width="30" height="29" cornerRadiusTL="0" originY="0" name="Path"/><Fill name="Fill"><SolidColor colorValue="FFF1C9A5" name="Color"/></Fill></Shape>
-    <Shape x="20" y="-14" name="Párpado der" id="0:22"><Rectangle width="30" height="29" cornerRadiusTL="0" originY="0" name="Path"/><Fill name="Fill"><SolidColor colorValue="FFF1C9A5" name="Color"/></Fill></Shape>
-    <Shape x="-17" y="2" name="Pupila izq"><Ellipse width="10.4" height="10.4" name="Path"/><Fill name="Fill"><SolidColor colorValue="FF1A1A1A" name="Color"/></Fill></Shape>
-    <Shape x="23" y="2" name="Pupila der"><Ellipse width="10.4" height="10.4" name="Path"/><Fill name="Fill"><SolidColor colorValue="FF1A1A1A" name="Color"/></Fill></Shape>
-    <Shape x="-20" y="0" name="Ojo izq"><Ellipse width="26" height="26" name="Path"/><Fill name="Fill"><SolidColor colorValue="FFFFFFFF" name="Color"/></Fill></Shape>
-    <Shape x="20" y="0" name="Ojo der"><Ellipse width="26" height="26" name="Path"/><Fill name="Fill"><SolidColor colorValue="FFFFFFFF" name="Color"/></Fill></Shape>
+    <Shape x="-20" y="-15" name="Párpado izq" id="0:24"><Rectangle width="32" height="31" cornerRadiusTL="0" originY="0" name="Path"/><Fill name="Fill"><SolidColor colorValue="FFF1C9A5" name="Color"/></Fill></Shape>
+    <Shape x="20" y="-15" name="Párpado der" id="0:25"><Rectangle width="32" height="31" cornerRadiusTL="0" originY="0" name="Path"/><Fill name="Fill"><SolidColor colorValue="FFF1C9A5" name="Color"/></Fill></Shape>
+    <Shape x="-20" y="-15" name="Párpado pesado izq" id="0:22"><Rectangle width="32" height="31" cornerRadiusTL="0" originY="0" name="Path"/><Fill name="Fill"><SolidColor colorValue="FFF1C9A5" name="Color"/></Fill></Shape>
+    <Shape x="20" y="-15" name="Párpado pesado der" id="0:23"><Rectangle width="32" height="31" cornerRadiusTL="0" originY="0" name="Path"/><Fill name="Fill"><SolidColor colorValue="FFF1C9A5" name="Color"/></Fill></Shape>
+    <Shape x="-17" y="3" name="Pupila izq"><Ellipse width="8" height="8" name="Path"/><Fill name="Fill"><SolidColor colorValue="FF1A1A1A" name="Color"/></Fill></Shape>
+    <Shape x="24" y="3" name="Pupila der"><Ellipse width="8" height="8" name="Path"/><Fill name="Fill"><SolidColor colorValue="FF1A1A1A" name="Color"/></Fill></Shape>
+    <Shape x="-20" y="0" name="Ojo izq"><Ellipse width="29" height="29" name="Path"/><Fill name="Fill"><SolidColor colorValue="FFFFFFFF" name="Color"/></Fill></Shape>
+    <Shape x="20" y="0" name="Ojo der"><Ellipse width="29" height="29" name="Path"/><Fill name="Fill"><SolidColor colorValue="FFFFFFFF" name="Color"/></Fill></Shape>
+    <Shape name="Ojera izq"><PointsPath isClosed="false" name="Path"><StraightVertex x="-30" y="16"/><StraightVertex x="-20" y="19" radius="4"/><StraightVertex x="-10" y="16"/></PointsPath><Stroke thickness="2.2" cap="round" join="round" name="Stroke"><SolidColor colorValue="FFC9956F" name="Color"/></Stroke></Shape>
+    <Shape name="Ojera der"><PointsPath isClosed="false" name="Path"><StraightVertex x="10" y="16"/><StraightVertex x="20" y="19" radius="4"/><StraightVertex x="30" y="16"/></PointsPath><Stroke thickness="2.2" cap="round" join="round" name="Stroke"><SolidColor colorValue="FFC9956F" name="Color"/></Stroke></Shape>
   </Node>
-  <Solo y="-24" activeComponentId="0:25" name="Boca" id="0:24">
-    <Shape name="Sonrisa" id="0:25"><PointsPath isClosed="false" name="Path"><StraightVertex x="-18" y="0"/><CubicMirroredVertex x="0" y="8" rotation="0" distance="10"/><StraightVertex x="18" y="0"/></PointsPath><Stroke thickness="4.4" cap="round" join="round" name="Stroke"><SolidColor colorValue="FF7A4A3A" name="Color"/></Stroke></Shape>
-    <Shape x="0" y="4" name="O" id="0:26"><Ellipse width="16" height="20" name="Path"/><Fill name="Fill"><SolidColor colorValue="FF7A4A3A" name="Color"/></Fill></Shape>
+  <Shape name="Nariz"><PointsPath isClosed="true" isClockwise="true" name="Path"><StraightVertex x="-1" y="-44" radius="4"/><StraightVertex x="10" y="-26" radius="4"/><StraightVertex x="-8" y="-24" radius="4"/></PointsPath><Fill name="Fill"><SolidColor colorValue="FFDFAE8A" name="Color"/></Fill></Shape>
+  <Solo y="-12" activeComponentId="0:27" name="Boca" id="0:26">
+    <Shape name="Plana" id="0:27"><PointsPath isClosed="false" name="Path"><StraightVertex x="-17" y="0"/><StraightVertex x="0" y="2" radius="6"/><StraightVertex x="17" y="-2"/></PointsPath><Stroke thickness="4" cap="round" join="round" name="Stroke"><SolidColor colorValue="FF6E4034" name="Color"/></Stroke></Shape>
+    <Shape x="0" y="4" name="O" id="0:28"><Ellipse width="14" height="18" name="Path"/><Fill name="Fill"><SolidColor colorValue="FF6E4034" name="Color"/></Fill></Shape>
+    <Shape name="Sonrisa" id="0:29"><PointsPath isClosed="false" name="Path"><StraightVertex x="-20" y="-2"/><CubicMirroredVertex x="0" y="10" rotation="0" distance="12"/><StraightVertex x="20" y="-2"/></PointsPath><Stroke thickness="4.2" cap="round" join="round" name="Stroke"><SolidColor colorValue="FF6E4034" name="Color"/></Stroke></Shape>
   </Solo>
-  <Shape x="-22" y="-92" name="Lente izq"><Ellipse width="26" height="26" name="Path"/><Fill name="Fill"><SolidColor colorValue="FF7EE35B" name="Color"/></Fill><Stroke thickness="4" cap="round" join="round" name="Stroke"><SolidColor colorValue="FF3A4A3F" name="Color"/></Stroke></Shape>
-  <Shape x="22" y="-92" name="Lente der"><Ellipse width="26" height="26" name="Path"/><Fill name="Fill"><SolidColor colorValue="FF7EE35B" name="Color"/></Fill><Stroke thickness="4" cap="round" join="round" name="Stroke"><SolidColor colorValue="FF3A4A3F" name="Color"/></Stroke></Shape>
-  <Shape x="0" y="-91" name="Anteojos"><Rectangle width="88" height="10" cornerRadiusTL="4" name="Path"/><Fill name="Fill"><SolidColor colorValue="FF3A4A3F" name="Color"/></Fill></Shape>
-  <Shape x="0" y="-10" name="Mentón"><Ellipse width="56" height="24" name="Path"/><Fill name="Fill"><SolidColor colorValue="59B8B1A7" name="Color"/></Fill></Shape>
-  <Shape x="0" y="-50" name="Cara"><Ellipse width="100" height="108" name="Path"/><Fill name="Fill"><SolidColor colorValue="FFF1C9A5" name="Color"/></Fill></Shape>
+  <Shape x="-22" y="-94" name="Lente izq"><Ellipse width="26" height="26" name="Path"/><Fill name="Fill"><SolidColor colorValue="FF7EE35B" name="Color"/></Fill><Stroke thickness="4" cap="round" join="round" name="Stroke"><SolidColor colorValue="FF3A4A3F" name="Color"/></Stroke></Shape>
+  <Shape x="22" y="-94" name="Lente der"><Ellipse width="26" height="26" name="Path"/><Fill name="Fill"><SolidColor colorValue="FF7EE35B" name="Color"/></Fill><Stroke thickness="4" cap="round" join="round" name="Stroke"><SolidColor colorValue="FF3A4A3F" name="Color"/></Stroke></Shape>
+  <Shape x="0" y="-93" name="Anteojos"><Rectangle width="88" height="10" cornerRadiusTL="4" name="Path"/><Fill name="Fill"><SolidColor colorValue="FF3A4A3F" name="Color"/></Fill></Shape>
+  <Shape x="0" y="-50" name="Cara"><Ellipse width="98" height="114" name="Path"/><Fill name="Fill"><SolidColor colorValue="FFF1C9A5" name="Color"/></Fill></Shape>
   <Node y="-62" name="Pelo" id="0:19">
-    <Shape name="Pelo"><PointsPath isClosed="true" isClockwise="true" name="Path"><StraightVertex x="-60" y="0"/><StraightVertex x="-76" y="-60"/><StraightVertex x="-44" y="-28"/><StraightVertex x="-36" y="-80"/><StraightVertex x="-12" y="-32"/><StraightVertex x="4" y="-88"/><StraightVertex x="20" y="-32"/><StraightVertex x="44" y="-76"/><StraightVertex x="44" y="-28"/><StraightVertex x="76" y="-60"/><StraightVertex x="60" y="0"/></PointsPath><Fill name="Fill"><SolidColor colorValue="FFCFD8E3" name="Color"/></Fill></Shape>
+    <Node y="62"><Shape name="Pelo"><PointsPath isClosed="true" isClockwise="true" name="Path"><StraightVertex x="-43.973" y="-48.464"/><StraightVertex x="-65.98" y="-66.451"/><StraightVertex x="-41.603" y="-64.325"/><StraightVertex x="-72.932" y="-95.573"/><StraightVertex x="-34.672" y="-77.089"/><StraightVertex x="-61.566" y="-128.801"/><StraightVertex x="-22.662" y="-87.715"/><StraightVertex x="-30.32" y="-155.739"/><StraightVertex x="-6.883" y="-93.458"/><StraightVertex x="11.289" y="-157.408"/><StraightVertex x="9.898" y="-92.872"/><StraightVertex x="46.947" y="-138.295"/><StraightVertex x="24.922" y="-86.262"/><StraightVertex x="69.433" y="-110.357"/><StraightVertex x="36.043" y="-75.237"/><StraightVertex x="74.686" y="-78.669"/><StraightVertex x="42.4" y="-61.758"/><StraightVertex x="65.96" y="-52.303"/><StraightVertex x="43.993" y="-49.232"/></PointsPath><Fill name="Fill"><SolidColor colorValue="FFBBD1EA" name="Color"/></Fill></Shape></Node>
   </Node>
 </Node>
     
-<Node x="176" y="148" name="Brazo señala" id="0:27">
-  <Shape x="1" y="85" name="Dedo"><Rectangle width="6" height="18" cornerRadiusTL="3" name="Path"/><Fill name="Fill"><SolidColor colorValue="FFF1C9A5" name="Color"/></Fill></Shape>
+<Node x="176" y="148" name="Brazo señala" id="0:30">
+  <Shape x="1" y="86" name="Dedo"><Rectangle width="6" height="18" cornerRadiusTL="3" name="Path"/><Fill name="Fill"><SolidColor colorValue="FFF1C9A5" name="Color"/></Fill></Shape>
   <Shape x="0" y="80" name="Mano"><Ellipse width="22" height="22" name="Path"/><Fill name="Fill"><SolidColor colorValue="FFF1C9A5" name="Color"/></Fill></Shape>
-  <Shape x="0" y="38" name="Brazo"><Rectangle width="24" height="76" cornerRadiusTL="12" name="Path"/><Fill name="Fill"><SolidColor colorValue="FFE9EEF2" name="Color"/></Fill></Shape>
+  <Shape x="0" y="66" name="Puño"><Rectangle width="26" height="10" cornerRadiusTL="3" name="Path"/><Fill name="Fill"><SolidColor colorValue="FFD5DDE3" name="Color"/></Fill></Shape>
+  <Shape x="0" y="38" name="Manga"><Rectangle width="24" height="76" cornerRadiusTL="12" name="Path"/><Fill name="Fill"><SolidColor colorValue="FFE9EEF2" name="Color"/></Fill></Shape>
 </Node>
     
-<Node x="64" y="148" name="Brazo frasco" id="0:28">
+<Node x="64" y="148" name="Brazo frasco" id="0:31">
   <Node name="Frasco">
-    <Shape x="-4" y="86" name="Burbuja 1" id="0:29"><Ellipse width="2.8" height="2.8" name="Path"/><Fill name="Fill"><SolidColor colorValue="FFE6FFE0" name="Color"/></Fill></Shape>
-    <Shape x="6" y="88" name="Burbuja 2" id="0:30"><Ellipse width="2" height="2" name="Path"/><Fill name="Fill"><SolidColor colorValue="FFE6FFE0" name="Color"/></Fill></Shape>
+    <Shape x="-4" y="86" name="Burbuja 1" id="0:32"><Ellipse width="2.8" height="2.8" name="Path"/><Fill name="Fill"><SolidColor colorValue="FFE6FFE0" name="Color"/></Fill></Shape>
+    <Shape x="6" y="88" name="Burbuja 2" id="0:33"><Ellipse width="2" height="2" name="Path"/><Fill name="Fill"><SolidColor colorValue="FFE6FFE0" name="Color"/></Fill></Shape>
     <Shape name="Líquido"><PointsPath isClosed="true" isClockwise="true" name="Path"><StraightVertex x="-16" y="72"/><StraightVertex x="16" y="72"/><StraightVertex x="24" y="92"/><StraightVertex x="-24" y="92"/></PointsPath><Fill name="Fill"><SolidColor colorValue="FF7EE35B" name="Color"/></Fill></Shape>
     <Shape name="Vidrio"><PointsPath isClosed="true" isClockwise="true" name="Path"><StraightVertex x="-8" y="44"/><StraightVertex x="8" y="44"/><StraightVertex x="8" y="60"/><StraightVertex x="24" y="92"/><StraightVertex x="-24" y="92"/><StraightVertex x="-8" y="60"/></PointsPath><Fill name="Fill"><SolidColor colorValue="D9CFE9FF" name="Color"/></Fill></Shape>
   </Node>
   <Shape x="0" y="80" name="Mano"><Ellipse width="22" height="22" name="Path"/><Fill name="Fill"><SolidColor colorValue="FFF1C9A5" name="Color"/></Fill></Shape>
-  <Shape x="0" y="38" name="Brazo"><Rectangle width="24" height="76" cornerRadiusTL="12" name="Path"/><Fill name="Fill"><SolidColor colorValue="FFE9EEF2" name="Color"/></Fill></Shape>
+  <Shape x="0" y="66" name="Puño"><Rectangle width="26" height="10" cornerRadiusTL="3" name="Path"/><Fill name="Fill"><SolidColor colorValue="FFD5DDE3" name="Color"/></Fill></Shape>
+  <Shape x="0" y="38" name="Manga"><Rectangle width="24" height="76" cornerRadiusTL="12" name="Path"/><Fill name="Fill"><SolidColor colorValue="FFE9EEF2" name="Color"/></Fill></Shape>
 </Node>
     
-<Shape name="Corbata"><PointsPath isClosed="true" isClockwise="true" name="Path"><StraightVertex x="108" y="144"/><StraightVertex x="132" y="144"/><StraightVertex x="124" y="208"/><StraightVertex x="116" y="208"/></PointsPath><Fill name="Fill"><SolidColor colorValue="FF7EE35B" name="Color"/></Fill></Shape>
-<Shape name="Solapa izq"><PointsPath isClosed="true" isClockwise="true" name="Path"><StraightVertex x="72" y="144"/><StraightVertex x="108" y="144"/><StraightVertex x="104" y="220"/></PointsPath><Fill name="Fill"><SolidColor colorValue="FFD5DDE3" name="Color"/></Fill></Shape>
-<Shape name="Solapa der"><PointsPath isClosed="true" isClockwise="false" name="Path"><StraightVertex x="168" y="144"/><StraightVertex x="132" y="144"/><StraightVertex x="136" y="220"/></PointsPath><Fill name="Fill"><SolidColor colorValue="FFD5DDE3" name="Color"/></Fill></Shape>
-<Shape name="Bata"><PointsPath isClosed="true" isClockwise="true" name="Path"><StraightVertex x="72" y="144"/><StraightVertex x="168" y="144"/><StraightVertex x="180" y="248"/><StraightVertex x="60" y="248"/></PointsPath><Fill name="Fill"><SolidColor colorValue="FFE9EEF2" name="Color"/></Fill></Shape>
+<Shape name="Solapa izq"><PointsPath isClosed="true" isClockwise="true" name="Path"><StraightVertex x="98" y="146"/><StraightVertex x="116" y="146"/><StraightVertex x="116" y="184"/></PointsPath><Fill name="Fill"><SolidColor colorValue="FFD5DDE3" name="Color"/></Fill></Shape>
+<Shape name="Solapa der"><PointsPath isClosed="true" isClockwise="false" name="Path"><StraightVertex x="142" y="146"/><StraightVertex x="124" y="146"/><StraightVertex x="124" y="184"/></PointsPath><Fill name="Fill"><SolidColor colorValue="FFD5DDE3" name="Color"/></Fill></Shape>
+<Shape name="Bata izq"><PointsPath isClosed="true" isClockwise="true" name="Path"><StraightVertex x="66" y="146"/><StraightVertex x="116" y="146"/><StraightVertex x="116" y="184"/><StraightVertex x="108" y="272"/><StraightVertex x="56" y="272"/></PointsPath><Fill name="Fill"><SolidColor colorValue="FFE9EEF2" name="Color"/></Fill></Shape>
+<Shape name="Bata der"><PointsPath isClosed="true" isClockwise="false" name="Path"><StraightVertex x="174" y="146"/><StraightVertex x="124" y="146"/><StraightVertex x="124" y="184"/><StraightVertex x="132" y="272"/><StraightVertex x="184" y="272"/></PointsPath><Fill name="Fill"><SolidColor colorValue="FFE9EEF2" name="Color"/></Fill></Shape>
+<Shape x="120" y="241" name="Hebilla"><Rectangle width="14" height="12" cornerRadiusTL="2" name="Path"/><Fill name="Fill"><SolidColor colorValue="FF7EE35B" name="Color"/></Fill></Shape>
+<Shape x="120" y="241" name="Cinturón"><Rectangle width="116" height="10" cornerRadiusTL="0" name="Path"/><Fill name="Fill"><SolidColor colorValue="FF1F262C" name="Color"/></Fill></Shape>
+<Shape name="Camisa"><PointsPath isClosed="true" isClockwise="true" name="Path"><StraightVertex x="100" y="146"/><StraightVertex x="140" y="146"/><StraightVertex x="134" y="236"/><StraightVertex x="106" y="236"/></PointsPath><Fill name="Fill"><SolidColor colorValue="FFCFE3F5" name="Color"/></Fill></Shape>
     
-<Shape x="98" y="288" name="Zapato izq"><Rectangle width="36" height="16" cornerRadiusTL="6" name="Path"/><Fill name="Fill"><SolidColor colorValue="FF15191D" name="Color"/></Fill></Shape>
-<Shape x="142" y="288" name="Zapato der"><Rectangle width="36" height="16" cornerRadiusTL="6" name="Path"/><Fill name="Fill"><SolidColor colorValue="FF15191D" name="Color"/></Fill></Shape>
-<Shape x="98" y="264" name="Pierna izq"><Rectangle width="28" height="56" cornerRadiusTL="8" name="Path"/><Fill name="Fill"><SolidColor colorValue="FF2B3640" name="Color"/></Fill></Shape>
-<Shape x="142" y="264" name="Pierna der"><Rectangle width="28" height="56" cornerRadiusTL="8" name="Path"/><Fill name="Fill"><SolidColor colorValue="FF2B3640" name="Color"/></Fill></Shape>
+<Shape x="104" y="290" name="Zapato izq"><Rectangle width="36" height="14" cornerRadiusTL="6" name="Path"/><Fill name="Fill"><SolidColor colorValue="FF15191D" name="Color"/></Fill></Shape>
+<Shape x="136" y="290" name="Zapato der"><Rectangle width="36" height="14" cornerRadiusTL="6" name="Path"/><Fill name="Fill"><SolidColor colorValue="FF15191D" name="Color"/></Fill></Shape>
+<Shape x="108" y="262" name="Pierna izq"><Rectangle width="28" height="58" cornerRadiusTL="6" name="Path"/><Fill name="Fill"><SolidColor colorValue="FF2B3640" name="Color"/></Fill></Shape>
+<Shape x="132" y="262" name="Pierna der"><Rectangle width="28" height="58" cornerRadiusTL="6" name="Path"/><Fill name="Fill"><SolidColor colorValue="FF2B3640" name="Color"/></Fill></Shape>
   </Node>
   </Node>
   
 <StateMachine name="Personaje" id="0:12">
-  <StateMachineLayer name="Vida" id="0:33">
+  <StateMachineLayer name="Vida" id="0:36">
     <AnyState x="400" y="-120"/><ExitState x="520" y="-120"/>
-    <EntryState x="0" y="0"><StateTransition stateToId="0:36"/></EntryState>
-    <AnimationState x="160" y="0" animationId="0:31" id="0:36"/>
+    <EntryState x="0" y="0"><StateTransition stateToId="0:39"/></EntryState>
+    <AnimationState x="160" y="0" animationId="0:34" id="0:39"/>
   </StateMachineLayer>
-  <StateMachineLayer name="Parpadeo" id="0:34">
+  <StateMachineLayer name="Parpadeo" id="0:37">
     <AnyState x="400" y="-120"/><ExitState x="520" y="-120"/>
-    <EntryState x="0" y="0"><StateTransition stateToId="0:37"/></EntryState>
-    <AnimationState x="160" y="0" animationId="0:32" id="0:37"/>
-  </StateMachineLayer>
-  <StateMachineLayer name="Pose" id="0:35">
-    <AnyState x="1000" y="-120"/><ExitState x="1120" y="-120"/>
     <EntryState x="0" y="0"><StateTransition stateToId="0:40"/></EntryState>
+    <AnimationState x="160" y="0" animationId="0:35" id="0:40"/>
+  </StateMachineLayer>
+  <StateMachineLayer name="Pose" id="0:38">
+    <AnyState x="1000" y="-120"/><ExitState x="1120" y="-120"/>
+    <EntryState x="0" y="0"><StateTransition stateToId="0:43"/></EntryState>
     
-<AnimationState x="160" y="0" animationId="0:39" id="0:40">
+<AnimationState x="160" y="0" animationId="0:42" id="0:43">
+  <StateTransition stateToId="0:46" duration="350" interpolationType="cubic"><CubicEaseInterpolator x1="0.42" y1="0" x2="0.58" y2="1"/>
+<TransitionViewModelCondition opValue="equal">
+  <TransitionPropertyViewModelComparator>
+    <BindablePropertyEnum><DataBindContext sourcePathIds="0:13-0:15" propertyKey="637"/></BindablePropertyEnum>
+  </TransitionPropertyViewModelComparator>
+  <TransitionValueEnumComparator value="0:44"/>
+</TransitionViewModelCondition></StateTransition><StateTransition stateToId="0:49" duration="350" interpolationType="cubic"><CubicEaseInterpolator x1="0.42" y1="0" x2="0.58" y2="1"/>
+<TransitionViewModelCondition opValue="equal">
+  <TransitionPropertyViewModelComparator>
+    <BindablePropertyEnum><DataBindContext sourcePathIds="0:13-0:15" propertyKey="637"/></BindablePropertyEnum>
+  </TransitionPropertyViewModelComparator>
+  <TransitionValueEnumComparator value="0:47"/>
+</TransitionViewModelCondition></StateTransition><StateTransition stateToId="0:52" duration="350" interpolationType="cubic"><CubicEaseInterpolator x1="0.42" y1="0" x2="0.58" y2="1"/>
+<TransitionViewModelCondition opValue="equal">
+  <TransitionPropertyViewModelComparator>
+    <BindablePropertyEnum><DataBindContext sourcePathIds="0:13-0:15" propertyKey="637"/></BindablePropertyEnum>
+  </TransitionPropertyViewModelComparator>
+  <TransitionValueEnumComparator value="0:50"/>
+</TransitionViewModelCondition></StateTransition>
+</AnimationState>
+<AnimationState x="380" y="120" animationId="0:45" id="0:46">
+  <StateTransition stateToId="0:43" duration="350" interpolationType="cubic"><CubicEaseInterpolator x1="0.42" y1="0" x2="0.58" y2="1"/>
+<TransitionViewModelCondition opValue="equal">
+  <TransitionPropertyViewModelComparator>
+    <BindablePropertyEnum><DataBindContext sourcePathIds="0:13-0:15" propertyKey="637"/></BindablePropertyEnum>
+  </TransitionPropertyViewModelComparator>
+  <TransitionValueEnumComparator value="0:41"/>
+</TransitionViewModelCondition></StateTransition><StateTransition stateToId="0:49" duration="350" interpolationType="cubic"><CubicEaseInterpolator x1="0.42" y1="0" x2="0.58" y2="1"/>
+<TransitionViewModelCondition opValue="equal">
+  <TransitionPropertyViewModelComparator>
+    <BindablePropertyEnum><DataBindContext sourcePathIds="0:13-0:15" propertyKey="637"/></BindablePropertyEnum>
+  </TransitionPropertyViewModelComparator>
+  <TransitionValueEnumComparator value="0:47"/>
+</TransitionViewModelCondition></StateTransition><StateTransition stateToId="0:52" duration="350" interpolationType="cubic"><CubicEaseInterpolator x1="0.42" y1="0" x2="0.58" y2="1"/>
+<TransitionViewModelCondition opValue="equal">
+  <TransitionPropertyViewModelComparator>
+    <BindablePropertyEnum><DataBindContext sourcePathIds="0:13-0:15" propertyKey="637"/></BindablePropertyEnum>
+  </TransitionPropertyViewModelComparator>
+  <TransitionValueEnumComparator value="0:50"/>
+</TransitionViewModelCondition></StateTransition>
+</AnimationState>
+<AnimationState x="600" y="0" animationId="0:48" id="0:49">
+  <StateTransition stateToId="0:43" duration="350" interpolationType="cubic"><CubicEaseInterpolator x1="0.42" y1="0" x2="0.58" y2="1"/>
+<TransitionViewModelCondition opValue="equal">
+  <TransitionPropertyViewModelComparator>
+    <BindablePropertyEnum><DataBindContext sourcePathIds="0:13-0:15" propertyKey="637"/></BindablePropertyEnum>
+  </TransitionPropertyViewModelComparator>
+  <TransitionValueEnumComparator value="0:41"/>
+</TransitionViewModelCondition></StateTransition><StateTransition stateToId="0:46" duration="350" interpolationType="cubic"><CubicEaseInterpolator x1="0.42" y1="0" x2="0.58" y2="1"/>
+<TransitionViewModelCondition opValue="equal">
+  <TransitionPropertyViewModelComparator>
+    <BindablePropertyEnum><DataBindContext sourcePathIds="0:13-0:15" propertyKey="637"/></BindablePropertyEnum>
+  </TransitionPropertyViewModelComparator>
+  <TransitionValueEnumComparator value="0:44"/>
+</TransitionViewModelCondition></StateTransition><StateTransition stateToId="0:52" duration="350" interpolationType="cubic"><CubicEaseInterpolator x1="0.42" y1="0" x2="0.58" y2="1"/>
+<TransitionViewModelCondition opValue="equal">
+  <TransitionPropertyViewModelComparator>
+    <BindablePropertyEnum><DataBindContext sourcePathIds="0:13-0:15" propertyKey="637"/></BindablePropertyEnum>
+  </TransitionPropertyViewModelComparator>
+  <TransitionValueEnumComparator value="0:50"/>
+</TransitionViewModelCondition></StateTransition>
+</AnimationState>
+<AnimationState x="820" y="120" animationId="0:51" id="0:52">
   <StateTransition stateToId="0:43" duration="350" interpolationType="cubic"><CubicEaseInterpolator x1="0.42" y1="0" x2="0.58" y2="1"/>
 <TransitionViewModelCondition opValue="equal">
   <TransitionPropertyViewModelComparator>
@@ -96,127 +168,72 @@
   <TransitionValueEnumComparator value="0:47"/>
 </TransitionViewModelCondition></StateTransition>
 </AnimationState>
-<AnimationState x="380" y="120" animationId="0:42" id="0:43">
-  <StateTransition stateToId="0:40" duration="350" interpolationType="cubic"><CubicEaseInterpolator x1="0.42" y1="0" x2="0.58" y2="1"/>
-<TransitionViewModelCondition opValue="equal">
-  <TransitionPropertyViewModelComparator>
-    <BindablePropertyEnum><DataBindContext sourcePathIds="0:13-0:15" propertyKey="637"/></BindablePropertyEnum>
-  </TransitionPropertyViewModelComparator>
-  <TransitionValueEnumComparator value="0:38"/>
-</TransitionViewModelCondition></StateTransition><StateTransition stateToId="0:46" duration="350" interpolationType="cubic"><CubicEaseInterpolator x1="0.42" y1="0" x2="0.58" y2="1"/>
-<TransitionViewModelCondition opValue="equal">
-  <TransitionPropertyViewModelComparator>
-    <BindablePropertyEnum><DataBindContext sourcePathIds="0:13-0:15" propertyKey="637"/></BindablePropertyEnum>
-  </TransitionPropertyViewModelComparator>
-  <TransitionValueEnumComparator value="0:44"/>
-</TransitionViewModelCondition></StateTransition><StateTransition stateToId="0:49" duration="350" interpolationType="cubic"><CubicEaseInterpolator x1="0.42" y1="0" x2="0.58" y2="1"/>
-<TransitionViewModelCondition opValue="equal">
-  <TransitionPropertyViewModelComparator>
-    <BindablePropertyEnum><DataBindContext sourcePathIds="0:13-0:15" propertyKey="637"/></BindablePropertyEnum>
-  </TransitionPropertyViewModelComparator>
-  <TransitionValueEnumComparator value="0:47"/>
-</TransitionViewModelCondition></StateTransition>
-</AnimationState>
-<AnimationState x="600" y="0" animationId="0:45" id="0:46">
-  <StateTransition stateToId="0:40" duration="350" interpolationType="cubic"><CubicEaseInterpolator x1="0.42" y1="0" x2="0.58" y2="1"/>
-<TransitionViewModelCondition opValue="equal">
-  <TransitionPropertyViewModelComparator>
-    <BindablePropertyEnum><DataBindContext sourcePathIds="0:13-0:15" propertyKey="637"/></BindablePropertyEnum>
-  </TransitionPropertyViewModelComparator>
-  <TransitionValueEnumComparator value="0:38"/>
-</TransitionViewModelCondition></StateTransition><StateTransition stateToId="0:43" duration="350" interpolationType="cubic"><CubicEaseInterpolator x1="0.42" y1="0" x2="0.58" y2="1"/>
-<TransitionViewModelCondition opValue="equal">
-  <TransitionPropertyViewModelComparator>
-    <BindablePropertyEnum><DataBindContext sourcePathIds="0:13-0:15" propertyKey="637"/></BindablePropertyEnum>
-  </TransitionPropertyViewModelComparator>
-  <TransitionValueEnumComparator value="0:41"/>
-</TransitionViewModelCondition></StateTransition><StateTransition stateToId="0:49" duration="350" interpolationType="cubic"><CubicEaseInterpolator x1="0.42" y1="0" x2="0.58" y2="1"/>
-<TransitionViewModelCondition opValue="equal">
-  <TransitionPropertyViewModelComparator>
-    <BindablePropertyEnum><DataBindContext sourcePathIds="0:13-0:15" propertyKey="637"/></BindablePropertyEnum>
-  </TransitionPropertyViewModelComparator>
-  <TransitionValueEnumComparator value="0:47"/>
-</TransitionViewModelCondition></StateTransition>
-</AnimationState>
-<AnimationState x="820" y="120" animationId="0:48" id="0:49">
-  <StateTransition stateToId="0:40" duration="350" interpolationType="cubic"><CubicEaseInterpolator x1="0.42" y1="0" x2="0.58" y2="1"/>
-<TransitionViewModelCondition opValue="equal">
-  <TransitionPropertyViewModelComparator>
-    <BindablePropertyEnum><DataBindContext sourcePathIds="0:13-0:15" propertyKey="637"/></BindablePropertyEnum>
-  </TransitionPropertyViewModelComparator>
-  <TransitionValueEnumComparator value="0:38"/>
-</TransitionViewModelCondition></StateTransition><StateTransition stateToId="0:43" duration="350" interpolationType="cubic"><CubicEaseInterpolator x1="0.42" y1="0" x2="0.58" y2="1"/>
-<TransitionViewModelCondition opValue="equal">
-  <TransitionPropertyViewModelComparator>
-    <BindablePropertyEnum><DataBindContext sourcePathIds="0:13-0:15" propertyKey="637"/></BindablePropertyEnum>
-  </TransitionPropertyViewModelComparator>
-  <TransitionValueEnumComparator value="0:41"/>
-</TransitionViewModelCondition></StateTransition><StateTransition stateToId="0:46" duration="350" interpolationType="cubic"><CubicEaseInterpolator x1="0.42" y1="0" x2="0.58" y2="1"/>
-<TransitionViewModelCondition opValue="equal">
-  <TransitionPropertyViewModelComparator>
-    <BindablePropertyEnum><DataBindContext sourcePathIds="0:13-0:15" propertyKey="637"/></BindablePropertyEnum>
-  </TransitionPropertyViewModelComparator>
-  <TransitionValueEnumComparator value="0:44"/>
-</TransitionViewModelCondition></StateTransition>
-</AnimationState>
   </StateMachineLayer>
 </StateMachine>
   
-<LinearAnimation loopValue="loop" duration="240" name="Vida" id="0:31">
+<LinearAnimation loopValue="loop" duration="240" name="Vida" id="0:34">
   <KeyedObject objectId="0:17"><KeyedProperty property="y"><KeyFrameDouble value="0" frame="0" interpolationType="cubic"><CubicEaseInterpolator x1="0.42" y1="0" x2="0.58" y2="1"/></KeyFrameDouble><KeyFrameDouble value="-3" frame="120" interpolationType="cubic"><CubicEaseInterpolator x1="0.42" y1="0" x2="0.58" y2="1"/></KeyFrameDouble><KeyFrameDouble value="0" frame="240" interpolationType="linear"></KeyFrameDouble></KeyedProperty></KeyedObject>
   <KeyedObject objectId="0:19"><KeyedProperty property="rotation"><KeyFrameDouble value="-0.026" frame="0" interpolationType="cubic"><CubicEaseInterpolator x1="0.42" y1="0" x2="0.58" y2="1"/></KeyFrameDouble><KeyFrameDouble value="0.026" frame="120" interpolationType="cubic"><CubicEaseInterpolator x1="0.42" y1="0" x2="0.58" y2="1"/></KeyFrameDouble><KeyFrameDouble value="-0.026" frame="240" interpolationType="linear"></KeyFrameDouble></KeyedProperty></KeyedObject>
-  <KeyedObject objectId="0:29"><KeyedProperty property="y"><KeyFrameDouble value="86" frame="0" interpolationType="linear"></KeyFrameDouble><KeyFrameDouble value="72" frame="108" interpolationType="hold"></KeyFrameDouble><KeyFrameDouble value="86" frame="120" interpolationType="linear"></KeyFrameDouble><KeyFrameDouble value="72" frame="228" interpolationType="hold"></KeyFrameDouble><KeyFrameDouble value="86" frame="240" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject>
-  <KeyedObject objectId="0:29"><KeyedProperty property="opacity"><KeyFrameDouble value="0.9" frame="0" interpolationType="linear"></KeyFrameDouble><KeyFrameDouble value="0" frame="108" interpolationType="hold"></KeyFrameDouble><KeyFrameDouble value="0.9" frame="120" interpolationType="linear"></KeyFrameDouble><KeyFrameDouble value="0" frame="228" interpolationType="hold"></KeyFrameDouble><KeyFrameDouble value="0.9" frame="240" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject>
-  <KeyedObject objectId="0:30"><KeyedProperty property="y"><KeyFrameDouble value="88" frame="0" interpolationType="hold"></KeyFrameDouble><KeyFrameDouble value="88" frame="54" interpolationType="linear"></KeyFrameDouble><KeyFrameDouble value="74" frame="162" interpolationType="hold"></KeyFrameDouble><KeyFrameDouble value="88" frame="174" interpolationType="linear"></KeyFrameDouble><KeyFrameDouble value="80" frame="240" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject>
-  <KeyedObject objectId="0:30"><KeyedProperty property="opacity"><KeyFrameDouble value="0" frame="0" interpolationType="hold"></KeyFrameDouble><KeyFrameDouble value="0.9" frame="54" interpolationType="linear"></KeyFrameDouble><KeyFrameDouble value="0" frame="162" interpolationType="hold"></KeyFrameDouble><KeyFrameDouble value="0.9" frame="174" interpolationType="linear"></KeyFrameDouble><KeyFrameDouble value="0.5" frame="240" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject>
+  <KeyedObject objectId="0:32"><KeyedProperty property="y"><KeyFrameDouble value="86" frame="0" interpolationType="linear"></KeyFrameDouble><KeyFrameDouble value="72" frame="108" interpolationType="hold"></KeyFrameDouble><KeyFrameDouble value="86" frame="120" interpolationType="linear"></KeyFrameDouble><KeyFrameDouble value="72" frame="228" interpolationType="hold"></KeyFrameDouble><KeyFrameDouble value="86" frame="240" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject>
+  <KeyedObject objectId="0:32"><KeyedProperty property="opacity"><KeyFrameDouble value="0.9" frame="0" interpolationType="linear"></KeyFrameDouble><KeyFrameDouble value="0" frame="108" interpolationType="hold"></KeyFrameDouble><KeyFrameDouble value="0.9" frame="120" interpolationType="linear"></KeyFrameDouble><KeyFrameDouble value="0" frame="228" interpolationType="hold"></KeyFrameDouble><KeyFrameDouble value="0.9" frame="240" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject>
+  <KeyedObject objectId="0:33"><KeyedProperty property="y"><KeyFrameDouble value="88" frame="0" interpolationType="hold"></KeyFrameDouble><KeyFrameDouble value="88" frame="54" interpolationType="linear"></KeyFrameDouble><KeyFrameDouble value="74" frame="162" interpolationType="hold"></KeyFrameDouble><KeyFrameDouble value="88" frame="174" interpolationType="linear"></KeyFrameDouble><KeyFrameDouble value="80" frame="240" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject>
+  <KeyedObject objectId="0:33"><KeyedProperty property="opacity"><KeyFrameDouble value="0" frame="0" interpolationType="hold"></KeyFrameDouble><KeyFrameDouble value="0.9" frame="54" interpolationType="linear"></KeyFrameDouble><KeyFrameDouble value="0" frame="162" interpolationType="hold"></KeyFrameDouble><KeyFrameDouble value="0.9" frame="174" interpolationType="linear"></KeyFrameDouble><KeyFrameDouble value="0.5" frame="240" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject>
 </LinearAnimation>
   
-<LinearAnimation loopValue="loop" duration="276" name="Parpadeo" id="0:32">
-  <KeyedObject objectId="0:21"><KeyedProperty property="scaleY"><KeyFrameDouble value="0" frame="0" interpolationType="hold"></KeyFrameDouble><KeyFrameDouble value="0" frame="248" interpolationType="linear"></KeyFrameDouble><KeyFrameDouble value="1" frame="254" interpolationType="linear"></KeyFrameDouble><KeyFrameDouble value="0" frame="262" interpolationType="hold"></KeyFrameDouble><KeyFrameDouble value="0" frame="276" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject><KeyedObject objectId="0:22"><KeyedProperty property="scaleY"><KeyFrameDouble value="0" frame="0" interpolationType="hold"></KeyFrameDouble><KeyFrameDouble value="0" frame="248" interpolationType="linear"></KeyFrameDouble><KeyFrameDouble value="1" frame="254" interpolationType="linear"></KeyFrameDouble><KeyFrameDouble value="0" frame="262" interpolationType="hold"></KeyFrameDouble><KeyFrameDouble value="0" frame="276" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject>
+<LinearAnimation loopValue="loop" duration="276" name="Parpadeo" id="0:35">
+  <KeyedObject objectId="0:24"><KeyedProperty property="scaleY"><KeyFrameDouble value="0" frame="0" interpolationType="hold"></KeyFrameDouble><KeyFrameDouble value="0" frame="248" interpolationType="linear"></KeyFrameDouble><KeyFrameDouble value="1" frame="253" interpolationType="linear"></KeyFrameDouble><KeyFrameDouble value="1" frame="258" interpolationType="linear"></KeyFrameDouble><KeyFrameDouble value="0" frame="264" interpolationType="hold"></KeyFrameDouble><KeyFrameDouble value="0" frame="276" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject><KeyedObject objectId="0:25"><KeyedProperty property="scaleY"><KeyFrameDouble value="0" frame="0" interpolationType="hold"></KeyFrameDouble><KeyFrameDouble value="0" frame="248" interpolationType="linear"></KeyFrameDouble><KeyFrameDouble value="1" frame="253" interpolationType="linear"></KeyFrameDouble><KeyFrameDouble value="1" frame="258" interpolationType="linear"></KeyFrameDouble><KeyFrameDouble value="0" frame="264" interpolationType="hold"></KeyFrameDouble><KeyFrameDouble value="0" frame="276" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject>
 </LinearAnimation>
   
-<LinearAnimation duration="1" name="Pose Quieto" id="0:39">
-  <KeyedObject objectId="0:27"><KeyedProperty property="rotation"><KeyFrameDouble value="0" frame="0" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject>
-  <KeyedObject objectId="0:28"><KeyedProperty property="rotation"><KeyFrameDouble value="0" frame="0" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject>
+<LinearAnimation duration="1" name="Pose Quieto" id="0:42">
+  <KeyedObject objectId="0:30"><KeyedProperty property="rotation"><KeyFrameDouble value="0" frame="0" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject>
+  <KeyedObject objectId="0:31"><KeyedProperty property="rotation"><KeyFrameDouble value="0" frame="0" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject>
   <KeyedObject objectId="0:20"><KeyedProperty property="scaleX"><KeyFrameDouble value="1" frame="0" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject>
   <KeyedObject objectId="0:20"><KeyedProperty property="scaleY"><KeyFrameDouble value="1" frame="0" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject>
-  <KeyedObject objectId="0:23"><KeyedProperty property="y"><KeyFrameDouble value="0" frame="0" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject>
-  <KeyedObject objectId="0:24"><KeyedProperty property="activeComponentId"><KeyFrameId value="0:25" frame="0" interpolationType="hold"/></KeyedProperty></KeyedObject>
+  <KeyedObject objectId="0:22"><KeyedProperty property="scaleY"><KeyFrameDouble value="0.42" frame="0" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject>
+  <KeyedObject objectId="0:23"><KeyedProperty property="scaleY"><KeyFrameDouble value="0.42" frame="0" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject>
+  <KeyedObject objectId="0:21"><KeyedProperty property="y"><KeyFrameDouble value="0" frame="0" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject>
+  <KeyedObject objectId="0:26"><KeyedProperty property="activeComponentId"><KeyFrameId value="0:27" frame="0" interpolationType="hold"/></KeyedProperty></KeyedObject>
 </LinearAnimation>
-<LinearAnimation duration="1" name="Pose Señalando" id="0:42">
-  <KeyedObject objectId="0:27"><KeyedProperty property="rotation"><KeyFrameDouble value="-1.833" frame="0" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject>
-  <KeyedObject objectId="0:28"><KeyedProperty property="rotation"><KeyFrameDouble value="0" frame="0" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject>
+<LinearAnimation duration="1" name="Pose Señalando" id="0:45">
+  <KeyedObject objectId="0:30"><KeyedProperty property="rotation"><KeyFrameDouble value="-1.833" frame="0" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject>
+  <KeyedObject objectId="0:31"><KeyedProperty property="rotation"><KeyFrameDouble value="0" frame="0" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject>
   <KeyedObject objectId="0:20"><KeyedProperty property="scaleX"><KeyFrameDouble value="1" frame="0" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject>
   <KeyedObject objectId="0:20"><KeyedProperty property="scaleY"><KeyFrameDouble value="1" frame="0" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject>
-  <KeyedObject objectId="0:23"><KeyedProperty property="y"><KeyFrameDouble value="0" frame="0" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject>
-  <KeyedObject objectId="0:24"><KeyedProperty property="activeComponentId"><KeyFrameId value="0:25" frame="0" interpolationType="hold"/></KeyedProperty></KeyedObject>
+  <KeyedObject objectId="0:22"><KeyedProperty property="scaleY"><KeyFrameDouble value="0.3" frame="0" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject>
+  <KeyedObject objectId="0:23"><KeyedProperty property="scaleY"><KeyFrameDouble value="0.3" frame="0" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject>
+  <KeyedObject objectId="0:21"><KeyedProperty property="y"><KeyFrameDouble value="-2" frame="0" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject>
+  <KeyedObject objectId="0:26"><KeyedProperty property="activeComponentId"><KeyFrameId value="0:29" frame="0" interpolationType="hold"/></KeyedProperty></KeyedObject>
 </LinearAnimation>
-<LinearAnimation duration="1" name="Pose Sorprendido" id="0:45">
-  <KeyedObject objectId="0:27"><KeyedProperty property="rotation"><KeyFrameDouble value="0" frame="0" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject>
-  <KeyedObject objectId="0:28"><KeyedProperty property="rotation"><KeyFrameDouble value="0" frame="0" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject>
-  <KeyedObject objectId="0:20"><KeyedProperty property="scaleX"><KeyFrameDouble value="1.25" frame="0" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject>
-  <KeyedObject objectId="0:20"><KeyedProperty property="scaleY"><KeyFrameDouble value="1.25" frame="0" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject>
-  <KeyedObject objectId="0:23"><KeyedProperty property="y"><KeyFrameDouble value="-6" frame="0" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject>
-  <KeyedObject objectId="0:24"><KeyedProperty property="activeComponentId"><KeyFrameId value="0:26" frame="0" interpolationType="hold"/></KeyedProperty></KeyedObject>
+<LinearAnimation duration="1" name="Pose Sorprendido" id="0:48">
+  <KeyedObject objectId="0:30"><KeyedProperty property="rotation"><KeyFrameDouble value="0" frame="0" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject>
+  <KeyedObject objectId="0:31"><KeyedProperty property="rotation"><KeyFrameDouble value="0" frame="0" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject>
+  <KeyedObject objectId="0:20"><KeyedProperty property="scaleX"><KeyFrameDouble value="1.2" frame="0" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject>
+  <KeyedObject objectId="0:20"><KeyedProperty property="scaleY"><KeyFrameDouble value="1.2" frame="0" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject>
+  <KeyedObject objectId="0:22"><KeyedProperty property="scaleY"><KeyFrameDouble value="0" frame="0" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject>
+  <KeyedObject objectId="0:23"><KeyedProperty property="scaleY"><KeyFrameDouble value="0" frame="0" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject>
+  <KeyedObject objectId="0:21"><KeyedProperty property="y"><KeyFrameDouble value="-9" frame="0" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject>
+  <KeyedObject objectId="0:26"><KeyedProperty property="activeComponentId"><KeyFrameId value="0:28" frame="0" interpolationType="hold"/></KeyedProperty></KeyedObject>
 </LinearAnimation>
-<LinearAnimation duration="1" name="Pose Eureka" id="0:48">
-  <KeyedObject objectId="0:27"><KeyedProperty property="rotation"><KeyFrameDouble value="-2.793" frame="0" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject>
-  <KeyedObject objectId="0:28"><KeyedProperty property="rotation"><KeyFrameDouble value="2.793" frame="0" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject>
-  <KeyedObject objectId="0:20"><KeyedProperty property="scaleX"><KeyFrameDouble value="1.25" frame="0" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject>
-  <KeyedObject objectId="0:20"><KeyedProperty property="scaleY"><KeyFrameDouble value="1.25" frame="0" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject>
-  <KeyedObject objectId="0:23"><KeyedProperty property="y"><KeyFrameDouble value="-6" frame="0" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject>
-  <KeyedObject objectId="0:24"><KeyedProperty property="activeComponentId"><KeyFrameId value="0:26" frame="0" interpolationType="hold"/></KeyedProperty></KeyedObject>
+<LinearAnimation duration="1" name="Pose Eureka" id="0:51">
+  <KeyedObject objectId="0:30"><KeyedProperty property="rotation"><KeyFrameDouble value="-2.793" frame="0" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject>
+  <KeyedObject objectId="0:31"><KeyedProperty property="rotation"><KeyFrameDouble value="2.793" frame="0" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject>
+  <KeyedObject objectId="0:20"><KeyedProperty property="scaleX"><KeyFrameDouble value="1.15" frame="0" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject>
+  <KeyedObject objectId="0:20"><KeyedProperty property="scaleY"><KeyFrameDouble value="1.15" frame="0" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject>
+  <KeyedObject objectId="0:22"><KeyedProperty property="scaleY"><KeyFrameDouble value="0" frame="0" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject>
+  <KeyedObject objectId="0:23"><KeyedProperty property="scaleY"><KeyFrameDouble value="0" frame="0" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject>
+  <KeyedObject objectId="0:21"><KeyedProperty property="y"><KeyFrameDouble value="-7" frame="0" interpolationType="hold"></KeyFrameDouble></KeyedProperty></KeyedObject>
+  <KeyedObject objectId="0:26"><KeyedProperty property="activeComponentId"><KeyFrameId value="0:29" frame="0" interpolationType="hold"/></KeyedProperty></KeyedObject>
 </LinearAnimation>
 </Artboard>
 
 <DataEnumCustom name="Pose" id="0:16">
-  <DataEnumValue key="quieto" value="Quieto" id="0:38"/><DataEnumValue key="senalando" value="Señalando" id="0:41"/><DataEnumValue key="sorprendido" value="Sorprendido" id="0:44"/><DataEnumValue key="eureka" value="Eureka" id="0:47"/>
+  <DataEnumValue key="quieto" value="Quieto" id="0:41"/><DataEnumValue key="senalando" value="Señalando" id="0:44"/><DataEnumValue key="sorprendido" value="Sorprendido" id="0:47"/><DataEnumValue key="eureka" value="Eureka" id="0:50"/>
 </DataEnumCustom>
 
 <ViewModel defaultInstanceId="0:14" name="Personaje" id="0:13">
   <ViewModelPropertyEnumCustom enumId="0:16" name="pose" id="0:15"/>
   <ViewModelInstance exports="true" name="Default" id="0:14">
-    <ViewModelInstanceEnum propertyValue="0:38" viewModelPropertyId="0:15"/>
+    <ViewModelInstanceEnum propertyValue="0:41" viewModelPropertyId="0:15"/>
   </ViewModelInstance>
 </ViewModel>
 </Rive>

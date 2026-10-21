@@ -47,7 +47,7 @@ export function PersonajeSVG({ pose, className = "" }: { pose: Pose; className?:
           <path
             className="pelo"
             d="M30 44 L22 14 L38 30 L42 4 L54 28 L62 0 L70 28 L82 6 L82 30 L98 14 L90 44 Z"
-            fill="#cfd8e3"
+            fill="#bbd1ea"
           />
           <ellipse cx="60" cy="50" rx="25" ry="27" fill="#f1c9a5" />
           <ellipse cx="60" cy="70" rx="14" ry="6" fill="#b8b1a7" opacity="0.35" />
