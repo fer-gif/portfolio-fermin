@@ -7,6 +7,7 @@ import { obtenerProyecto, proyectos } from "@/proyectos";
 // Los demás usan el molde genérico con su caso.mdx mientras no tengan la suya.
 const paginasPropias = {
   "futbol-necochea": () => import("@/proyectos/futbol-necochea/Pagina"),
+  "zona-fria": () => import("@/proyectos/zona-fria/Pagina"),
 } as const;
 
 export function generateStaticParams() {
