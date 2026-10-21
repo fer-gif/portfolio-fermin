@@ -22,7 +22,7 @@ export function EscenaEntrada({ nombre, titulo }: { nombre: string; titulo: stri
     <div ref={ref} className="grid h-full place-items-center px-4 text-center">
       <div className="cartel">
         <p className="font-mono text-sm text-lab-portal sm:text-base">~/el laboratorio de</p>
-        <h1 className="mt-2 text-[22vw] leading-none font-bold tracking-tighter uppercase sm:text-[13vw]">
+        <h1 className="mt-2 text-[26vw] leading-[0.9] font-extrabold tracking-tighter uppercase sm:text-[16vw]">
           {nombre}
         </h1>
         <p className="mt-4 text-lg text-lab-tenue sm:text-xl">{titulo}</p>

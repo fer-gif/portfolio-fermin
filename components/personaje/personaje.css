@@ -72,6 +72,13 @@
 .personaje-svg.pose-empujando .boca-o { opacity: 1; }
 .personaje-svg.pose-empujando .boca-sonrisa { opacity: 0; }
 
+/* La pose de empuje (dibujo aparte) tiembla un poco: esfuerzo. */
+@keyframes personaje-esfuerzo {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(1.5px, -1px); }
+}
+.personaje-empujando { animation: personaje-esfuerzo 0.16s steps(2) infinite; }
+
 /* El personaje fijo espera a que termine la intro para aparecer. */
 .personaje-contenedor.espera-intro { opacity: 0; transition: opacity 0.6s ease; }
 html.intro-lista .personaje-contenedor.espera-intro { opacity: 1; }

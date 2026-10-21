@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 import { gsap, useDirector, useGSAP } from "@/components/recorrido";
-import { PersonajeSVG } from "@/components/personaje/PersonajeSVG";
+import { PersonajeEmpujando } from "@/components/personaje/PersonajeEmpujando";
 
 const CLAVE_SESION = "intro-vista";
 
@@ -43,7 +43,8 @@ export function Cortina() {
       // al correr la puerta, él entra desde la izquierda empujándola.
       gsap
         .timeline({ onComplete: terminar, delay: 0.4 })
-        .to(".intro-puerta", { xPercent: 100, duration: 2.8, ease: "power2.inOut" })
+        // arranca costando y después se va de una: esfuerzo
+        .to(".intro-puerta", { xPercent: 100, duration: 2.8, ease: "power3.inOut" })
         // el contenedor es el scope: hay que apuntarlo directo, no por selector
         .to(ref.current, { opacity: 0, duration: 0.25 }, "-=0.1");
     },
@@ -54,26 +55,12 @@ export function Cortina() {
 
   return (
     <div ref={ref} className="intro-capa fixed inset-0 z-40 overflow-hidden" aria-hidden>
-      {/* la puerta del laboratorio: verde portal, bien distinta del fondo oscuro que revela */}
-      <div className="intro-puerta absolute inset-0 bg-lab-portal">
-        <div
-          className="absolute inset-0 opacity-25"
-          style={{
-            backgroundImage:
-              "linear-gradient(#0b0f0c 1px, transparent 1px), linear-gradient(90deg, #0b0f0c 1px, transparent 1px)",
-            backgroundSize: "56px 56px",
-          }}
-        />
-        <p className="absolute inset-x-0 top-[18vh] text-center font-mono text-[7vw] font-bold uppercase tracking-[0.1em] text-lab-fondo/80 sm:text-[5vw]">
-          Laboratorio
-        </p>
-        <p className="absolute inset-x-0 top-[18vh] mt-[9vw] text-center font-mono text-[10px] uppercase tracking-[0.3em] text-lab-fondo/60 sm:mt-[6.5vw] sm:text-sm">
-          puerta cerrada · empujar
-        </p>
-        <div className="absolute inset-y-0 left-0 w-2 bg-lab-fondo/70" />
-        {/* las manos quedan sobre el borde de la puerta */}
-        <div className="absolute bottom-[10vh] left-0 -translate-x-[88%]">
-          <PersonajeSVG pose="empujando" className="h-[44vh] w-auto sm:h-[52vh]" />
+      {/* la puerta: clara y limpia, el inverso del fondo oscuro que revela */}
+      <div className="intro-puerta absolute inset-0 bg-lab-texto">
+        <div className="absolute inset-y-0 left-0 w-1.5 bg-lab-fondo/15" />
+        {/* el científico viaja con la puerta, con las manos apoyadas en su borde */}
+        <div className="absolute bottom-[8vh] left-0 -translate-x-[93%] sm:bottom-[10vh]">
+          <PersonajeEmpujando className="h-[40vh] w-auto sm:h-[52vh]" />
         </div>
       </div>
     </div>
