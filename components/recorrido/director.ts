@@ -16,8 +16,15 @@ type Oyente = () => void;
 export function crearDirector() {
   let estado: EstadoRecorrido = { escena: null, progreso: 0 };
   const oyentes = new Set<Oyente>();
+  let navegar: (escena: string) => void = () => {};
 
   return {
+    /** Lleva al visitante al inicio de una escena. */
+    irA: (escena: string) => navegar(escena),
+    /** <Recorrido> enchufa acá el scroll suave una vez que existe. */
+    conectarNavegacion(fn: typeof navegar) {
+      navegar = fn;
+    },
     obtener: () => estado,
     fijar(parcial: Partial<EstadoRecorrido>) {
       estado = { ...estado, ...parcial };

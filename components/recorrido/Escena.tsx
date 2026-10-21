@@ -64,6 +64,7 @@ export function Escena({
     <EscenaContext value={{ id, linea }}>
       <section
         ref={ref}
+        id={id}
         data-escena={id}
         className={`relative h-svh w-full overflow-hidden ${className}`}
       >

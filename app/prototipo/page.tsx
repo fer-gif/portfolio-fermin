@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { BarraProgreso, Escena, Recorrido } from "@/components/recorrido";
 import { Personaje } from "@/components/personaje/Personaje";
 import type { Guion } from "@/components/personaje/guion";
-import { Ambiente } from "./Ambiente";
+import { Ambiente } from "@/components/laboratorio/Ambiente";
 import { EscenaDatos } from "./EscenaDatos";
 import { EscenaMultiverso } from "./EscenaMultiverso";
 import { EscenaPortal } from "./EscenaPortal";

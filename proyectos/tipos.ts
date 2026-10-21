@@ -5,6 +5,14 @@ export type Categoria =
   | "corto"
   | "por-definir";
 
+export const ETIQUETA_CATEGORIA: Record<Categoria, string> = {
+  principal: "Caso principal",
+  analisis: "Caso de análisis",
+  software: "Caso de software",
+  corto: "Caso corto",
+  "por-definir": "Experimento en curso",
+};
+
 export type Estado = "publicado" | "en-proceso";
 
 export type Autoria = "individual" | "equipo";

@@ -20,3 +20,4 @@ export function obtenerProyecto(slug: string): Proyecto | undefined {
 }
 
 export type { Proyecto } from "./tipos";
+export { ETIQUETA_CATEGORIA } from "./tipos";

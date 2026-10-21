@@ -14,6 +14,9 @@ export function Recorrido({ children }: { children: ReactNode }) {
   useEffect(() => {
     const lenis = new Lenis({ autoRaf: false, lerp: 0.1 });
     lenis.on("scroll", ScrollTrigger.update);
+    director.conectarNavegacion((escena) =>
+      lenis.scrollTo(`#${escena}`, { duration: 1.4 }),
+    );
 
     // Un solo reloj: GSAP mueve a Lenis, y Lenis avisa a ScrollTrigger.
     const tick = (tiempo: number) => lenis.raf(tiempo * 1000);
@@ -21,10 +24,11 @@ export function Recorrido({ children }: { children: ReactNode }) {
     gsap.ticker.lagSmoothing(0);
 
     return () => {
+      director.conectarNavegacion(() => {});
       gsap.ticker.remove(tick);
       lenis.destroy();
     };
-  }, []);
+  }, [director]);
 
   // El body es flex: ScrollTrigger no reserva espacio de scroll al clavar una
   // escena cuyo padre es flex, así que las escenas viven en un bloque normal.
