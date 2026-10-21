@@ -1,6 +1,5 @@
 import { proyectos } from "@/proyectos";
 import { TarjetaExperimento } from "@/components/laboratorio/TarjetaExperimento";
-import { Personaje } from "@/components/personaje/Personaje";
 
 export default function Laboratorio() {
   return (
@@ -11,8 +10,6 @@ export default function Laboratorio() {
           Programador y Data Analyst
         </h1>
       </header>
-
-      <Personaje />
 
       <section className="mt-12 grid gap-4 sm:grid-cols-2">
         {proyectos.map((proyecto) => (

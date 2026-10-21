@@ -4,7 +4,10 @@ Portfolio de Programador y Data Analyst. No es una vitrina estática: cada proye
 "vive" dentro del sitio como un artefacto que el visitante puede usar, y un
 personaje (el científico loco del laboratorio) guía la visita.
 
-Stack: Next.js (App Router) · TypeScript · Tailwind CSS · MDX · deploy en Vercel.
+Stack: Next.js (App Router) · TypeScript · Tailwind CSS · MDX · GSAP + ScrollTrigger · Lenis.
+
+Publicado en https://portfolio-fermin.vercel.app (cada push a `main` se despliega solo).
+Prototipo del recorrido guiado: https://portfolio-fermin.vercel.app/prototipo
 
 ## Estructura
 
@@ -23,8 +26,9 @@ proyectos/                    ← un módulo autocontenido por proyecto
    └─ data/                   ← datos procesados que usa el artefacto
 
 components/
+├─ recorrido/                 ← motor del scrollytelling: Recorrido, Escena, Director, barra
 ├─ laboratorio/               ← piezas de la escena (marco del artefacto, tarjetas)
-└─ personaje/                 ← el científico loco (animación + diálogo)
+└─ personaje/                 ← el científico (SVG v0, poses, globo de diálogo, guion)
 
 public/
 ├─ proyectos/<slug>/          ← imágenes de cada caso (capturas, escudos…)

@@ -1,0 +1,94 @@
+/* Personaje v0: vida, poses y movimiento por la pantalla. */
+
+.personaje-svg * {
+  transform-box: fill-box;
+}
+
+/* --- vida: pasa aunque nadie scrollee --- */
+@keyframes personaje-respirar {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-1.5px); }
+}
+@keyframes personaje-parpadear {
+  0%, 90%, 100% { transform: scaleY(0); }
+  94% { transform: scaleY(1); }
+}
+@keyframes personaje-pelo {
+  0%, 100% { transform: rotate(-1.5deg); }
+  50% { transform: rotate(1.5deg); }
+}
+@keyframes personaje-burbuja {
+  from { transform: translateY(0); opacity: 0.9; }
+  to { transform: translateY(-14px); opacity: 0; }
+}
+
+.personaje-svg .cuerpo { animation: personaje-respirar 3.2s ease-in-out infinite; }
+.personaje-svg .parpado {
+  transform-origin: top;
+  transform: scaleY(0);
+  animation: personaje-parpadear 4.6s infinite;
+}
+.personaje-svg .pelo {
+  transform-origin: bottom center;
+  animation: personaje-pelo 4s ease-in-out infinite;
+}
+.personaje-svg .burbuja-frasco { animation: personaje-burbuja 1.8s linear infinite; }
+.personaje-svg .burbuja-frasco:nth-child(odd) { animation-delay: 0.9s; }
+
+/* --- poses --- */
+.personaje-svg .brazo-senala,
+.personaje-svg .brazo-frasco {
+  transform-origin: top center;
+  transition: transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.personaje-svg .ojos,
+.personaje-svg .ceja {
+  transform-origin: center;
+  transition: transform 0.3s ease;
+}
+.personaje-svg .boca-o { opacity: 0; transition: opacity 0.2s; }
+.personaje-svg .boca-sonrisa { transition: opacity 0.2s; }
+
+.personaje-svg.pose-senalando .brazo-senala { transform: rotate(-105deg); }
+
+.personaje-svg.pose-sorprendido .ojos,
+.personaje-svg.pose-eureka .ojos { transform: scale(1.25); }
+.personaje-svg.pose-sorprendido .ceja,
+.personaje-svg.pose-eureka .ceja { transform: translateY(-3px); }
+.personaje-svg.pose-sorprendido .boca-o,
+.personaje-svg.pose-eureka .boca-o { opacity: 1; }
+.personaje-svg.pose-sorprendido .boca-sonrisa,
+.personaje-svg.pose-eureka .boca-sonrisa { opacity: 0; }
+
+.personaje-svg.pose-eureka .brazo-senala { transform: rotate(-160deg); }
+.personaje-svg.pose-eureka .brazo-frasco { transform: rotate(160deg); }
+
+/* --- dónde está en la pantalla --- */
+.personaje-contenedor {
+  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.personaje-contenedor.lado-derecha {
+  transform: translateX(calc(100vw - 100% - 2rem));
+}
+.personaje-contenedor.ausente {
+  transform: translateY(140%);
+}
+.personaje-contenedor.lado-derecha.ausente {
+  transform: translate(calc(100vw - 100% - 2rem), 140%);
+}
+
+/* --- globo de diálogo --- */
+@keyframes personaje-cursor {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+.personaje-cursor { animation: personaje-cursor 0.8s step-end infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .personaje-svg *,
+  .personaje-contenedor,
+  .personaje-cursor {
+    animation: none !important;
+    transition: none !important;
+  }
+}
