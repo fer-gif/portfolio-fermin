@@ -41,12 +41,12 @@ export function EscenaMultiverso() {
       {VARIANTES.map((v) => (
         <span
           key={v.texto}
-          className="variante absolute rounded-md border border-lab-borde bg-lab-panel px-3 py-1.5 font-mono text-sm"
+          className="variante absolute inset-0 m-auto h-fit w-fit rounded-md border border-lab-borde bg-lab-panel px-3 py-1.5 font-mono text-sm"
         >
           {v.texto}
         </span>
       ))}
-      <div className="final absolute rounded-xl border-2 border-lab-portal bg-lab-panel px-6 py-4 text-center">
+      <div className="final absolute inset-0 m-auto h-fit w-fit rounded-xl border-2 border-lab-portal bg-lab-panel px-6 py-4 text-center">
         <span className="block text-2xl font-bold">Villa Díaz Vélez</span>
         <span className="font-mono text-xs text-lab-tenue">1 club · 6 versiones fusionadas</span>
       </div>

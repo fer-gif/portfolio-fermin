@@ -16,8 +16,9 @@ export function EscenaPortal() {
       linea
         .to(".portal", { scale: 1, rotate: 0, duration: 2, ease: "power2.out" })
         .to(".titulo", { opacity: 0, scale: 0.9, duration: 1 }, "<+=1")
-        .to(".portal", { scale: 14, duration: 2, ease: "power2.in" })
-        .to(".portal", { opacity: 0, duration: 0.5 }, "-=0.3");
+        // Crece hasta rodear la pantalla, pero el borde verde sigue a la vista:
+        // la sensación es "estoy adentro del portal", no pantalla negra.
+        .to(".portal", { scale: 6, duration: 2, ease: "power2.in" });
     },
     { scope: ref },
   );
