@@ -54,6 +54,14 @@ export function Escena({
 
   useGSAP(
     () => {
+      const seccion = ref.current;
+      if (!seccion) return;
+
+      // El solapamiento se aplica recién acá, con el motor andando: si viviera
+      // en el CSS, antes de que cargue el JS las escenas se apilarían todas en
+      // una sola pantalla. ScrollTrigger copia este margen al pin-spacer.
+      if (solapar) seccion.style.marginTop = "-100svh";
+
       // Los hijos ya sumaron sus tweens (sus efectos corren antes). La espera
       // final ocupa exactamente la pantalla extra que dura la cobertura.
       if (cubierta && linea.duration() > 0) {
@@ -74,8 +82,12 @@ export function Escena({
           if (st.isActive) director.fijar({ progreso: st.progress });
         },
       });
+
+      return () => {
+        seccion.style.marginTop = "";
+      };
     },
-    { scope: ref, dependencies: [id, duracion, cubierta] },
+    { scope: ref, dependencies: [id, duracion, cubierta, solapar] },
   );
 
   return (
@@ -90,7 +102,7 @@ export function Escena({
           "relative h-svh w-full overflow-hidden bg-lab-fondo pt-14 pb-36 sm:pt-0 sm:pb-0",
           // Sombra en el borde superior: se lee como un panel que sube, no como un corte.
           // (la sombra solo en pantalla grande: en celular cuesta pintarla y no se nota)
-          solapar ? "-mt-[100svh] sm:shadow-[0_-24px_48px_rgba(0,0,0,0.55)]" : "",
+          solapar ? "sm:shadow-[0_-24px_48px_rgba(0,0,0,0.55)]" : "",
           className,
         ].join(" ")}
       >

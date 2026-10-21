@@ -11,6 +11,7 @@ import { MenuLaboratorio, type Destino } from "@/components/laboratorio/MenuLabo
 import { perfil } from "@/lib/perfil";
 import { proyectos } from "@/proyectos";
 import * as futbol from "@/proyectos/futbol-necochea/escenas";
+import * as argentinaBrasil from "@/proyectos/argentina-brasil/escenas";
 import * as zonaFria from "@/proyectos/zona-fria/escenas";
 
 // Todo el portfolio es un solo recorrido: entrada → cada mesa con las escenas
@@ -24,6 +25,7 @@ interface ModuloProyecto {
 
 const modulos: Record<string, ModuloProyecto> = {
   "futbol-necochea": futbol,
+  "argentina-brasil": argentinaBrasil,
   "zona-fria": zonaFria,
 };
 
@@ -33,10 +35,6 @@ const guionBase: Record<string, Linea> = {
   entrada: {
     texto: "Acá adentro cada proyecto es un experimento que podés tocar. Vení, te muestro.",
     pose: "senalando",
-  },
-  "mesa-argentina-brasil": {
-    texto: "¿Cuánto depende Argentina de Brasil? Elegí un sector y mirá lo que pasa. Este experimento todavía se está armando.",
-    pose: "quieto",
   },
   "mesa-futbolshop": {
     texto: "Un inventario real, de un cliente real. Pronto te doy una copia para que la rompas tranquilo.",
