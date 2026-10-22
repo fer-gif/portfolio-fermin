@@ -67,6 +67,8 @@ export function Escena({
       if (cubierta && linea.duration() > 0) {
         linea.to({}, { duration: linea.duration() / duracion });
       }
+      // Progreso de la parte animada sola (la espera queda en 1).
+      const animado = (p: number) => (cubierta ? Math.min(1, (p * (duracion + 1)) / duracion) : p);
       ScrollTrigger.create({
         trigger: ref.current,
         start: "top top",
@@ -76,10 +78,10 @@ export function Escena({
         scrub: 0.6,
         animation: linea,
         onToggle: (st) => {
-          if (st.isActive) director.fijar({ escena: id, progreso: st.progress });
+          if (st.isActive) director.fijar({ escena: id, progreso: st.progress, progresoAnimacion: animado(st.progress) });
         },
         onUpdate: (st) => {
-          if (st.isActive) director.fijar({ progreso: st.progress });
+          if (st.isActive) director.fijar({ progreso: st.progress, progresoAnimacion: animado(st.progress) });
         },
       });
 
@@ -99,7 +101,7 @@ export function Escena({
         className={[
           // Fondo opaco para poder cubrir a la escena anterior.
           // En celular reserva lugar arriba (botones fijos) y abajo (personaje).
-          "relative h-svh w-full overflow-hidden bg-lab-fondo pt-14 pb-36 sm:pt-0 sm:pb-0",
+          "relative h-svh w-full overflow-hidden bg-lab-fondo pt-14 pb-44 sm:pt-0 sm:pb-0",
           // Sombra en el borde superior: se lee como un panel que sube, no como un corte.
           // (la sombra solo en pantalla grande: en celular cuesta pintarla y no se nota)
           solapar ? "sm:shadow-[0_-24px_48px_rgba(0,0,0,0.55)]" : "",

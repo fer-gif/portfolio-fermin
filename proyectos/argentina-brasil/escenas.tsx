@@ -6,6 +6,7 @@ import { Asimetria } from "./escenas/Asimetria";
 import { Balanza } from "./escenas/Balanza";
 import { Dependometro } from "./escenas/Dependometro";
 import { Socios } from "./escenas/Socios";
+import { PASOS_BALANZA } from "./data/pasos";
 import { meta } from "./meta";
 
 // Argentina–Brasil: el informe se va armando a medida que bajás.
@@ -27,8 +28,9 @@ export const guion: Record<string, Linea> = {
     pose: "senalando",
   },
   [`${P}-balanza`]: {
-    texto: "Veinticuatro años de comercio y solo tres con saldo a favor. El 2017 fue un agujero.",
+    texto: "Veinticuatro años de comercio y solo tres con saldo a favor.",
     pose: "quieto",
+    pasos: PASOS_BALANZA.map((p) => ({ texto: p.dice, pose: p.pose })),
   },
   [`${P}-socios`]: {
     texto: "Primer cliente, segundo proveedor. Y es el único que compra lo que fabricamos, no lo que cosechamos.",
@@ -56,7 +58,7 @@ export function Escenas() {
         <Dependometro />
       </Escena>
 
-      <Escena id={`${P}-balanza`} duracion={2}>
+      <Escena id={`${P}-balanza`} duracion={3.2}>
         <Balanza />
       </Escena>
 

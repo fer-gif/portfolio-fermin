@@ -1,6 +1,6 @@
 "use client";
 
-import { useEscenaActual } from "@/components/recorrido";
+import { useEscenaActual, usePasoActual } from "@/components/recorrido";
 import type { Guion, Linea } from "./guion";
 import { PersonajeRive } from "./PersonajeRive";
 import { useMaquinaDeEscribir } from "./useMaquinaDeEscribir";
@@ -12,8 +12,11 @@ const SILENCIO: Linea = { texto: "" };
 // visitante y busca en el guion qué decir, qué pose tomar y de qué lado pararse.
 export function Personaje({ guion, esperarIntro = false }: { guion: Guion; esperarIntro?: boolean }) {
   const escena = useEscenaActual();
-  const linea: Linea =
+  const base: Linea =
     (escena ? guion.escenas[escena] : undefined) ?? guion.inicial ?? SILENCIO;
+  // En una escena por pasos, el científico dice la línea del paso actual.
+  const paso = usePasoActual(base.pasos?.length ?? 0);
+  const linea: Linea = base.pasos?.[paso] ? { ...base, ...base.pasos[paso] } : base;
   const pose = linea.pose ?? "quieto";
   const lado = linea.lado ?? "izquierda";
   const { visible, escribiendo } = useMaquinaDeEscribir(linea.texto);

@@ -8,13 +8,14 @@ import { createContext, useContext, useEffect, useSyncExternalStore } from "reac
 
 export interface EstadoRecorrido {
   escena: string | null;
-  progreso: number; // 0..1 dentro de la escena actual
+  progreso: number; // 0..1 dentro de la escena actual, espera final incluida
+  progresoAnimacion: number; // 0..1 de la parte animada (sin la espera de cobertura)
 }
 
 type Oyente = () => void;
 
 export function crearDirector() {
-  let estado: EstadoRecorrido = { escena: null, progreso: 0 };
+  let estado: EstadoRecorrido = { escena: null, progreso: 0, progresoAnimacion: 0 };
   const oyentes = new Set<Oyente>();
   let navegar: (escena: string) => void = () => {};
   let pausar: (pausado: boolean) => void = () => {};
@@ -70,6 +71,21 @@ export function useEscenaActual(): string | null {
     () => director.obtener().escena,
     () => null,
   );
+}
+
+/**
+ * En qué paso (0..cantidad-1) de la escena actual está el visitante: la parte
+ * animada de la escena se divide en tramos iguales. Re-renderiza solo cuando
+ * cambia el paso. Con cantidad 0 devuelve siempre 0.
+ */
+export function usePasoActual(cantidad: number): number {
+  const director = useDirector();
+  const calcular = () => {
+    if (cantidad <= 0) return 0;
+    const p = director.obtener().progresoAnimacion;
+    return Math.min(cantidad - 1, Math.floor(p * cantidad));
+  };
+  return useSyncExternalStore(director.suscribir, calcular, () => 0);
 }
 
 /**

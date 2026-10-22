@@ -5,6 +5,7 @@ import { FichaTecnica } from "@/components/laboratorio/FichaTecnica";
 import { Calculadora } from "./escenas/Calculadora";
 import { Categorias } from "./escenas/Categorias";
 import { Junin } from "./escenas/Junin";
+import { PASOS_CATEGORIAS } from "./data/pasos";
 import { meta } from "./meta";
 
 // Zona Fría: la calculadora es la protagonista.
@@ -28,6 +29,7 @@ export const guion: Record<string, Linea> = {
   [`${P}-categorias`]: {
     texto: "Cuanto más consumís, más duele. Pero duele en todas las categorías.",
     pose: "sorprendido",
+    pasos: PASOS_CATEGORIAS.map((p) => ({ texto: p.dice, pose: p.pose })),
   },
   [`${P}-ficha`]: { texto: "La letra chica: fuentes, créditos y la publicación original.", pose: "quieto" },
 };
@@ -50,7 +52,7 @@ export function Escenas() {
         <Calculadora />
       </Escena>
 
-      <Escena id={`${P}-categorias`} duracion={2}>
+      <Escena id={`${P}-categorias`} duracion={3.2}>
         <Categorias />
       </Escena>
 

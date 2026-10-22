@@ -24,8 +24,9 @@ export function Escenografia() {
         <rect x="1116" y="166" width="128" height="6" rx="3" fill="#7ee35b" opacity="0.55" />
       </g>
 
-      {/* estante con frascos (solo pantalla grande: en celular se ve entre el contenido) */}
-      <g className="hidden sm:block">
+      {/* estante con frascos, bien arriba para no chocar con el contenido
+          (solo pantalla grande: en celular se vería entre el contenido) */}
+      <g className="hidden sm:block" transform="translate(0 -110)">
         <rect x="90" y="236" width="300" height="10" rx="3" fill="#1b2620" />
         <path d="M100 246 l14 20 M380 246 l-14 20" stroke="#1b2620" strokeWidth="4" strokeLinecap="round" />
         {/* frascos: vidrio translúcido con líquido */}

@@ -15,6 +15,12 @@ export interface Linea {
   texto: string;
   pose?: Pose;
   lado?: Lado;
+  /**
+   * Escenas por pasos: una línea por paso, en orden. La escena se divide en
+   * tantos tramos iguales como pasos; `texto`/`pose` de arriba son el
+   * respaldo si faltara alguno.
+   */
+  pasos?: { texto: string; pose?: Pose; lado?: Lado }[];
 }
 
 export interface Guion {
