@@ -1,9 +1,10 @@
 import type { ComponentType } from "react";
-import { BarraProgreso, Escena, Recorrido } from "@/components/recorrido";
+import { BarraProgreso, Recorrido } from "@/components/recorrido";
 import { Personaje } from "@/components/personaje/Personaje";
 import type { Guion, Linea } from "@/components/personaje/guion";
 import { Ambiente } from "@/components/laboratorio/Ambiente";
 import { Cortina } from "@/components/laboratorio/Cortina";
+import { EscenaLab as Escena } from "@/components/laboratorio/EscenaLab";
 import { EscenaEntrada } from "@/components/laboratorio/EscenaEntrada";
 import { EscenaSalida } from "@/components/laboratorio/EscenaSalida";
 import { Mesa } from "@/components/laboratorio/Mesa";

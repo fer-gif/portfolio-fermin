@@ -1,4 +1,4 @@
-import { Escena } from "@/components/recorrido";
+import { EscenaLab as Escena } from "@/components/laboratorio/EscenaLab";
 import type { Linea } from "@/components/personaje/guion";
 import type { Destino } from "@/components/laboratorio/MenuLaboratorio";
 import { FichaTecnica } from "@/components/laboratorio/FichaTecnica";

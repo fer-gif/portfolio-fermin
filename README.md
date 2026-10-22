@@ -17,7 +17,9 @@ app/globals.css               ← paleta del laboratorio y animaciones de ambien
 components/
 ├─ recorrido/                 ← motor del scrollytelling: Recorrido, Escena, Director, barra
 ├─ laboratorio/               ← la carcasa: Cortina (intro), EscenaEntrada, Mesa, EscenaSalida,
-│                                MenuLaboratorio ("saltar a"), FichaTecnica, Ambiente
+│                                MenuLaboratorio ("saltar a"), FichaTecnica, Ambiente, y la
+│                                escenografía: EscenaLab (escena con pared y piso), Escenografia
+│                                (estante y lámpara), Banco (la mesada con tubos y monitor)
 └─ personaje/                 ← el científico: SVG v0, poses, globo de diálogo, tipo Guion
 
 proyectos/                    ← un módulo por proyecto

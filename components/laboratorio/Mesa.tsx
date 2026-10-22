@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { gsap, useEscena, useGSAP } from "@/components/recorrido";
 import { ETIQUETA_CATEGORIA, type Proyecto } from "@/proyectos";
+import { Banco } from "./Banco";
 
 // Una mesa del laboratorio: el experimento entra deslizándose y es el portal
 // a sus escenas, que vienen justo después en el mismo recorrido.
@@ -24,8 +25,10 @@ export function Mesa({ proyecto, numero, tieneEscenas }: { proyecto: Proyecto; n
   );
 
   return (
-    <div ref={ref} className="flex h-full items-center justify-center px-4 sm:justify-end sm:pr-[8vw]">
-      <article className="ficha w-full max-w-xl rounded-2xl border border-lab-borde bg-lab-panel p-6 shadow-[0_0_60px_-20px_rgba(126,227,91,0.4)] sm:p-8">
+    <div ref={ref} className="relative flex h-full items-end justify-center px-4 pb-[16svh] sm:justify-end sm:pr-[8vw] sm:pb-[19svh]">
+      {/* el banco sobre el que se apoya la ficha */}
+      <Banco className="absolute inset-x-0 bottom-[2svh] mx-auto h-[26svh] w-full max-w-5xl sm:bottom-[4svh]" />
+      <article className="ficha relative w-full max-w-xl rounded-2xl border border-lab-borde bg-lab-panel/95 p-6 shadow-[0_24px_40px_-20px_rgba(0,0,0,0.8),0_0_60px_-20px_rgba(126,227,91,0.4)] backdrop-blur sm:p-8">
         <header className="flex items-center justify-between font-mono text-xs uppercase tracking-wider text-lab-tenue">
           <span className="text-lab-portal">
             Experimento {String(numero).padStart(2, "0")}

@@ -18,6 +18,22 @@ body {
   color: var(--color-lab-texto);
 }
 
+/* Escenografía: pared azulejada y piso del laboratorio. Es idéntica en todas
+   las escenas, así cuando una cubre a la otra el laboratorio queda quieto. */
+.fondo-laboratorio {
+  background-color: var(--color-lab-fondo);
+  background-image:
+    /* piso */
+    linear-gradient(to top, #0e1612 0, #0e1612 13svh, rgba(126, 227, 91, 0.14) 13svh, rgba(126, 227, 91, 0.14) calc(13svh + 1px), transparent calc(13svh + 1px)),
+    /* azulejos */
+    linear-gradient(rgba(126, 227, 91, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(126, 227, 91, 0.045) 1px, transparent 1px),
+    /* luz general de la pared */
+    radial-gradient(ellipse 80% 60% at 50% 0%, #121b15 0, var(--color-lab-fondo) 70%);
+  background-size: 100% 100%, 72px 72px, 72px 72px, 100% 100%;
+  background-position: 0 0, 0 0, 0 0, 0 0;
+}
+
 /* Animaciones de ambiente: viven aunque nadie scrollee. */
 @keyframes parpadeo {
   0%, 100% { opacity: 0.25; }
@@ -31,6 +47,23 @@ body {
 .luz { animation: parpadeo 2s ease-in-out infinite; }
 .burbuja { animation: subir 9s linear infinite; }
 
+/* Objetos del laboratorio */
+@keyframes burbuja-tubo {
+  from { transform: translateY(0); opacity: 0.9; }
+  to { transform: translateY(-34px); opacity: 0; }
+}
+@keyframes lampara-vaiven {
+  0%, 100% { transform: rotate(-1.2deg); }
+  50% { transform: rotate(1.2deg); }
+}
+@keyframes pantalla-titila {
+  0%, 92%, 100% { opacity: 1; }
+  95% { opacity: 0.7; }
+}
+.burbuja-tubo { animation: burbuja-tubo 2.6s linear infinite; }
+.lampara { transform-origin: top center; animation: lampara-vaiven 6s ease-in-out infinite; }
+.pantalla { animation: pantalla-titila 7s linear infinite; }
+
 @media (prefers-reduced-motion: reduce) {
-  .luz, .burbuja { animation: none; }
+  .luz, .burbuja, .burbuja-tubo, .lampara, .pantalla { animation: none; }
 }
