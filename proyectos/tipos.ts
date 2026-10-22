@@ -30,12 +30,21 @@ export interface Proyecto {
   autoria: Autoria;
   /** Mi rol concreto, sobre todo en proyectos en equipo. */
   rol?: string;
+  /** Qué hice yo, en pocas frases concretas (lo que mira un reclutador). */
+  queHice?: string[];
+  /** Resultado medido o verificable del proyecto, si lo hay. */
+  resultado?: string;
   /** Organizaciones o personas que participaron o respaldaron el proyecto. */
   creditos?: string;
   resumen: string;
   /** Qué puede hacer el visitante con el artefacto vivo. */
   artefacto: string;
   stack: string[];
+  /** Dónde se usa de verdad el proyecto (botón "probarlo"). */
+  probar?: string;
+  /** Repositorio con el código (botón "ver el código"). */
+  codigo?: string;
+  /** Otros enlaces (publicaciones, informes, notas). */
   enlaces: Enlace[];
   /** Posición en el laboratorio (menor = más destacado). */
   orden: number;

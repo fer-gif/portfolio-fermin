@@ -1,12 +1,12 @@
 "use client";
 
-import Link from "next/link";
 import { useRef, type ReactNode } from "react";
 import { gsap, useEscena, useGSAP } from "@/components/recorrido";
 import type { Proyecto } from "@/proyectos";
 
 // Salida de todo proyecto: la ficha técnica, siempre con la misma forma.
 // Parte de la carcasa común; cada proyecto puede sumar filas propias.
+// Arriba de todo, los dos botones que busca un reclutador: probarlo y ver el código.
 export function FichaTecnica({
   proyecto,
   filasExtra = [],
@@ -20,13 +20,27 @@ export function FichaTecnica({
   useGSAP(
     () => {
       gsap.set(".linea", { opacity: 0, y: 16 });
-      linea.to(".linea", { opacity: 1, y: 0, duration: 0.5, stagger: 0.15 });
+      linea.to(".linea", { opacity: 1, y: 0, duration: 0.5, stagger: 0.12 });
     },
     { scope: ref },
   );
 
   const filas: { etiqueta: string; contenido: ReactNode }[] = [
     { etiqueta: "Rol", contenido: proyecto.rol },
+    {
+      etiqueta: "Qué hice",
+      contenido: proyecto.queHice?.length ? (
+        <ul className="space-y-1">
+          {proyecto.queHice.map((item) => (
+            <li key={item} className="flex gap-2">
+              <span className="text-lab-portal">›</span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      ) : undefined,
+    },
+    { etiqueta: "Resultado", contenido: proyecto.resultado },
     { etiqueta: "Con", contenido: proyecto.creditos },
     { etiqueta: "Modalidad", contenido: proyecto.autoria === "equipo" ? "En equipo" : "Individual" },
     // El stack se completa en meta.ts de cada proyecto.
@@ -46,11 +60,39 @@ export function FichaTecnica({
     },
   ];
 
+  const boton = "rounded-full px-4 py-2 font-mono text-sm transition-colors";
+
   return (
     <div ref={ref} className="grid h-full place-items-center px-4">
       <div className="w-full max-w-xl">
         <p className="linea font-mono text-sm text-lab-portal">~/ficha-tecnica</p>
         <h2 className="linea mt-2 text-3xl font-bold tracking-tight">{proyecto.titulo}</h2>
+
+        {(proyecto.probar || proyecto.codigo) && (
+          <div className="linea mt-5 flex flex-wrap gap-3">
+            {proyecto.probar && (
+              <a
+                href={proyecto.probar}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`${boton} border border-lab-portal bg-lab-portal text-lab-fondo hover:bg-transparent hover:text-lab-portal`}
+              >
+                probarlo ↗
+              </a>
+            )}
+            {proyecto.codigo && (
+              <a
+                href={proyecto.codigo}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`${boton} border border-lab-borde text-lab-texto hover:border-lab-portal hover:text-lab-portal`}
+              >
+                ver el código ↗
+              </a>
+            )}
+          </div>
+        )}
+
         <dl className="mt-6 divide-y divide-lab-borde text-sm">
           {filas
             .filter((f) => f.contenido)
@@ -61,12 +103,8 @@ export function FichaTecnica({
               </div>
             ))}
         </dl>
-        <Link
-          href="/"
-          className="linea mt-8 inline-block rounded-full border border-lab-portal px-4 py-2 font-mono text-sm text-lab-portal hover:bg-lab-portal hover:text-lab-fondo"
-        >
-          ← volver al laboratorio
-        </Link>
+
+        <p className="linea mt-8 font-mono text-xs text-lab-tenue">seguí bajando: la próxima mesa te espera ↓</p>
       </div>
     </div>
   );

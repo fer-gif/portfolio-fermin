@@ -3,6 +3,8 @@ import { BarraProgreso, Recorrido } from "@/components/recorrido";
 import { Personaje } from "@/components/personaje/Personaje";
 import type { Guion, Linea } from "@/components/personaje/guion";
 import { Ambiente } from "@/components/laboratorio/Ambiente";
+import { BarraCapitulos, type Capitulo } from "@/components/laboratorio/BarraCapitulos";
+import { ContactoFijo } from "@/components/laboratorio/ContactoFijo";
 import { Cortina } from "@/components/laboratorio/Cortina";
 import { EscenaLab as Escena } from "@/components/laboratorio/EscenaLab";
 import { EscenaEntrada } from "@/components/laboratorio/EscenaEntrada";
@@ -69,6 +71,16 @@ const destinos: Destino[] = [
   { escena: "salida", etiqueta: "Contacto" },
 ];
 
+// Los capítulos de la barra lateral: un punto por parada; las dimensiones
+// de un proyecto cuentan como su mesa.
+const capitulos: Capitulo[] = [
+  { escena: "entrada", etiqueta: "Entrada" },
+  ...proyectos.map((p) => ({ escena: `mesa-${p.slug}`, etiqueta: p.titulo, prefijos: [`${p.slug}-`] })),
+  { escena: "salida", etiqueta: "Contacto" },
+];
+
+const enlace = (etiqueta: string) => perfil.enlaces.find((e) => e.etiqueta === etiqueta)?.url ?? "#";
+
 export default function Laboratorio() {
   return (
     <Recorrido>
@@ -76,6 +88,8 @@ export default function Laboratorio() {
       <BarraProgreso />
       <Ambiente />
       <MenuLaboratorio destinos={destinos} />
+      <ContactoFijo email={perfil.email} linkedin={enlace("LinkedIn")} github={enlace("GitHub")} cv={perfil.cv} />
+      <BarraCapitulos capitulos={capitulos} />
       <Personaje guion={guion} esperarIntro />
 
       <Escena id="entrada" duracion={1.2} solapar={false}>
@@ -96,9 +110,11 @@ export default function Laboratorio() {
 
       <Escena id="salida" duracion={0.8} cubierta={false}>
         <EscenaSalida
-          nombre={perfil.nombre}
+          nombre={perfil.nombreCompleto}
           presentacion={perfil.presentacion}
           enlaces={perfil.enlaces}
+          cv={perfil.cv}
+          repositorio={perfil.repositorio}
         />
       </Escena>
     </Recorrido>

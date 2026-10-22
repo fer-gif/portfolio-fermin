@@ -17,20 +17,22 @@ app/globals.css               ← paleta del laboratorio y animaciones de ambien
 components/
 ├─ recorrido/                 ← motor del scrollytelling: Recorrido, Escena, Director, barra
 ├─ laboratorio/               ← la carcasa: Cortina (intro), EscenaEntrada, Mesa, EscenaSalida,
-│                                MenuLaboratorio ("saltar a"), FichaTecnica, Ambiente, y la
-│                                escenografía: EscenaLab (escena con pared y piso), Escenografia
+│                                MenuLaboratorio ("saltar a"), ContactoFijo (mail/LinkedIn/
+│                                GitHub/CV arriba a la izquierda), BarraCapitulos (puntos a la
+│                                derecha), FichaTecnica (con "probarlo" y "ver el código"),
+│                                Ambiente, y la escenografía: EscenaLab (escena con pared y piso), Escenografia
 │                                (estante y lámpara), Banco (la mesada con tubos y monitor)
 └─ personaje/                 ← el científico: SVG v0, poses, globo de diálogo, tipo Guion
 
 proyectos/                    ← un módulo por proyecto
 ├─ tipos.ts · index.ts        ← ficha de cada proyecto y registro central (orden de las mesas)
 └─ <slug>/
-   ├─ meta.ts                 ← título, categoría, rol, créditos, enlaces, orden
+   ├─ meta.ts                 ← título, categoría, rol, qué hice, resultado, probar, código, orden
    ├─ escenas.tsx             ← (si el proyecto ya "vive") sus escenas, su guion y sus dimensiones
    ├─ escenas/                ← los componentes de cada escena
    └─ data/                   ← datos procesados
 
-lib/perfil.ts                 ← nombre, presentación y contactos
+lib/perfil.ts                 ← nombre, presentación, contactos, repo y ruta del CV (null = sin botón)
 public/proyectos/<slug>/      ← imágenes de cada proyecto
 public/personaje/cientifico.riv ← el personaje compilado (sale de rive/cientifico)
 
@@ -93,6 +95,16 @@ tiempo (GSAP ScrollTrigger + Lenis). Lo que hay adentro suma animaciones con
 
 Los ids de escena van con el slug adelante (`zona-fria-calculadora`); la mesa
 es `mesa-<slug>`. `/proyectos/<slug>` redirige a `/#mesa-<slug>`.
+
+En `meta.ts`, `probar` (dónde se usa de verdad) y `codigo` (repo) son los dos
+botones grandes de la ficha técnica; `queHice` y `resultado` son las filas que
+mira un reclutador. Todo lo que falte simplemente no se muestra.
+
+### CV descargable
+
+Poner el PDF en `public/cv-fermin-hernando.pdf` y cambiar `cv` en
+`lib/perfil.ts` a `"/cv-fermin-hernando.pdf"`. Con eso aparece el botón "CV"
+arriba a la izquierda y "descargar CV" en la salida.
 
 ## Desarrollo
 

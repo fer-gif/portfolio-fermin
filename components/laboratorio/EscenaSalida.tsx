@@ -13,10 +13,16 @@ export function EscenaSalida({
   nombre,
   presentacion,
   enlaces,
+  cv,
+  repositorio,
 }: {
   nombre: string;
   presentacion: string;
   enlaces: Enlace[];
+  /** Ruta al CV en PDF; si no hay, no se muestra el botón. */
+  cv?: string | null;
+  /** Repo de este mismo sitio. */
+  repositorio?: string;
 }) {
   const { linea } = useEscena();
   const ref = useRef<HTMLDivElement>(null);
@@ -36,6 +42,17 @@ export function EscenaSalida({
         <h2 className="linea mt-3 text-4xl font-bold tracking-tight sm:text-5xl">{nombre}</h2>
         <p className="linea mt-4 text-lg text-lab-tenue">{presentacion}</p>
         <ul className="linea mt-8 flex flex-wrap justify-center gap-3 font-mono text-sm">
+          {cv && (
+            <li>
+              <a
+                href={cv}
+                download
+                className="rounded-full border border-lab-portal bg-lab-portal px-4 py-2 text-lab-fondo transition-colors hover:bg-transparent hover:text-lab-portal"
+              >
+                descargar CV ↓
+              </a>
+            </li>
+          )}
           {enlaces.map((e) => (
             <li key={e.url}>
               <a
@@ -49,6 +66,14 @@ export function EscenaSalida({
             </li>
           ))}
         </ul>
+        {repositorio && (
+          <p className="linea mt-8 font-mono text-xs text-lab-tenue">
+            este laboratorio también es código:{" "}
+            <a href={repositorio} target="_blank" rel="noopener noreferrer" className="text-lab-portal underline underline-offset-4">
+              ver el repo ↗
+            </a>
+          </p>
+        )}
       </div>
     </div>
   );
