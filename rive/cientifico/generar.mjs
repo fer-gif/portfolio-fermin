@@ -69,6 +69,7 @@ const ID = {
   pesadoIzq: id(), pesadoDer: id(), parpadoIzq: id(), parpadoDer: id(),
   boca: id(), bocaPlana: id(), bocaO: id(), bocaSonrisa: id(),
   brazoSenala: id(), brazoFrasco: id(), burbuja1: id(), burbuja2: id(),
+  pupilaIzq: id(), pupilaDer: id(), joystick: id(), animMiradaX: id(), animMiradaY: id(), vmMiradaX: id(), vmMiradaY: id(),
   animVida: id(), animParpadeo: id(),
   capaVida: id(), capaParpadeo: id(), capaPose: id(), estadoVida: id(), estadoParpadeo: id(),
 };
@@ -109,8 +110,8 @@ const cabeza = `
     ${rect("Párpado der", 20, -15, 32, 31, PIEL, 0, ` id="${ID.parpadoDer}"`, true)}
     ${rect("Párpado pesado izq", -20, -15, 32, 31, PIEL, 0, ` id="${ID.pesadoIzq}"`, true)}
     ${rect("Párpado pesado der", 20, -15, 32, 31, PIEL, 0, ` id="${ID.pesadoDer}"`, true)}
-    ${elipse("Pupila izq", -17, 3, 8, 8, NEGRO)}
-    ${elipse("Pupila der", 24, 3, 8, 8, NEGRO)}
+    ${elipse("Pupila izq", -17, 3, 8, 8, NEGRO, ` id="${ID.pupilaIzq}"`)}
+    ${elipse("Pupila der", 24, 3, 8, 8, NEGRO, ` id="${ID.pupilaDer}"`)}
     ${elipse("Ojo izq", -20, 0, 29, 29, BLANCO)}
     ${elipse("Ojo der", 20, 0, 29, 29, BLANCO)}
     ${trazo("Ojera izq", [[-30, 16], [-20, 19], [-10, 16]], OJERA, 2.2, 4)}
@@ -196,6 +197,26 @@ const animParpadeo = `
   ${parpadeo(ID.parpadoIzq)}${parpadeo(ID.parpadoDer)}
 </LinearAnimation>`;
 
+// Mirada: dos rangos que el joystick "frota" según dónde está el mouse.
+// Cuadro 0 = izquierda / arriba, cuadro 60 = derecha / abajo.
+const animMirada = `
+<LinearAnimation duration="60" name="Mirada X" id="${ID.animMiradaX}">
+  ${keyed(ID.pupilaIzq, "x", kf(-25, 0, "linear") + kf(-9, 60, "linear"))}
+  ${keyed(ID.pupilaDer, "x", kf(16, 0, "linear") + kf(32, 60, "linear"))}
+  ${keyed(ID.cabeza, "rotation", kf(rad(-2.5), 0, "linear") + kf(rad(2.5), 60, "linear"))}
+</LinearAnimation>
+<LinearAnimation duration="60" name="Mirada Y" id="${ID.animMiradaY}">
+  ${keyed(ID.pupilaIzq, "y", kf(-3, 0, "linear") + kf(9, 60, "linear"))}
+  ${keyed(ID.pupilaDer, "y", kf(-3, 0, "linear") + kf(9, 60, "linear"))}
+</LinearAnimation>`;
+
+// El joystick vive en el artboard; sus x/y (-1..1) vienen del view model.
+const joystick = `
+<Joystick posX="120" posY="100" width="100" height="100" xId="${ID.animMiradaX}" yId="${ID.animMiradaY}" name="Mirada" id="${ID.joystick}">
+  <DataBindContext sourcePathIds="${ID.vm}-${ID.vmMiradaX}" propertyKey="299"/>
+  <DataBindContext sourcePathIds="${ID.vm}-${ID.vmMiradaY}" propertyKey="300"/>
+</Joystick>`;
+
 // Poses: un cuadro cada una; la transición entre estados hace la mezcla.
 const idBoca = { plana: ID.bocaPlana, o: ID.bocaO, sonrisa: ID.bocaSonrisa };
 const animPoses = POSES.map(
@@ -257,8 +278,12 @@ const datos = `
 
 <ViewModel defaultInstanceId="${ID.vmInstancia}" name="Personaje" id="${ID.vm}">
   <ViewModelPropertyEnumCustom enumId="${ID.enumPose}" name="pose" id="${ID.vmPose}"/>
+  <ViewModelPropertyNumber name="miradaX" id="${ID.vmMiradaX}"/>
+  <ViewModelPropertyNumber name="miradaY" id="${ID.vmMiradaY}"/>
   <ViewModelInstance exports="true" name="Default" id="${ID.vmInstancia}">
     <ViewModelInstanceEnum propertyValue="${POSES[0].valorId}" viewModelPropertyId="${ID.vmPose}"/>
+    <ViewModelInstanceNumber propertyValue="0" viewModelPropertyId="${ID.vmMiradaX}"/>
+    <ViewModelInstanceNumber propertyValue="0" viewModelPropertyId="${ID.vmMiradaY}"/>
   </ViewModelInstance>
 </ViewModel>`;
 
@@ -274,9 +299,11 @@ const rml = `<Rive version="1" kind="fragment">
     ${piernas}
   </Node>
   </Node>
+  ${joystick}
   ${maquina}
   ${animVida}
   ${animParpadeo}
+  ${animMirada}
   ${animPoses}
 </Artboard>
 ${datos}
