@@ -19,7 +19,8 @@ export function Repisa() {
   }, [ultimo]);
 
   return (
-    <div className="aparece-tras-intro pointer-events-none fixed top-16 right-4 z-50 flex items-start justify-end gap-2">
+    // En celular el aviso va debajo del contador (al lado taparía el título).
+    <div className="aparece-tras-intro pointer-events-none fixed top-16 right-4 z-50 flex flex-col-reverse items-end gap-2 sm:flex-row sm:items-start sm:justify-end">
       {aviso && (
         <div
           role="status"

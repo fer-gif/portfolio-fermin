@@ -48,7 +48,7 @@ export function EscenaSalida({
 
   return (
     <div ref={ref} className="grid h-full place-items-center px-4 sm:pt-[9svh]">
-      <div className="max-w-xl text-center">
+      <div className="max-h-full max-w-xl overflow-y-auto text-center" data-desborda>
         <p className="linea font-mano text-2xl text-lab-portal">hasta acá llegamos. gracias por bajar.</p>
         <h2 className="linea brillo-portal font-display mt-2 text-4xl font-bold tracking-tight sm:text-5xl">{nombre}</h2>
         <p className="linea mt-3 text-lg text-lab-tenue">{presentacion}</p>
