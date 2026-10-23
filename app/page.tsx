@@ -17,6 +17,7 @@ import * as futbol from "@/proyectos/futbol-necochea/escenas";
 import * as argentinaBrasil from "@/proyectos/argentina-brasil/escenas";
 import * as zonaFria from "@/proyectos/zona-fria/escenas";
 import * as ypf from "@/proyectos/ypf/escenas";
+import * as futbolshop from "@/proyectos/futbolshop/escenas";
 
 // Todo el portfolio es un solo recorrido: entrada → cada mesa con las escenas
 // de su proyecto justo después → salida. Un proyecto "vive" acá cuando tiene
@@ -32,6 +33,7 @@ const modulos: Record<string, ModuloProyecto> = {
   "argentina-brasil": argentinaBrasil,
   "zona-fria": zonaFria,
   ypf,
+  futbolshop,
 };
 
 // Lo que dice el científico en las paradas comunes. Cada proyecto trae las suyas.
@@ -39,10 +41,6 @@ const modulos: Record<string, ModuloProyecto> = {
 const guionBase: Record<string, Linea> = {
   entrada: {
     texto: "Acá adentro cada proyecto es un experimento que podés tocar. Vení, te muestro.",
-    pose: "senalando",
-  },
-  "mesa-futbolshop": {
-    texto: "Un inventario real, de un cliente real. Pronto te doy una copia para que la rompas tranquilo.",
     pose: "senalando",
   },
   salida: {
