@@ -7,6 +7,11 @@ import { useDirector } from "./director";
 // Una Escena es una pantalla que se queda clavada mientras el visitante
 // scrollea. El scroll no mueve la página: avanza la línea de tiempo de la
 // escena. Lo que hay adentro agrega sus animaciones a esa línea con useEscena().
+//
+// Las escenas son transparentes: el laboratorio vive fijo detrás de todas
+// (FondoLaboratorio) y nunca se mueve. Lo único que entra y sale es el
+// contenido: cada escena se apaga al final de su tramo y la siguiente aparece
+// recién cuando se clava.
 
 interface ContextoEscena {
   id: string;
@@ -33,13 +38,13 @@ export function Escena({
   /** Cuánto scroll dura la animación de la escena, en alturas de pantalla. */
   duracion?: number;
   /**
-   * La escena sube y cubre a la anterior en vez de esperar a que se vaya:
-   * sin huecos de scroll común entre escenas. La primera del recorrido va en false.
+   * La escena arranca donde termina la anterior, sin huecos de scroll común
+   * entre escenas. La primera del recorrido va en false.
    */
   solapar?: boolean;
   /**
-   * La escena siguiente la va a cubrir: se agrega una pantalla de espera al
-   * final, con la animación ya terminada, para que la tapen quieta y no a medias.
+   * Después de la animación hay una pantalla extra de scroll: la escena se
+   * queda quieta un momento y después se apaga, mientras la siguiente llega.
    * La última del recorrido va en false.
    */
   cubierta?: boolean;
@@ -47,6 +52,7 @@ export function Escena({
   children: ReactNode;
 }) {
   const ref = useRef<HTMLElement>(null);
+  const contenido = useRef<HTMLDivElement>(null);
   const director = useDirector();
   // La línea de tiempo existe desde el primer render para que los hijos
   // (cuyos efectos corren antes que el de este componente) puedan sumarle tweens.
@@ -55,17 +61,29 @@ export function Escena({
   useGSAP(
     () => {
       const seccion = ref.current;
-      if (!seccion) return;
+      const caja = contenido.current;
+      if (!seccion || !caja) return;
 
       // El solapamiento se aplica recién acá, con el motor andando: si viviera
       // en el CSS, antes de que cargue el JS las escenas se apilarían todas en
       // una sola pantalla. ScrollTrigger copia este margen al pin-spacer.
-      if (solapar) seccion.style.marginTop = "-100svh";
+      if (solapar) {
+        seccion.style.marginTop = "-100svh";
+        // Hasta que se clava, la escena viaja invisible por encima de la
+        // anterior: el visitante ve el laboratorio quieto y la escena anterior
+        // apagándose.
+        caja.style.opacity = "0";
+      }
 
-      // Los hijos ya sumaron sus tweens (sus efectos corren antes). La espera
-      // final ocupa exactamente la pantalla extra que dura la cobertura.
+      // Los hijos ya sumaron sus tweens (sus efectos corren antes). La pantalla
+      // extra: un rato quieta con la animación terminada, y después se apaga.
       if (cubierta && linea.duration() > 0) {
-        linea.to({}, { duration: linea.duration() / duracion });
+        const espera = linea.duration() / duracion;
+        // fromTo con el 1 fijado a mano: si se llega acá a los saltos (menú,
+        // scroll rápido), el tween no tiene que adivinar desde dónde apagar.
+        linea
+          .to({}, { duration: espera * 0.4 })
+          .fromTo(caja, { opacity: 1 }, { opacity: 0, duration: espera * 0.6, ease: "none", immediateRender: false });
       }
       // Progreso de la parte animada sola (la espera queda en 1).
       const animado = (p: number) => (cubierta ? Math.min(1, (p * (duracion + 1)) / duracion) : p);
@@ -78,7 +96,18 @@ export function Escena({
         scrub: 0.6,
         animation: linea,
         onToggle: (st) => {
-          if (st.isActive) director.fijar({ escena: id, progreso: st.progress, progresoAnimacion: animado(st.progress) });
+          if (st.isActive) {
+            // Entrando desde arriba: aparece rápido. Volviendo desde abajo, la
+            // propia línea de tiempo la va prendiendo al revés.
+            if (solapar && st.direction === 1) {
+              gsap.fromTo(caja, { opacity: 0 }, { opacity: 1, duration: 0.45, ease: "power1.out" });
+            } else {
+              caja.style.opacity = "1";
+            }
+            director.fijar({ escena: id, progreso: st.progress, progresoAnimacion: animado(st.progress) });
+          } else if (solapar) {
+            caja.style.opacity = "0";
+          }
         },
         onUpdate: (st) => {
           if (st.isActive) director.fijar({ progreso: st.progress, progresoAnimacion: animado(st.progress) });
@@ -87,6 +116,7 @@ export function Escena({
 
       return () => {
         seccion.style.marginTop = "";
+        caja.style.opacity = "";
       };
     },
     { scope: ref, dependencies: [id, duracion, cubierta, solapar] },
@@ -98,17 +128,13 @@ export function Escena({
         ref={ref}
         id={id}
         data-escena={id}
-        className={[
-          // Fondo opaco para poder cubrir a la escena anterior.
-          // En celular reserva lugar arriba (botones fijos) y abajo (personaje).
-          "relative h-svh w-full overflow-hidden bg-lab-fondo pt-14 pb-44 sm:pt-0 sm:pb-0",
-          // Sombra en el borde superior: se lee como un panel que sube, no como un corte.
-          // (la sombra solo en pantalla grande: en celular cuesta pintarla y no se nota)
-          solapar ? "sm:shadow-[0_-24px_48px_rgba(0,0,0,0.55)]" : "",
-          className,
-        ].join(" ")}
+        // Transparente: el laboratorio está fijo detrás. En celular reserva
+        // lugar arriba (botones fijos) y abajo (personaje).
+        className={["relative h-svh w-full overflow-hidden pt-14 pb-44 sm:pt-0 sm:pb-0", className].join(" ")}
       >
-        {children}
+        <div ref={contenido} className="h-full">
+          {children}
+        </div>
       </section>
     </EscenaContext>
   );

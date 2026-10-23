@@ -81,10 +81,15 @@ el científico camina hasta ahí a paso constante, mirando hacia donde va, y
 recién al llegar habla. Las mesas lo llevan al banco (`POSICION_MESA` en
 `app/page.tsx`); las demás escenas lo devuelven a la izquierda.
 
+- El laboratorio (pared, piso, estante, lámpara, cuadros, kimono, tabla) vive
+  **fijo detrás de todo** en `FondoLaboratorio`; las escenas son transparentes.
+  Así el escenario nunca se mueve: solo entra y sale el contenido.
 - La primera escena lleva `solapar={false}`; la última, `cubierta={false}`.
-  Las demás suben y cubren a la anterior, sin scroll común entre escenas.
-- Las escenas tienen fondo opaco y reservan espacio en celular para los
-  botones fijos (arriba) y el personaje (abajo).
+  Las demás arrancan donde termina la anterior. En la pantalla extra del final
+  la escena se queda quieta un momento y se apaga; la siguiente viaja invisible
+  y aparece recién cuando se clava.
+- Las escenas reservan espacio en celular para los botones fijos (arriba) y el
+  personaje (abajo).
 - La `Cortina` es la intro (el científico empuja la puerta). Se ve una vez por
   sesión y se saltea con `#ancla` o con "reducir movimiento".
 - Ojo: ScrollTrigger no reserva espacio de pin si el padre es `display: flex`.

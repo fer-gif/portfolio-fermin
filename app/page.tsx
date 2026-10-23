@@ -9,6 +9,7 @@ import { Cortina } from "@/components/laboratorio/Cortina";
 import { EscenaLab as Escena } from "@/components/laboratorio/EscenaLab";
 import { EscenaEntrada } from "@/components/laboratorio/EscenaEntrada";
 import { EscenaSalida } from "@/components/laboratorio/EscenaSalida";
+import { FondoLaboratorio } from "@/components/laboratorio/FondoLaboratorio";
 import { Mesa } from "@/components/laboratorio/Mesa";
 import { MenuLaboratorio, type Destino } from "@/components/laboratorio/MenuLaboratorio";
 import { perfil } from "@/lib/perfil";
@@ -90,6 +91,7 @@ const enlace = (etiqueta: string) => perfil.enlaces.find((e) => e.etiqueta === e
 export default function Laboratorio() {
   return (
     <Recorrido>
+      <FondoLaboratorio />
       <Cortina />
       <BarraProgreso />
       <Ambiente />

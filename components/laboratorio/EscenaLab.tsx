@@ -1,17 +1,9 @@
 import type { ComponentProps } from "react";
 import { Escena } from "@/components/recorrido";
-import { Escenografia } from "./Escenografia";
 
-// Una Escena del recorrido con la escenografía del laboratorio puesta:
-// pared azulejada, piso, estante y lámpara. Todas las escenas del portfolio
-// usan esta en vez de la Escena pelada del motor.
-export function EscenaLab({ className = "", children, ...resto }: ComponentProps<typeof Escena>) {
-  return (
-    // `isolate`: la escenografía va en z negativo y necesita el contexto de
-    // apilamiento de la sección para quedar sobre su fondo y bajo el contenido.
-    <Escena className={`fondo-laboratorio isolate ${className}`} {...resto}>
-      <Escenografia />
-      {children}
-    </Escena>
-  );
+// Una Escena del recorrido dentro del laboratorio. La escenografía ya no va
+// acá: vive fija detrás de todas las escenas (FondoLaboratorio), así el
+// laboratorio queda quieto y solo entra y sale el contenido.
+export function EscenaLab(props: ComponentProps<typeof Escena>) {
+  return <Escena {...props} />;
 }
