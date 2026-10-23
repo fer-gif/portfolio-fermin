@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import { gsap, useEscena, useGSAP } from "@/components/recorrido";
+import { desbloquear } from "@/components/laboratorio/logros";
 import type { Club } from "../api";
 import { Escudo } from "../componentes/Escudo";
 import { clubFusionado, variantes } from "../data/contenido";
@@ -79,7 +80,10 @@ export function Multiverso({ clubes }: { clubes: Club[] }) {
         <input
           type="text"
           value={entrada}
-          onChange={(e) => setEntrada(e.target.value)}
+          onChange={(e) => {
+            setEntrada(e.target.value);
+            if (e.target.value.trim()) desbloquear("multiverso");
+          }}
           placeholder="ej: VDV, indep de loberia, sp. san cayetano"
           className="mt-3 w-full rounded-lg border border-lab-borde bg-lab-fondo px-3 py-2 text-sm outline-none focus:border-lab-portal"
         />

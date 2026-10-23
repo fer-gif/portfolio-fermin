@@ -5,7 +5,7 @@ const PATA = "#14282f";
 const MADERA = "#1f3a42";
 const MADERA_CLARA = "#2b4a52";
 
-export function Banco({ className = "" }: { className?: string }) {
+export function Banco({ className = "", onPan }: { className?: string; onPan?: () => void }) {
   return (
     <svg
       aria-hidden
@@ -43,15 +43,23 @@ export function Banco({ className = "" }: { className?: string }) {
       <path d="M236 70 h18 v18 l16 40 h-50 l16 -40 z" fill="#cfe9ff" opacity="0.16" />
       <path d="M228 108 l-8 20 h50 l-8 -20 z" fill="#97ce4c" opacity="0.55" />
 
-      {/* la tabla con el pan: una hogaza con sus cortes, una baguette y el frasco de masa madre */}
+      {/* la tabla con el pan: una hogaza con sus cortes, una baguette y el frasco de masa madre.
+          El pan se puede tocar (recibe el mouse aunque el banco entero no). */}
       <rect x="300" y="124" width="136" height="9" rx="3" fill="#7a4e2e" />
       <rect x="436" y="126" width="22" height="5" rx="2.5" fill="#7a4e2e" />
-      <ellipse cx="344" cy="110" rx="32" ry="17" fill="#c8925a" />
-      <ellipse cx="344" cy="104" rx="26" ry="10" fill="#d9a86d" opacity="0.7" />
-      <path d="M326 108 q18 -12 36 0 M332 114 q12 -8 24 0" stroke="#7a4e2e" strokeWidth="1.6" strokeLinecap="round" fill="none" />
-      <g transform="rotate(-9 404 114)">
-        <rect x="378" y="106" width="52" height="15" rx="7.5" fill="#d9a86d" />
-        <path d="M388 108 l5 10 M400 107 l5 10 M412 107 l5 10" stroke="#8a5a3a" strokeWidth="1.5" strokeLinecap="round" />
+      <g
+        className={onPan ? "pan-tocable" : ""}
+        style={onPan ? { pointerEvents: "all", cursor: "pointer" } : undefined}
+        onClick={onPan}
+      >
+        <rect x="306" y="88" width="128" height="36" fill="transparent" />
+        <ellipse cx="344" cy="110" rx="32" ry="17" fill="#c8925a" />
+        <ellipse cx="344" cy="104" rx="26" ry="10" fill="#d9a86d" opacity="0.7" />
+        <path d="M326 108 q18 -12 36 0 M332 114 q12 -8 24 0" stroke="#7a4e2e" strokeWidth="1.6" strokeLinecap="round" fill="none" />
+        <g transform="rotate(-9 404 114)">
+          <rect x="378" y="106" width="52" height="15" rx="7.5" fill="#d9a86d" />
+          <path d="M388 108 l5 10 M400 107 l5 10 M412 107 l5 10" stroke="#8a5a3a" strokeWidth="1.5" strokeLinecap="round" />
+        </g>
       </g>
       <rect x="470" y="94" width="28" height="38" rx="4" fill="#cfe9ff" opacity="0.18" />
       <rect x="470" y="112" width="28" height="20" rx="4" fill="#e8d8b8" opacity="0.6" />

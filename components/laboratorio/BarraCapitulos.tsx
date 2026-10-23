@@ -21,9 +21,11 @@ export function BarraCapitulos({ capitulos }: { capitulos: Capitulo[] }) {
   );
 
   return (
+    // Solo el punto recibe el mouse: la etiqueta (invisible hasta el hover) no
+    // tiene que taparle el clic a lo que hay detrás, como la tabla de surf.
     <nav
       aria-label="Capítulos"
-      className="fixed top-1/2 right-5 z-40 hidden -translate-y-1/2 flex-col items-end gap-3 sm:flex"
+      className="pointer-events-none fixed top-1/2 right-3 z-40 hidden -translate-y-1/2 flex-col items-end gap-1 sm:flex"
     >
       {capitulos.map((c, i) => {
         const activo = i === indiceActivo;
@@ -33,7 +35,7 @@ export function BarraCapitulos({ capitulos }: { capitulos: Capitulo[] }) {
             type="button"
             onClick={() => director.irA(c.escena)}
             aria-current={activo ? "step" : undefined}
-            className="group flex items-center gap-3"
+            className="group pointer-events-none flex items-center gap-2"
           >
             <span
               className={`translate-x-1 font-mono text-[11px] opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100 ${
@@ -42,13 +44,15 @@ export function BarraCapitulos({ capitulos }: { capitulos: Capitulo[] }) {
             >
               {c.etiqueta}
             </span>
-            <span
-              className={`block rounded-full border transition-all ${
-                activo
-                  ? "size-3 border-lab-portal bg-lab-portal shadow-[0_0_10px_rgba(151,206,76,0.6)]"
-                  : "size-2 border-lab-tenue/60 bg-transparent group-hover:border-lab-portal"
-              }`}
-            />
+            <span className="pointer-events-auto flex size-6 items-center justify-center">
+              <span
+                className={`block rounded-full border transition-all ${
+                  activo
+                    ? "size-3 border-lab-portal bg-lab-portal shadow-[0_0_10px_rgba(151,206,76,0.6)]"
+                    : "size-2 border-lab-tenue/60 bg-transparent group-hover:border-lab-portal"
+                }`}
+              />
+            </span>
           </button>
         );
       })}

@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { useEscena, useGSAP } from "@/components/recorrido";
+import { desbloquear } from "@/components/laboratorio/logros";
 import { CATALOGO, CATEGORIAS, MOTIVOS, type Motivo, type Movimiento, type Producto } from "../data/catalogo";
 import { aplicarPorcentaje, formatearMoneda } from "../dinero";
 
@@ -147,6 +148,7 @@ export function Sandbox() {
       ),
     );
     setAviso(`Listo: ${seleccion.length} ${seleccion.length === 1 ? "producto actualizado" : "productos actualizados"}. Los precios se recalcularon en centavos enteros.`);
+    desbloquear("inventario");
     setConfirmacion(null);
     setSeleccion([]);
   };
@@ -194,6 +196,7 @@ export function Sandbox() {
     setAjustes({});
     setPidiendoMotivo(false);
     setAviso(`Ajuste guardado: ${movimientos.length} ${movimientos.length === 1 ? "variante" : "variantes"}. Queda en el historial con tu nombre y el motivo.`);
+    desbloquear("inventario");
   };
 
   const pildora = (valor: Existencia, etiqueta: string) => (

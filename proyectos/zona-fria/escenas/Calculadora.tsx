@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import { useEscena, useGSAP } from "@/components/recorrido";
+import { desbloquear } from "@/components/laboratorio/logros";
 import { calcular, estimarConsumo, pesos } from "../calcular";
 import { CONSUMO_BASE_JUNIN, DESCUENTOS, FACTORES } from "../data/tarifas";
 
@@ -49,6 +50,12 @@ export function Calculadora() {
   const [manual, setManual] = useState(CONSUMO_BASE_JUNIN);
   const [descuento, setDescuento] = useState(0.3);
 
+  // Tocar cualquier control cuenta como experimento hecho.
+  const usar = <T,>(set: (v: T) => void) => (v: T) => {
+    set(v);
+    desbloquear("calculadora");
+  };
+
   const consumo = modo === "estimador" ? estimarConsumo(vivienda, calefaccion, personas) : manual;
   const r = calcular(consumo, descuento);
 
@@ -74,7 +81,7 @@ export function Calculadora() {
                 <button
                   key={m}
                   type="button"
-                  onClick={() => setModo(m)}
+                  onClick={() => usar(setModo)(m)}
                   className={`rounded-md px-2.5 py-1 ${modo === m ? "bg-lab-borde text-lab-texto" : "text-lab-tenue"}`}
                 >
                   {m === "estimador" ? "Describí tu casa" : "Sé mis m³"}
@@ -86,15 +93,15 @@ export function Calculadora() {
               <>
                 <label className="block text-xs">
                   <span className="mb-1.5 block font-mono text-lab-tenue">Vivienda</span>
-                  <Pildoras opciones={FACTORES.vivienda} valor={vivienda} onChange={setVivienda} />
+                  <Pildoras opciones={FACTORES.vivienda} valor={vivienda} onChange={usar(setVivienda)} />
                 </label>
                 <label className="block text-xs">
                   <span className="mb-1.5 block font-mono text-lab-tenue">Calefacción</span>
-                  <Pildoras opciones={FACTORES.calefaccion} valor={calefaccion} onChange={setCalefaccion} />
+                  <Pildoras opciones={FACTORES.calefaccion} valor={calefaccion} onChange={usar(setCalefaccion)} />
                 </label>
                 <label className="block text-xs">
                   <span className="mb-1.5 block font-mono text-lab-tenue">Integrantes</span>
-                  <Pildoras opciones={FACTORES.personas} valor={personas} onChange={setPersonas} />
+                  <Pildoras opciones={FACTORES.personas} valor={personas} onChange={usar(setPersonas)} />
                 </label>
               </>
             ) : (
@@ -107,7 +114,7 @@ export function Calculadora() {
                   min={30}
                   max={800}
                   value={manual}
-                  onChange={(e) => setManual(Number(e.target.value))}
+                  onChange={(e) => usar(setManual)(Number(e.target.value))}
                   className="w-full accent-lab-portal"
                 />
               </label>
@@ -115,7 +122,7 @@ export function Calculadora() {
 
             <label className="block text-xs">
               <span className="mb-1.5 block font-mono text-lab-tenue">Descuento Zona Fría</span>
-              <Pildoras opciones={DESCUENTOS} valor={descuento} onChange={setDescuento} />
+              <Pildoras opciones={DESCUENTOS} valor={descuento} onChange={usar(setDescuento)} />
             </label>
           </div>
 

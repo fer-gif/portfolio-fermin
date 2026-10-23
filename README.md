@@ -98,6 +98,25 @@ recién al llegar habla. Las mesas lo llevan al banco (`POSICION_MESA` en
   `data-desborda`: Lenis le deja la rueda solo cuando su contenido no entra;
   si entra, la página sigue bajando aunque el mouse esté encima.
 
+## La capa de interacción
+
+- **Objetos tocables.** Los dibujos viven en la escenografía (detrás de las
+  escenas); `CapaDeObjetos` es una capa invisible por delante con las siluetas
+  que reciben el mouse, en el mismo viewBox. Al pasar por encima el objeto se
+  asoma (`.objeto.activo`), al tocarlo se sacude y el científico cuenta algo
+  (`objetos.ts`, frases por objeto). El pan está en el banco de cada mesa y
+  recibe el mouse por su cuenta.
+- **El científico habla fuera del guion.** `director.decir(texto, pose, ms)`
+  pone una frase por encima de la escena un rato; `useDicho()` la lee. Tocar
+  al científico dice una frase al azar (`fraseDelCientifico`). `useReacciones`
+  lo hace reaccionar a la inactividad, al scroll a toda velocidad y a irse de
+  la pestaña.
+- **Experimentos desbloqueados.** `logros.ts` guarda en el navegador qué
+  artefactos usó el visitante y qué objetos descubrió (`desbloquear(id)` desde
+  cada artefacto, `registrarObjeto(id)` desde los objetos). `Repisa` muestra
+  el conteo y avisa cada desbloqueo; la salida lista lo que falta con el
+  camino a cada uno.
+
 ## Sumar un proyecto
 
 1. Crear `proyectos/<slug>/meta.ts` y registrarlo en `proyectos/index.ts`.

@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import { useEscena, useGSAP } from "@/components/recorrido";
+import { desbloquear } from "@/components/laboratorio/logros";
 import { ENDPOINTS, type Goleador, type Partido, type Posicion } from "../api";
 import { Goleadores } from "../componentes/Goleadores";
 import { TablaPosiciones } from "../componentes/TablaPosiciones";
@@ -52,7 +53,10 @@ export function MonitorAPI({ datos }: { datos: DatosAPI }) {
             <button
               key={p.id}
               type="button"
-              onClick={() => setPestana(p.id)}
+              onClick={() => {
+                setPestana(p.id);
+                desbloquear("api");
+              }}
               className={`rounded-md px-2 py-1 font-mono text-[11px] transition-colors sm:px-2.5 sm:text-xs ${
                 pestana === p.id ? "bg-lab-borde text-lab-texto" : "text-lab-tenue hover:text-lab-texto"
               }`}

@@ -12,6 +12,7 @@ import { EscenaSalida } from "@/components/laboratorio/EscenaSalida";
 import { FondoLaboratorio } from "@/components/laboratorio/FondoLaboratorio";
 import { Mesa } from "@/components/laboratorio/Mesa";
 import { MenuLaboratorio, type Destino } from "@/components/laboratorio/MenuLaboratorio";
+import { Repisa } from "@/components/laboratorio/Repisa";
 import { perfil } from "@/lib/perfil";
 import { proyectos } from "@/proyectos";
 import * as futbol from "@/proyectos/futbol-necochea/escenas";
@@ -99,6 +100,7 @@ export default function Laboratorio() {
       <MenuLaboratorio destinos={destinos} />
       <ContactoFijo email={perfil.email} linkedin={enlace("LinkedIn")} github={enlace("GitHub")} cv={perfil.cv} />
       <BarraCapitulos capitulos={capitulos} />
+      <Repisa />
       <Personaje guion={guion} esperarIntro />
 
       <Escena id="entrada" duracion={1.2} solapar={false}>

@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import { useEscena, useGSAP } from "@/components/recorrido";
+import { desbloquear } from "@/components/laboratorio/logros";
 import { SECTORES } from "../data/comercio";
 
 // El artefacto vivo: elegís un sector y ves cuánto pesa Brasil en él.
@@ -32,7 +33,10 @@ export function Dependometro() {
               <button
                 key={s.id}
                 type="button"
-                onClick={() => setId(s.id)}
+                onClick={() => {
+                  setId(s.id);
+                  desbloquear("dependometro");
+                }}
                 className={`rounded-full border px-3 py-1 text-xs transition-colors ${
                   s.id === id
                     ? "border-lab-portal bg-lab-portal text-lab-fondo"

@@ -1,9 +1,10 @@
 "use client";
 
 import { useRef } from "react";
-import { gsap, useEscena, useGSAP } from "@/components/recorrido";
+import { gsap, useDirector, useEscena, useGSAP } from "@/components/recorrido";
 import { ETIQUETA_CATEGORIA, type Proyecto } from "@/proyectos";
 import { Banco } from "./Banco";
+import { tocarObjeto } from "./objetos";
 
 // Colores de las etiquetas de los frascos, en ronda.
 const COLORES = ["bg-lab-portal", "bg-lab-celeste", "bg-lab-amarillo", "bg-lab-rosa"];
@@ -13,6 +14,7 @@ const COLORES = ["bg-lab-portal", "bg-lab-celeste", "bg-lab-amarillo", "bg-lab-r
 // tecnologías del proyecto caen sobre la mesada como frascos etiquetados.
 export function Mesa({ proyecto, numero, tieneEscenas }: { proyecto: Proyecto; numero: number; tieneEscenas: boolean }) {
   const { linea } = useEscena();
+  const director = useDirector();
   const ref = useRef<HTMLDivElement>(null);
   const enProceso = proyecto.estado === "en-proceso";
   // "Laravel 12 · PHP 8.3" son dos frascos, no uno.
@@ -36,7 +38,10 @@ export function Mesa({ proyecto, numero, tieneEscenas }: { proyecto: Proyecto; n
   return (
     <div ref={ref} className="relative flex h-full items-end justify-center px-4 pb-[11svh] sm:justify-end sm:pr-[8vw] sm:pb-[19svh]">
       {/* el banco sobre el que se apoya la ficha */}
-      <Banco className="absolute inset-x-0 bottom-[2svh] mx-auto h-[26svh] w-full max-w-5xl sm:bottom-[4svh]" />
+      <Banco
+        className="absolute inset-x-0 bottom-[2svh] mx-auto h-[26svh] w-full max-w-5xl sm:bottom-[4svh]"
+        onPan={() => tocarObjeto("pan", director)}
+      />
 
       {/* los frascos con las tecnologías, apilados sobre la mesada (a la
           izquierda de la ficha; en celular van en una línea dentro de la ficha).

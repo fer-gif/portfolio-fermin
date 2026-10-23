@@ -1,10 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useEscenaActual, usePasoActual } from "@/components/recorrido";
-import type { Guion, Linea } from "./guion";
+import { useDicho, useDirector, useEscenaActual, usePasoActual } from "@/components/recorrido";
+import { desbloquear } from "@/components/laboratorio/logros";
+import { fraseDelCientifico } from "@/components/laboratorio/objetos";
+import type { Guion, Linea, Pose } from "./guion";
 import { PersonajeRive } from "./PersonajeRive";
 import { useMaquinaDeEscribir, useReducirMovimiento } from "./useMaquinaDeEscribir";
+import { useReacciones } from "./useReacciones";
 import "./personaje.css";
 
 const SILENCIO: Linea = { texto: "" };
@@ -21,16 +24,29 @@ function posicionDe(linea: Linea): number {
 // El científico del laboratorio. Lee del Director en qué escena está el
 // visitante y busca en el guion qué decir, qué pose tomar y dónde pararse.
 // Si la posición cambia, camina hasta ahí (mirando hacia donde va) y recién
-// al llegar habla.
+// al llegar habla. Si el visitante toca algo (o lo toca a él), dice eso por
+// encima del guion un rato y después vuelve a la escena.
 export function Personaje({ guion, esperarIntro = false }: { guion: Guion; esperarIntro?: boolean }) {
+  const director = useDirector();
   const escena = useEscenaActual();
+  const dicho = useDicho();
   const base: Linea =
     (escena ? guion.escenas[escena] : undefined) ?? guion.inicial ?? SILENCIO;
   // En una escena por pasos, el científico dice la línea del paso actual.
   const paso = usePasoActual(base.pasos?.length ?? 0);
-  const linea: Linea = base.pasos?.[paso] ? { ...base, ...base.pasos[paso] } : base;
-  const posicion = posicionDe(linea);
+  const lineaEscena: Linea = base.pasos?.[paso] ? { ...base, ...base.pasos[paso] } : base;
+  const linea: Linea = dicho
+    ? { ...lineaEscena, texto: dicho.texto, pose: (dicho.pose as Pose | undefined) ?? lineaEscena.pose }
+    : lineaEscena;
+  const posicion = posicionDe(lineaEscena);
   const reducido = useReducirMovimiento();
+
+  useReacciones(director);
+
+  // Al cambiar de escena, lo que decía por fuera del guion se corta.
+  useEffect(() => {
+    director.callar();
+  }, [escena, director]);
 
   const contenedor = useRef<HTMLElement>(null);
   const figura = useRef<HTMLDivElement>(null);
@@ -101,6 +117,12 @@ export function Personaje({ guion, esperarIntro = false }: { guion: Guion; esper
   const { visible, escribiendo } = useMaquinaDeEscribir(texto);
   const aLaDerecha = posicion > 0.5;
 
+  const hablar = () => {
+    const frase = fraseDelCientifico();
+    director.decir(frase.texto, frase.pose);
+    desbloquear("cientifico");
+  };
+
   const globo = [
     "personaje-globo absolute bottom-full mb-2 w-max max-w-[80vw] rounded-2xl border border-lab-portal/40 bg-lab-panel/95 px-3 py-1.5 font-mano text-lg leading-tight backdrop-blur sm:bottom-6 sm:mb-0 sm:max-w-xs sm:px-4 sm:py-2.5 sm:text-2xl",
     aLaDerecha
@@ -118,7 +140,22 @@ export function Personaje({ guion, esperarIntro = false }: { guion: Guion; esper
       aria-live="polite"
     >
       <div ref={figura} className={`personaje-cuerpo relative w-max ${linea.pose === "ausente" ? "ausente" : ""}`}>
-        <PersonajeRive pose={pose} direccion={direccion} className="h-24 sm:h-44" />
+        <div
+          role="button"
+          tabIndex={0}
+          aria-label="Hacer hablar al científico"
+          title="Tocame"
+          onClick={hablar}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              hablar();
+            }
+          }}
+          className="personaje-figura pointer-events-auto cursor-pointer rounded-full outline-none focus-visible:ring-2 focus-visible:ring-lab-portal"
+        >
+          <PersonajeRive pose={pose} direccion={direccion} className="h-24 sm:h-44" />
+        </div>
         {texto && (
           <div className={globo}>
             {visible}

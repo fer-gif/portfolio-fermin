@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import { useEscena, useGSAP } from "@/components/recorrido";
+import { desbloquear } from "@/components/laboratorio/logros";
 import { HISTORIAL, MEDIANA_MENSUAL, MESES } from "../data/sismos";
 import { proyectar } from "../modelo";
 
@@ -60,7 +61,10 @@ export function Consulta() {
                 min={1}
                 max={12}
                 value={meses}
-                onChange={(e) => setMeses(Number(e.target.value))}
+                onChange={(e) => {
+                  setMeses(Number(e.target.value));
+                  desbloquear("consulta");
+                }}
                 className="w-full accent-lab-portal"
               />
               <span className="mt-1 flex justify-between font-mono text-[10px] text-lab-tenue">
