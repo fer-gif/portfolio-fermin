@@ -44,7 +44,7 @@ const guionBase: Record<string, Linea> = {
     pose: "senalando",
   },
   "mesa-ypf": {
-    texto: "Esto todavía está en el tubo de ensayo. No toques nada.",
+    texto: "Diez años de sismos de la Argentina. Todavía está en el tubo de ensayo: no toques nada.",
     pose: "sorprendido",
   },
   salida: {
