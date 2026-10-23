@@ -25,32 +25,33 @@ export function Mesa({ proyecto, numero, tieneEscenas }: { proyecto: Proyecto; n
   );
 
   return (
-    <div ref={ref} className="relative flex h-full items-end justify-center px-4 pb-[16svh] sm:justify-end sm:pr-[8vw] sm:pb-[19svh]">
+    <div ref={ref} className="relative flex h-full items-end justify-center px-4 pb-[11svh] sm:justify-end sm:pr-[8vw] sm:pb-[19svh]">
       {/* el banco sobre el que se apoya la ficha */}
       <Banco className="absolute inset-x-0 bottom-[2svh] mx-auto h-[26svh] w-full max-w-5xl sm:bottom-[4svh]" />
-      <article className="ficha relative w-full max-w-xl rounded-2xl border border-lab-borde bg-lab-panel/95 p-6 shadow-[0_24px_40px_-20px_rgba(0,0,0,0.8),0_0_60px_-20px_rgba(126,227,91,0.4)] backdrop-blur sm:p-8">
-        <header className="flex items-center justify-between font-mono text-xs uppercase tracking-wider text-lab-tenue">
-          <span className="text-lab-portal">
-            Experimento {String(numero).padStart(2, "0")}
+      <article className="ficha relative w-full max-w-xl rounded-2xl border border-lab-borde bg-lab-panel/95 p-6 shadow-[0_24px_40px_-20px_rgba(0,0,0,0.8),0_0_60px_-20px_rgba(151,206,76,0.45)] backdrop-blur sm:p-8">
+        {/* la etiqueta del frasco: número a mano */}
+        <header className="flex items-center justify-between font-mono text-[10px] uppercase tracking-wider text-lab-tenue">
+          <span className="rounded-full border border-lab-portal bg-lab-fondo px-3 py-0.5 font-mano text-lg normal-case tracking-normal text-lab-portal sm:absolute sm:-top-4 sm:left-6">
+            experimento {String(numero).padStart(2, "0")}
           </span>
           <span>{ETIQUETA_CATEGORIA[proyecto.categoria]}</span>
         </header>
 
-        <h2 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">{proyecto.titulo}</h2>
+        <h2 className="font-display mt-2 text-3xl font-bold tracking-tight sm:text-4xl">{proyecto.titulo}</h2>
 
-        <p className="detalle mt-3 text-lab-tenue">{proyecto.resumen}</p>
+        <p className="detalle mt-3 text-sm text-lab-tenue sm:text-base">{proyecto.resumen}</p>
 
-        <p className="detalle mt-4 border-l-2 border-lab-portal pl-3 text-sm">
-          <span className="font-mono text-xs uppercase text-lab-tenue">Podés </span>
+        <p className="detalle mt-4 border-l-2 border-lab-portal pl-3 text-xs sm:text-sm">
+          <span className="font-mano text-lg text-lab-portal">podés </span>
           {proyecto.artefacto}
         </p>
 
-        <footer className="detalle mt-6 flex items-center justify-between font-mono text-xs">
+        <footer className="detalle mt-6 flex items-center justify-between gap-3 font-mono text-xs">
           <span className="text-lab-tenue">
             {proyecto.autoria === "equipo" ? "en equipo" : "individual"}
             {enProceso && " · en proceso"}
           </span>
-          <span className="text-lab-portal">
+          <span className="font-mano text-lg leading-tight text-lab-portal">
             {tieneEscenas ? "seguí bajando para entrar ↓" : "experimento en construcción"}
           </span>
         </footer>

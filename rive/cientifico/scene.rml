@@ -26,8 +26,8 @@
     <Shape x="0" y="4" name="O" id="0:28"><Ellipse width="14" height="18" name="Path"/><Fill name="Fill"><SolidColor colorValue="FF6E4034" name="Color"/></Fill></Shape>
     <Shape name="Sonrisa" id="0:29"><PointsPath isClosed="false" name="Path"><StraightVertex x="-20" y="-2"/><CubicMirroredVertex x="0" y="10" rotation="0" distance="12"/><StraightVertex x="20" y="-2"/></PointsPath><Stroke thickness="4.2" cap="round" join="round" name="Stroke"><SolidColor colorValue="FF6E4034" name="Color"/></Stroke></Shape>
   </Solo>
-  <Shape x="-22" y="-94" name="Lente izq"><Ellipse width="26" height="26" name="Path"/><Fill name="Fill"><SolidColor colorValue="FF7EE35B" name="Color"/></Fill><Stroke thickness="4" cap="round" join="round" name="Stroke"><SolidColor colorValue="FF3A4A3F" name="Color"/></Stroke></Shape>
-  <Shape x="22" y="-94" name="Lente der"><Ellipse width="26" height="26" name="Path"/><Fill name="Fill"><SolidColor colorValue="FF7EE35B" name="Color"/></Fill><Stroke thickness="4" cap="round" join="round" name="Stroke"><SolidColor colorValue="FF3A4A3F" name="Color"/></Stroke></Shape>
+  <Shape x="-22" y="-94" name="Lente izq"><Ellipse width="26" height="26" name="Path"/><Fill name="Fill"><SolidColor colorValue="FF97CE4C" name="Color"/></Fill><Stroke thickness="4" cap="round" join="round" name="Stroke"><SolidColor colorValue="FF3A4A3F" name="Color"/></Stroke></Shape>
+  <Shape x="22" y="-94" name="Lente der"><Ellipse width="26" height="26" name="Path"/><Fill name="Fill"><SolidColor colorValue="FF97CE4C" name="Color"/></Fill><Stroke thickness="4" cap="round" join="round" name="Stroke"><SolidColor colorValue="FF3A4A3F" name="Color"/></Stroke></Shape>
   <Shape x="0" y="-93" name="Anteojos"><Rectangle width="88" height="10" cornerRadiusTL="4" name="Path"/><Fill name="Fill"><SolidColor colorValue="FF3A4A3F" name="Color"/></Fill></Shape>
   <Shape x="0" y="-50" name="Cara"><Ellipse width="98" height="114" name="Path"/><Fill name="Fill"><SolidColor colorValue="FFF1C9A5" name="Color"/></Fill></Shape>
   <Node y="-62" name="Pelo" id="0:19">
@@ -46,7 +46,7 @@
   <Node name="Frasco">
     <Shape x="-4" y="86" name="Burbuja 1" id="0:32"><Ellipse width="2.8" height="2.8" name="Path"/><Fill name="Fill"><SolidColor colorValue="FFE6FFE0" name="Color"/></Fill></Shape>
     <Shape x="6" y="88" name="Burbuja 2" id="0:33"><Ellipse width="2" height="2" name="Path"/><Fill name="Fill"><SolidColor colorValue="FFE6FFE0" name="Color"/></Fill></Shape>
-    <Shape name="Líquido"><PointsPath isClosed="true" isClockwise="true" name="Path"><StraightVertex x="-16" y="72"/><StraightVertex x="16" y="72"/><StraightVertex x="24" y="92"/><StraightVertex x="-24" y="92"/></PointsPath><Fill name="Fill"><SolidColor colorValue="FF7EE35B" name="Color"/></Fill></Shape>
+    <Shape name="Líquido"><PointsPath isClosed="true" isClockwise="true" name="Path"><StraightVertex x="-16" y="72"/><StraightVertex x="16" y="72"/><StraightVertex x="24" y="92"/><StraightVertex x="-24" y="92"/></PointsPath><Fill name="Fill"><SolidColor colorValue="FF97CE4C" name="Color"/></Fill></Shape>
     <Shape name="Vidrio"><PointsPath isClosed="true" isClockwise="true" name="Path"><StraightVertex x="-8" y="44"/><StraightVertex x="8" y="44"/><StraightVertex x="8" y="60"/><StraightVertex x="24" y="92"/><StraightVertex x="-24" y="92"/><StraightVertex x="-8" y="60"/></PointsPath><Fill name="Fill"><SolidColor colorValue="D9CFE9FF" name="Color"/></Fill></Shape>
   </Node>
   <Shape x="0" y="80" name="Mano"><Ellipse width="22" height="22" name="Path"/><Fill name="Fill"><SolidColor colorValue="FFF1C9A5" name="Color"/></Fill></Shape>
@@ -58,7 +58,7 @@
 <Shape name="Solapa der"><PointsPath isClosed="true" isClockwise="false" name="Path"><StraightVertex x="142" y="146"/><StraightVertex x="124" y="146"/><StraightVertex x="124" y="184"/></PointsPath><Fill name="Fill"><SolidColor colorValue="FFD5DDE3" name="Color"/></Fill></Shape>
 <Shape name="Bata izq"><PointsPath isClosed="true" isClockwise="true" name="Path"><StraightVertex x="66" y="146"/><StraightVertex x="116" y="146"/><StraightVertex x="116" y="184"/><StraightVertex x="108" y="272"/><StraightVertex x="56" y="272"/></PointsPath><Fill name="Fill"><SolidColor colorValue="FFE9EEF2" name="Color"/></Fill></Shape>
 <Shape name="Bata der"><PointsPath isClosed="true" isClockwise="false" name="Path"><StraightVertex x="174" y="146"/><StraightVertex x="124" y="146"/><StraightVertex x="124" y="184"/><StraightVertex x="132" y="272"/><StraightVertex x="184" y="272"/></PointsPath><Fill name="Fill"><SolidColor colorValue="FFE9EEF2" name="Color"/></Fill></Shape>
-<Shape x="120" y="241" name="Hebilla"><Rectangle width="14" height="12" cornerRadiusTL="2" name="Path"/><Fill name="Fill"><SolidColor colorValue="FF7EE35B" name="Color"/></Fill></Shape>
+<Shape x="120" y="241" name="Hebilla"><Rectangle width="14" height="12" cornerRadiusTL="2" name="Path"/><Fill name="Fill"><SolidColor colorValue="FF97CE4C" name="Color"/></Fill></Shape>
 <Shape x="120" y="241" name="Cinturón"><Rectangle width="116" height="10" cornerRadiusTL="0" name="Path"/><Fill name="Fill"><SolidColor colorValue="FF1F262C" name="Color"/></Fill></Shape>
 <Shape name="Camisa"><PointsPath isClosed="true" isClockwise="true" name="Path"><StraightVertex x="100" y="146"/><StraightVertex x="140" y="146"/><StraightVertex x="134" y="236"/><StraightVertex x="106" y="236"/></PointsPath><Fill name="Fill"><SolidColor colorValue="FFCFE3F5" name="Color"/></Fill></Shape>
     

@@ -59,7 +59,7 @@ function arco(nombre, [a, m, b], color, grosor, curva = 10, extra = "") {
 
 // ---------- colores ----------
 const PIEL = "FFF1C9A5", PIEL_SOMBRA = "FFDFAE8A", OJERA = "FFC9956F";
-const BATA = "FFE9EEF2", BATA_SOMBRA = "FFD5DDE3", CAMISA = "FFCFE3F5", VERDE = "FF7EE35B";
+const BATA = "FFE9EEF2", BATA_SOMBRA = "FFD5DDE3", CAMISA = "FFCFE3F5", VERDE = "FF97CE4C";
 const PELO = "FFBBD1EA", OSCURO = "FF3A4A3F", PANTALON = "FF2B3640", ZAPATO = "FF15191D", CINTO = "FF1F262C";
 const BOCA = "FF6E4034", BLANCO = "FFFFFFFF", NEGRO = "FF1A1A1A", VIDRIO = "D9CFE9FF", BURBUJA = "FFE6FFE0";
 

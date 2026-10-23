@@ -1,21 +1,51 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
-/* Paleta del laboratorio. El diseño visual definitivo se ajusta más adelante. */
+/* Paleta del laboratorio, tomada de Rick y Morty: fondo de espacio verde
+   azulado, verde portal para lo que importa, y chispas rosa, amarillo y
+   celeste (el pelo de Rick) para los detalles. */
 @theme inline {
-  --color-lab-fondo: #0b0f0c;
-  --color-lab-panel: #121a15;
-  --color-lab-borde: #243129;
-  --color-lab-texto: #e6f0e8;
-  --color-lab-tenue: #8fa396;
-  --color-lab-portal: #7ee35b;
+  --color-lab-fondo: #0d1b22;
+  --color-lab-panel: #142830;
+  --color-lab-borde: #25444d;
+  --color-lab-texto: #eef7ee;
+  --color-lab-tenue: #9cbfb3;
+  --color-lab-portal: #97ce4c;
+  --color-lab-portal-claro: #c6f36a;
+  --color-lab-rosa: #ef6ad4;
+  --color-lab-amarillo: #f2e05a;
+  --color-lab-celeste: #9ad9ea;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-outfit);
+  --font-mano: var(--font-caveat);
 }
 
 body {
   background: var(--color-lab-fondo);
   color: var(--color-lab-texto);
+}
+
+/* Títulos grandes con el brillo del portal detrás. */
+.brillo-portal {
+  text-shadow:
+    0 0 24px rgba(151, 206, 76, 0.35),
+    0 0 90px rgba(151, 206, 76, 0.18);
+}
+
+/* Subrayado a mano alzada para las notas manuscritas. */
+.garabato {
+  background-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 8' preserveAspectRatio='none'%3E%3Cpath d='M2 5 C 20 1, 40 7, 60 4 S 100 2, 118 5' fill='none' stroke='%2397ce4c' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 100% 0.45em;
+  padding-bottom: 0.3em;
+}
+
+/* Grano fino sobre toda la página: saca el aspecto de plástico. */
+.grano {
+  background-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
 }
 
 /* Escenografía: pared azulejada y piso del laboratorio. Es idéntica en todas
@@ -24,12 +54,12 @@ body {
   background-color: var(--color-lab-fondo);
   background-image:
     /* piso */
-    linear-gradient(to top, #0e1612 0, #0e1612 13svh, rgba(126, 227, 91, 0.14) 13svh, rgba(126, 227, 91, 0.14) calc(13svh + 1px), transparent calc(13svh + 1px)),
+    linear-gradient(to top, #0a151a 0, #0a151a 13svh, rgba(151, 206, 76, 0.2) 13svh, rgba(151, 206, 76, 0.2) calc(13svh + 1px), transparent calc(13svh + 1px)),
     /* azulejos */
-    linear-gradient(rgba(126, 227, 91, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(126, 227, 91, 0.045) 1px, transparent 1px),
+    linear-gradient(rgba(154, 217, 234, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(154, 217, 234, 0.05) 1px, transparent 1px),
     /* luz general de la pared */
-    radial-gradient(ellipse 80% 60% at 50% 0%, #121b15 0, var(--color-lab-fondo) 70%);
+    radial-gradient(ellipse 80% 60% at 50% 0%, #15303a 0, var(--color-lab-fondo) 70%);
   background-size: 100% 100%, 72px 72px, 72px 72px, 100% 100%;
   background-position: 0 0, 0 0, 0 0, 0 0;
 }
@@ -40,12 +70,13 @@ body {
   50% { opacity: 1; }
 }
 @keyframes subir {
-  from { transform: translateY(0); opacity: 0; }
-  20% { opacity: 0.8; }
-  to { transform: translateY(-100vh); opacity: 0; }
+  from { transform: translateY(0) translateX(0); opacity: 0; }
+  15% { opacity: 0.7; }
+  50% { transform: translateY(-50vh) translateX(14px); }
+  to { transform: translateY(-100vh) translateX(-6px); opacity: 0; }
 }
 .luz { animation: parpadeo 2s ease-in-out infinite; }
-.burbuja { animation: subir 9s linear infinite; }
+.mota { animation: subir 14s linear infinite; }
 
 /* Objetos del laboratorio */
 @keyframes burbuja-tubo {
@@ -60,10 +91,15 @@ body {
   0%, 92%, 100% { opacity: 1; }
   95% { opacity: 0.7; }
 }
+@keyframes kimono-vaiven {
+  0%, 100% { transform: rotate(-0.8deg); }
+  50% { transform: rotate(0.8deg); }
+}
 .burbuja-tubo { animation: burbuja-tubo 2.6s linear infinite; }
 .lampara { transform-origin: top center; animation: lampara-vaiven 6s ease-in-out infinite; }
 .pantalla { animation: pantalla-titila 7s linear infinite; }
+.kimono { transform-box: fill-box; transform-origin: top center; animation: kimono-vaiven 7s ease-in-out infinite; }
 
 @media (prefers-reduced-motion: reduce) {
-  .luz, .burbuja, .burbuja-tubo, .lampara, .pantalla { animation: none; }
+  .luz, .mota, .burbuja-tubo, .lampara, .pantalla, .kimono { animation: none; }
 }

@@ -24,7 +24,7 @@ function MiniPrueba() {
       {PRUEBA.reales.map((v, i) => (
         <rect key={i} x={i * paso + 4} y={y(v)} width={paso - 8} height={alto - y(v)} fill="#8fa396" opacity={0.45} rx={1} />
       ))}
-      <polyline points={puntos} fill="none" stroke="#7ee35b" strokeWidth={2} strokeLinejoin="round" />
+      <polyline points={puntos} fill="none" stroke="#97ce4c" strokeWidth={2} strokeLinejoin="round" />
       {PRUEBA.meses.map(([, mes], i) => (
         <text key={i} x={(i + 0.5) * paso} y={alto + 11} textAnchor="middle" fontSize={8} fill="#8fa396" className="font-mono">
           {i % 2 === 0 ? MESES_CORTOS[mes - 1] : ""}

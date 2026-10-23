@@ -22,7 +22,7 @@ export function PersonajeEmpujando({ className = "" }: { className?: string }) {
       {/* guardapolvo, inclinado hacia adelante */}
       <path d="M78 50 L116 58 L98 114 L56 106 Z" fill="#e9eef2" />
       <path d="M78 50 L96 54 L82 108 Z" fill="#d5dde3" />
-      <path d="M96 54 L106 56 L96 86 Z" fill="#7ee35b" />
+      <path d="M96 54 L106 56 L96 86 Z" fill="#97ce4c" />
 
       {/* brazos rectos hacia la puerta */}
       <path d="M110 62 L154 52" stroke="#e9eef2" strokeWidth="12" strokeLinecap="round" />
@@ -41,8 +41,8 @@ export function PersonajeEmpujando({ className = "" }: { className?: string }) {
         <ellipse cx="108" cy="36" rx="24" ry="25" fill="#f1c9a5" />
         {/* anteojos en la frente */}
         <rect x="86" y="14" width="42" height="5" rx="2" fill="#3a4a3f" transform="rotate(8 107 16)" />
-        <circle cx="98" cy="17" r="6" fill="#7ee35b" stroke="#3a4a3f" strokeWidth="2" />
-        <circle cx="118" cy="20" r="6" fill="#7ee35b" stroke="#3a4a3f" strokeWidth="2" />
+        <circle cx="98" cy="17" r="6" fill="#97ce4c" stroke="#3a4a3f" strokeWidth="2" />
+        <circle cx="118" cy="20" r="6" fill="#97ce4c" stroke="#3a4a3f" strokeWidth="2" />
         {/* uniceja fruncida */}
         <path d="M94 27 L108 31 L120 30 L130 26" stroke="#3a4a3f" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none" />
         {/* nariz */}

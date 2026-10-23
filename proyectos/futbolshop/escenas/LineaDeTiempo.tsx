@@ -39,7 +39,7 @@ export function LineaDeTiempo() {
               >
                 <span
                   className={`absolute -left-[1.6rem] top-1 size-2.5 rounded-full border transition-all sm:-left-[1.85rem] ${
-                    actual ? "border-lab-portal bg-lab-portal shadow-[0_0_10px_rgba(126,227,91,0.6)]" : contado ? "border-lab-portal bg-lab-fondo" : "border-lab-tenue bg-lab-fondo"
+                    actual ? "border-lab-portal bg-lab-portal shadow-[0_0_10px_rgba(151,206,76,0.6)]" : contado ? "border-lab-portal bg-lab-fondo" : "border-lab-tenue bg-lab-fondo"
                   }`}
                 />
                 <p className="font-mono text-[10px] text-lab-tenue sm:text-xs">{h.fecha}</p>

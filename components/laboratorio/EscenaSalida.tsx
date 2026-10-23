@@ -38,8 +38,8 @@ export function EscenaSalida({
   return (
     <div ref={ref} className="grid h-full place-items-center px-4">
       <div className="max-w-xl text-center">
-        <p className="linea font-mono text-sm text-lab-portal">~/salida</p>
-        <h2 className="linea mt-3 text-4xl font-bold tracking-tight sm:text-5xl">{nombre}</h2>
+        <p className="linea font-mano text-2xl text-lab-portal">hasta acá llegamos. gracias por bajar.</p>
+        <h2 className="linea brillo-portal font-display mt-3 text-4xl font-bold tracking-tight sm:text-5xl">{nombre}</h2>
         <p className="linea mt-4 text-lg text-lab-tenue">{presentacion}</p>
         <ul className="linea mt-8 flex flex-wrap justify-center gap-3 font-mono text-sm">
           {cv && (
@@ -67,9 +67,9 @@ export function EscenaSalida({
           ))}
         </ul>
         {repositorio && (
-          <p className="linea mt-8 font-mono text-xs text-lab-tenue">
+          <p className="linea mt-8 font-mano text-lg text-lab-tenue">
             este laboratorio también es código:{" "}
-            <a href={repositorio} target="_blank" rel="noopener noreferrer" className="text-lab-portal underline underline-offset-4">
+            <a href={repositorio} target="_blank" rel="noopener noreferrer" className="garabato text-lab-portal">
               ver el repo ↗
             </a>
           </p>

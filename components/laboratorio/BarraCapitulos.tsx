@@ -45,7 +45,7 @@ export function BarraCapitulos({ capitulos }: { capitulos: Capitulo[] }) {
             <span
               className={`block rounded-full border transition-all ${
                 activo
-                  ? "size-3 border-lab-portal bg-lab-portal shadow-[0_0_10px_rgba(126,227,91,0.6)]"
+                  ? "size-3 border-lab-portal bg-lab-portal shadow-[0_0_10px_rgba(151,206,76,0.6)]"
                   : "size-2 border-lab-tenue/60 bg-transparent group-hover:border-lab-portal"
               }`}
             />

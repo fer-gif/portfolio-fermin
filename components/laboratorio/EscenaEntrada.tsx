@@ -21,12 +21,12 @@ export function EscenaEntrada({ nombre, titulo }: { nombre: string; titulo: stri
   return (
     <div ref={ref} className="grid h-full place-items-center px-4 text-center">
       <div className="cartel">
-        <p className="font-mono text-sm text-lab-portal sm:text-base">~/el laboratorio de</p>
-        <h1 className="mt-2 text-[26vw] leading-[0.9] font-extrabold tracking-tighter uppercase sm:text-[16vw]">
+        <p className="font-mano text-2xl text-lab-portal sm:text-3xl">el laboratorio de</p>
+        <h1 className="brillo-portal font-display mt-1 text-[26vw] leading-[0.9] font-extrabold tracking-tight uppercase sm:text-[16vw]">
           {nombre}
         </h1>
         <p className="mt-4 text-lg text-lab-tenue sm:text-xl">{titulo}</p>
-        <p className="pista mt-10 font-mono text-xs text-lab-tenue">scrolleá para entrar ↓</p>
+        <p className="pista mt-10 font-mano text-xl text-lab-tenue">scrolleá para entrar ↓</p>
       </div>
     </div>
   );

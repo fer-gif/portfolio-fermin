@@ -102,7 +102,7 @@ export function Personaje({ guion, esperarIntro = false }: { guion: Guion; esper
   const aLaDerecha = posicion > 0.5;
 
   const globo = [
-    "personaje-globo absolute bottom-full mb-2 w-max max-w-[80vw] rounded-2xl border border-lab-borde bg-lab-panel/95 px-3 py-2 text-xs leading-snug backdrop-blur sm:bottom-6 sm:mb-0 sm:max-w-xs sm:px-4 sm:py-3 sm:text-sm",
+    "personaje-globo absolute bottom-full mb-2 w-max max-w-[80vw] rounded-2xl border border-lab-portal/40 bg-lab-panel/95 px-3 py-1.5 font-mano text-lg leading-tight backdrop-blur sm:bottom-6 sm:mb-0 sm:max-w-xs sm:px-4 sm:py-2.5 sm:text-2xl",
     aLaDerecha
       ? "right-0 rounded-br-sm sm:right-full sm:mr-3 sm:rounded-br-2xl sm:rounded-tr-sm"
       : "left-0 rounded-bl-sm sm:left-full sm:ml-3 sm:rounded-bl-2xl sm:rounded-tl-sm",

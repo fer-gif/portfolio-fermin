@@ -19,7 +19,7 @@ export function PersonajeSVG({ pose, className = "" }: { pose: Pose; className?:
 
         {/* bata */}
         <path d="M36 72 L84 72 L90 124 L30 124 Z" fill="#e9eef2" />
-        <path d="M54 72 L66 72 L62 104 L58 104 Z" fill="#7ee35b" />
+        <path d="M54 72 L66 72 L62 104 L58 104 Z" fill="#97ce4c" />
         <path d="M36 72 L54 72 L52 110 Z" fill="#d5dde3" />
         <path d="M84 72 L66 72 L68 110 Z" fill="#d5dde3" />
 
@@ -29,7 +29,7 @@ export function PersonajeSVG({ pose, className = "" }: { pose: Pose; className?:
           <circle cx="32" cy="114" r="5.5" fill="#f1c9a5" />
           <g className="frasco">
             <path d="M28 96 h8 v8 l8 16 h-24 l8 -16 z" fill="#cfe9ff" opacity="0.85" />
-            <path d="M24 110 l-4 10 h24 l-4 -10 z" fill="#7ee35b" opacity="0.9" />
+            <path d="M24 110 l-4 10 h24 l-4 -10 z" fill="#97ce4c" opacity="0.9" />
             <circle className="burbuja-frasco" cx="30" cy="118" r="1.4" fill="#e6ffe0" />
             <circle className="burbuja-frasco" cx="35" cy="119" r="1" fill="#e6ffe0" />
           </g>
@@ -54,8 +54,8 @@ export function PersonajeSVG({ pose, className = "" }: { pose: Pose; className?:
 
           {/* anteojos en la frente */}
           <rect x="38" y="27" width="44" height="5" rx="2" fill="#3a4a3f" />
-          <circle cx="49" cy="29" r="6.5" fill="#7ee35b" stroke="#3a4a3f" strokeWidth="2" />
-          <circle cx="71" cy="29" r="6.5" fill="#7ee35b" stroke="#3a4a3f" strokeWidth="2" />
+          <circle cx="49" cy="29" r="6.5" fill="#97ce4c" stroke="#3a4a3f" strokeWidth="2" />
+          <circle cx="71" cy="29" r="6.5" fill="#97ce4c" stroke="#3a4a3f" strokeWidth="2" />
 
           {/* cejas */}
           <path className="ceja" d="M42 40 q7 -5 14 0" stroke="#3a4a3f" strokeWidth="2.2" fill="none" />

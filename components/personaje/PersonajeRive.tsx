@@ -21,7 +21,7 @@ if (typeof window !== "undefined") {
 
 // Subir este número cada vez que cambia public/personaje/cientifico.riv,
 // para que el navegador no muestre una versión vieja del personaje.
-const VERSION = 5;
+const VERSION = 6;
 
 // Las poses que conoce el archivo Rive (rive/cientifico/generar.mjs).
 // Las demás caen en "quieto".

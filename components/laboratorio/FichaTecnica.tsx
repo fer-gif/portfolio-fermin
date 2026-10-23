@@ -65,8 +65,8 @@ export function FichaTecnica({
   return (
     <div ref={ref} className="grid h-full place-items-center px-4">
       <div className="max-h-full w-full max-w-xl overflow-y-auto" data-desborda>
-        <p className="linea font-mono text-sm text-lab-portal">~/ficha-tecnica</p>
-        <h2 className="linea mt-2 text-3xl font-bold tracking-tight">{proyecto.titulo}</h2>
+        <p className="linea font-mano text-2xl text-lab-portal">ficha técnica</p>
+        <h2 className="linea font-display mt-1 text-3xl font-bold tracking-tight sm:text-4xl">{proyecto.titulo}</h2>
 
         {(proyecto.probar || proyecto.codigo) && (
           <div className="linea mt-5 flex flex-wrap gap-3">
@@ -104,7 +104,7 @@ export function FichaTecnica({
             ))}
         </dl>
 
-        <p className="linea mt-8 font-mono text-xs text-lab-tenue">seguí bajando: la próxima mesa te espera ↓</p>
+        <p className="linea mt-8 font-mano text-lg text-lab-tenue">seguí bajando: la próxima mesa te espera ↓</p>
       </div>
     </div>
   );
