@@ -12,7 +12,13 @@ export function Recorrido({ children }: { children: ReactNode }) {
   const [director] = useState(crearDirector);
 
   useEffect(() => {
-    const lenis = new Lenis({ autoRaf: false, lerp: 0.1 });
+    const lenis = new Lenis({
+      autoRaf: false,
+      lerp: 0.1,
+      // Un panel con `data-desborda` se queda con la rueda solo si tiene más
+      // contenido del que entra; si no, la página sigue bajando normalmente.
+      prevent: (nodo) => nodo.hasAttribute("data-desborda") && nodo.scrollHeight > nodo.clientHeight + 1,
+    });
     lenis.on("scroll", ScrollTrigger.update);
     director.conectarNavegacion(
       (escena) => lenis.scrollTo(`#${escena}`, { duration: 1.4 }),

@@ -89,6 +89,9 @@ recién al llegar habla. Las mesas lo llevan al banco (`POSICION_MESA` en
   sesión y se saltea con `#ancla` o con "reducir movimiento".
 - Ojo: ScrollTrigger no reserva espacio de pin si el padre es `display: flex`.
   Por eso `<Recorrido>` envuelve todo en un bloque normal.
+- Un panel con scroll propio (calculadora, consulta, ficha técnica) lleva
+  `data-desborda`: Lenis le deja la rueda solo cuando su contenido no entra;
+  si entra, la página sigue bajando aunque el mouse esté encima.
 
 ## Sumar un proyecto
 

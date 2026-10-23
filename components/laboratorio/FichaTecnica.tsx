@@ -64,7 +64,7 @@ export function FichaTecnica({
 
   return (
     <div ref={ref} className="grid h-full place-items-center px-4">
-      <div className="w-full max-w-xl">
+      <div className="max-h-full w-full max-w-xl overflow-y-auto" data-desborda>
         <p className="linea font-mono text-sm text-lab-portal">~/ficha-tecnica</p>
         <h2 className="linea mt-2 text-3xl font-bold tracking-tight">{proyecto.titulo}</h2>
 
@@ -93,7 +93,7 @@ export function FichaTecnica({
           </div>
         )}
 
-        <dl className="mt-6 divide-y divide-lab-borde text-sm">
+        <dl className="mt-5 divide-y divide-lab-borde text-xs sm:mt-6 sm:text-sm">
           {filas
             .filter((f) => f.contenido)
             .map((f) => (

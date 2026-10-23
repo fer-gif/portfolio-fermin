@@ -62,7 +62,7 @@ export function MonitorAPI({ datos }: { datos: DatosAPI }) {
           ))}
         </header>
 
-        <div className="min-h-0 overflow-y-auto p-4 sm:p-5" data-lenis-prevent>
+        <div className="min-h-0 overflow-y-auto p-4 sm:p-5" data-desborda>
           {!hayDatos && (
             <p className="text-sm text-lab-tenue">La API no respondió. El portal se reabre en unos minutos.</p>
           )}

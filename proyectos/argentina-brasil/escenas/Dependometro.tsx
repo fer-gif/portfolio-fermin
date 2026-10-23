@@ -26,7 +26,7 @@ export function Dependometro() {
           Dependómetro · elegí un sector
         </header>
 
-        <div className="min-h-0 overflow-y-auto p-4 sm:p-5" data-lenis-prevent>
+        <div className="min-h-0 overflow-y-auto p-4 sm:p-5" data-desborda>
           <div className="flex flex-wrap gap-1.5">
             {SECTORES.map((s) => (
               <button

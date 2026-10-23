@@ -67,7 +67,7 @@ export function Calculadora() {
           ¿Cuánto vas a pagar de gas?
         </header>
 
-        <div className="grid min-h-0 gap-5 overflow-y-auto p-4 sm:grid-cols-[1fr_15rem] sm:p-5" data-lenis-prevent>
+        <div className="grid min-h-0 gap-5 overflow-y-auto p-4 sm:grid-cols-[1fr_15rem] sm:p-5" data-desborda>
           <div className="space-y-4">
             <div className="flex gap-1 font-mono text-xs">
               {(["estimador", "manual"] as Modo[]).map((m) => (
