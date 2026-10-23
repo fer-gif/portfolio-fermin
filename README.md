@@ -113,6 +113,11 @@ En `meta.ts`, `probar` (dónde se usa de verdad) y `codigo` (repo) son los dos
 botones grandes de la ficha técnica; `queHice` y `resultado` son las filas que
 mira un reclutador. Todo lo que falte simplemente no se muestra.
 
+`stack` se ve dos veces: en la ficha técnica, y en la mesa del proyecto como
+frascos etiquetados que caen y rebotan sobre la mesada (en celular, una línea
+dentro de la tarjeta). Un elemento "A · B" son dos frascos; se muestran hasta
+nueve.
+
 ### CV descargable
 
 Poner el PDF en `public/cv-fermin-hernando.pdf` y cambiar `cv` en

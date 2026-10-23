@@ -67,20 +67,20 @@ export function Escena({
       // El solapamiento se aplica recién acá, con el motor andando: si viviera
       // en el CSS, antes de que cargue el JS las escenas se apilarían todas en
       // una sola pantalla. ScrollTrigger copia este margen al pin-spacer.
-      if (solapar) {
-        seccion.style.marginTop = "-100svh";
-        // Hasta que se clava, la escena viaja invisible por encima de la
-        // anterior: el visitante ve el laboratorio quieto y la escena anterior
-        // apagándose.
-        caja.style.opacity = "0";
-      }
+      if (solapar) seccion.style.marginTop = "-100svh";
 
-      // Los hijos ya sumaron sus tweens (sus efectos corren antes). La pantalla
-      // extra: un rato quieta con la animación terminada, y después se apaga.
-      if (cubierta && linea.duration() > 0) {
-        const espera = linea.duration() / duracion;
-        // fromTo con el 1 fijado a mano: si se llega acá a los saltos (menú,
-        // scroll rápido), el tween no tiene que adivinar desde dónde apagar.
+      // Los hijos ya sumaron sus tweens (sus efectos corren antes). La
+      // visibilidad del contenido va en la misma línea de tiempo, así siempre
+      // es coherente con el scroll, también a los saltos (menú, scroll rápido):
+      // - antes de clavarse, la escena viaja invisible por encima de la anterior;
+      // - al clavarse, el contenido se materializa en los primeros 10 vh;
+      // - en la pantalla extra del final se queda quieta un rato y se apaga.
+      const total = linea.duration();
+      if (solapar && total > 0) {
+        linea.fromTo(caja, { opacity: 0 }, { opacity: 1, duration: (total * 0.1) / duracion, ease: "none", immediateRender: true }, 0);
+      }
+      if (cubierta && total > 0) {
+        const espera = total / duracion;
         linea
           .to({}, { duration: espera * 0.4 })
           .fromTo(caja, { opacity: 1 }, { opacity: 0, duration: espera * 0.6, ease: "none", immediateRender: false });
@@ -96,18 +96,7 @@ export function Escena({
         scrub: 0.6,
         animation: linea,
         onToggle: (st) => {
-          if (st.isActive) {
-            // Entrando desde arriba: aparece rápido. Volviendo desde abajo, la
-            // propia línea de tiempo la va prendiendo al revés.
-            if (solapar && st.direction === 1) {
-              gsap.fromTo(caja, { opacity: 0 }, { opacity: 1, duration: 0.45, ease: "power1.out" });
-            } else {
-              caja.style.opacity = "1";
-            }
-            director.fijar({ escena: id, progreso: st.progress, progresoAnimacion: animado(st.progress) });
-          } else if (solapar) {
-            caja.style.opacity = "0";
-          }
+          if (st.isActive) director.fijar({ escena: id, progreso: st.progress, progresoAnimacion: animado(st.progress) });
         },
         onUpdate: (st) => {
           if (st.isActive) director.fijar({ progreso: st.progress, progresoAnimacion: animado(st.progress) });

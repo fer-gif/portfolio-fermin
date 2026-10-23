@@ -50,9 +50,10 @@ const guionBase: Record<string, Linea> = {
   },
 };
 
-// En cada mesa el científico camina hasta el banco (a un tercio de la
-// pantalla); en el resto de las escenas vuelve a su rincón de la izquierda.
-const POSICION_MESA = 0.35;
+// En cada mesa el científico camina hasta el banco (al lado del pan, para no
+// pararse encima de los frascos); en el resto de las escenas vuelve a su
+// rincón de la izquierda.
+const POSICION_MESA = 0.46;
 const escenasDelGuion: Record<string, Linea> = {
   ...guionBase,
   ...Object.assign({}, ...Object.values(modulos).map((m) => m.guion)),

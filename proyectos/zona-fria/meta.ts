@@ -11,8 +11,8 @@ export const meta: Proyecto = {
   resumen:
     "Cruce de datos climáticos históricos con cuadros tarifarios para calcular el impacto de la quita de Zona Fría en los hogares de Junín.",
   artefacto: "Describir tu casa y ver cuánto más pagarías de gas sin Zona Fría.",
-  // PENDIENTE: stack real.
-  stack: [],
+  // PENDIENTE: que Fermín confirme el stack (la calculadora publicada corre en JavaScript dentro del sitio).
+  stack: ["JavaScript", "HTML · CSS", "Cuadros ENARGAS"],
   probar: "https://valeriaarata.com.ar/zona-fria/",
   // PENDIENTE: repo, si es público.
   enlaces: [],

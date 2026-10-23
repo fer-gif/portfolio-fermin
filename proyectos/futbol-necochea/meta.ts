@@ -19,8 +19,8 @@ export const meta: Proyecto = {
     "No existían datos digitales del fútbol local. Diseñé la recopilación, limpieza y normalización, y armé la primera API centralizada.",
   artefacto:
     "El antes y el después (captura original contra registro normalizado) y el widget real funcionando.",
-  // PENDIENTE: stack real.
-  stack: [],
+  // PENDIENTE: que Fermín complete el stack real (lenguaje, base de datos, cómo se cargan los datos).
+  stack: ["API REST · Vercel", "JSON", "Widget embebible"],
   probar: "https://widget-futbol-muove.vercel.app/api/goleadores",
   // PENDIENTE: repo del proyecto, si es público.
   enlaces: [],
