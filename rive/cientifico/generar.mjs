@@ -2,6 +2,7 @@
 // Correr: node generar.mjs  →  luego  rive . --verify
 //
 // Coordenadas: la figura ocupa 240x300 y va centrada en un artboard de 400x340.
+// Poses fijas (quieto, señalando, sorprendido, eureka) y una en loop (caminando).
 // La cabeza es un nodo con pivote en el cuello (120,150); sus hijos usan
 // coordenadas locales. Los ojos son otro nodo (centro de los ojos) para poder
 // agrandarlos. Orden de declaración = de adelante hacia atrás.
@@ -68,19 +69,21 @@ const ID = {
   cuerpo: id(), cabeza: id(), pelo: id(), ojos: id(), cejas: id(),
   pesadoIzq: id(), pesadoDer: id(), parpadoIzq: id(), parpadoDer: id(),
   boca: id(), bocaPlana: id(), bocaO: id(), bocaSonrisa: id(),
-  brazoSenala: id(), brazoFrasco: id(), burbuja1: id(), burbuja2: id(),
+  brazoSenala: id(), brazoFrasco: id(), burbuja1: id(), burbuja2: id(), piernaIzq: id(), piernaDer: id(),
   pupilaIzq: id(), pupilaDer: id(), joystick: id(), animMiradaX: id(), animMiradaY: id(), vmMiradaX: id(), vmMiradaY: id(),
   animVida: id(), animParpadeo: id(),
   capaVida: id(), capaParpadeo: id(), capaPose: id(), estadoVida: id(), estadoParpadeo: id(),
 };
 
 // Cada pose: brazos (grados), tamaño de ojos, párpados pesados (0 = abiertos,
-// 1 = cerrados), altura de la ceja y boca.
+// 1 = cerrados), altura de la ceja y boca. "Caminando" no es un cuadro fijo
+// sino un ciclo en loop (ver animCaminar).
 const POSES = [
   { clave: "quieto", etiqueta: "Quieto", senala: 0, frasco: 0, ojos: 1, pesado: 0.42, cejas: 0, boca: "plana" },
   { clave: "senalando", etiqueta: "Señalando", senala: -105, frasco: 0, ojos: 1, pesado: 0.3, cejas: -2, boca: "sonrisa" },
   { clave: "sorprendido", etiqueta: "Sorprendido", senala: 0, frasco: 0, ojos: 1.2, pesado: 0, cejas: -9, boca: "o" },
   { clave: "eureka", etiqueta: "Eureka", senala: -160, frasco: 160, ojos: 1.15, pesado: 0, cejas: -7, boca: "sonrisa" },
+  { clave: "caminando", etiqueta: "Caminando", ojos: 1, pesado: 0.3, cejas: -2, boca: "sonrisa", camina: true },
 ];
 for (const p of POSES) { p.valorId = id(); p.animId = id(); p.estadoId = id(); }
 
@@ -166,11 +169,17 @@ ${rect("Hebilla", 120, 241, 14, 12, VERDE, 2)}
 ${rect("Cinturón", 120, 241, 116, 10, CINTO)}
 ${poligono("Camisa", [[100, 146], [140, 146], [134, 236], [106, 236]], CAMISA)}`;
 
+// Piernas: cada una es un nodo con pivote en la cadera, para poder caminar.
+const CADERA = 233;
 const piernas = `
-${rect("Zapato izq", 104, 290, 36, 14, ZAPATO, 6)}
-${rect("Zapato der", 136, 290, 36, 14, ZAPATO, 6)}
-${rect("Pierna izq", 108, 262, 28, 58, PANTALON, 6)}
-${rect("Pierna der", 132, 262, 28, 58, PANTALON, 6)}`;
+<Node x="108" y="${CADERA}" name="Pierna izq" id="${ID.piernaIzq}">
+  ${rect("Zapato izq", -4, 57, 36, 14, ZAPATO, 6)}
+  ${rect("Pantalón izq", 0, 29, 28, 58, PANTALON, 6)}
+</Node>
+<Node x="132" y="${CADERA}" name="Pierna der" id="${ID.piernaDer}">
+  ${rect("Zapato der", 4, 57, 36, 14, ZAPATO, 6)}
+  ${rect("Pantalón der", 0, 29, 28, 58, PANTALON, 6)}
+</Node>`;
 
 // ---------- animaciones ----------
 const ease = `<CubicEaseInterpolator x1="0.42" y1="0" x2="0.58" y2="1"/>`;
@@ -219,19 +228,47 @@ const joystick = `
 
 // Poses: un cuadro cada una; la transición entre estados hace la mezcla.
 const idBoca = { plana: ID.bocaPlana, o: ID.bocaO, sonrisa: ID.bocaSonrisa };
-const animPoses = POSES.map(
-  (p) => `
+const cara = (p) =>
+  keyed(ID.ojos, "scaleX", kf(p.ojos, 0, "hold")) +
+  keyed(ID.ojos, "scaleY", kf(p.ojos, 0, "hold")) +
+  keyed(ID.pesadoIzq, "scaleY", kf(p.pesado, 0, "hold")) +
+  keyed(ID.pesadoDer, "scaleY", kf(p.pesado, 0, "hold")) +
+  keyed(ID.cejas, "y", kf(p.cejas, 0, "hold")) +
+  `<KeyedObject objectId="${ID.boca}"><KeyedProperty property="activeComponentId"><KeyFrameId value="${idBoca[p.boca]}" frame="0" interpolationType="hold"/></KeyedProperty></KeyedObject>`;
+
+// Una pierna: rotación (zancada) y altura (se levanta al dar el paso).
+const pierna = (objeto, rotacion, altura) =>
+  `<KeyedObject objectId="${objeto}"><KeyedProperty property="rotation">${rotacion}</KeyedProperty><KeyedProperty property="y">${altura}</KeyedProperty></KeyedObject>`;
+
+const animPoseFija = (p) => `
 <LinearAnimation duration="1" name="Pose ${p.etiqueta}" id="${p.animId}">
   ${keyed(ID.brazoSenala, "rotation", kf(rad(p.senala), 0, "hold"))}
   ${keyed(ID.brazoFrasco, "rotation", kf(rad(p.frasco), 0, "hold"))}
-  ${keyed(ID.ojos, "scaleX", kf(p.ojos, 0, "hold"))}
-  ${keyed(ID.ojos, "scaleY", kf(p.ojos, 0, "hold"))}
-  ${keyed(ID.pesadoIzq, "scaleY", kf(p.pesado, 0, "hold"))}
-  ${keyed(ID.pesadoDer, "scaleY", kf(p.pesado, 0, "hold"))}
-  ${keyed(ID.cejas, "y", kf(p.cejas, 0, "hold"))}
-  <KeyedObject objectId="${ID.boca}"><KeyedProperty property="activeComponentId"><KeyFrameId value="${idBoca[p.boca]}" frame="0" interpolationType="hold"/></KeyedProperty></KeyedObject>
-</LinearAnimation>`,
-).join("");
+  ${pierna(ID.piernaIzq, kf(0, 0, "hold"), kf(CADERA, 0, "hold"))}
+  ${pierna(ID.piernaDer, kf(0, 0, "hold"), kf(CADERA, 0, "hold"))}
+  ${cara(p)}
+</LinearAnimation>`;
+
+// Caminar: 40 cuadros en loop (dos pasos). Las piernas se alternan, cada brazo
+// va al revés que la pierna de su lado y el cuerpo rebota en cada paso.
+// Rotación negativa = hacia adelante (el personaje mira a la derecha).
+// La zancada es corta (las piernas están una al lado de la otra y se
+// cruzarían); lo que se ve es que cada pierna se levanta al ir hacia adelante.
+const CICLO = 40, ZANCADA = rad(16), BRACEO = rad(16), REBOTE = 6, LEVANTE = 9;
+const vaiven = (a, b) => kf(a, 0) + kf(b, CICLO / 2) + kf(a, CICLO, "linear");
+const levanteIzq = kf(CADERA, 0) + kf(CADERA - LEVANTE, CICLO / 4) + kf(CADERA, CICLO / 2, "hold") + kf(CADERA, CICLO, "hold");
+const levanteDer = kf(CADERA, 0, "hold") + kf(CADERA, CICLO / 2) + kf(CADERA - LEVANTE, (3 * CICLO) / 4) + kf(CADERA, CICLO, "linear");
+const animCaminar = (p) => `
+<LinearAnimation loopValue="loop" duration="${CICLO}" name="Pose ${p.etiqueta}" id="${p.animId}">
+  ${pierna(ID.piernaIzq, vaiven(ZANCADA, -ZANCADA), levanteIzq)}
+  ${pierna(ID.piernaDer, vaiven(-ZANCADA, ZANCADA), levanteDer)}
+  ${keyed(ID.brazoSenala, "rotation", vaiven(BRACEO, -BRACEO))}
+  ${keyed(ID.brazoFrasco, "rotation", vaiven(-BRACEO, BRACEO))}
+  ${keyed(ID.cuerpo, "y", kf(0, 0) + kf(-REBOTE, CICLO / 4) + kf(0, CICLO / 2) + kf(-REBOTE, (3 * CICLO) / 4) + kf(0, CICLO, "linear"))}
+  ${cara(p)}
+</LinearAnimation>`;
+
+const animPoses = POSES.map((p) => (p.camina ? animCaminar(p) : animPoseFija(p))).join("");
 
 // ---------- máquina de estados ----------
 const condicion = (p) => `

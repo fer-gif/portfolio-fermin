@@ -47,7 +47,8 @@ rive/cientifico/              ← el personaje como proyecto Rive CLI
 El científico es un archivo Rive escrito como texto (RML) y compilado con el
 [Rive CLI](https://rive.app/docs/cli). `generar.mjs` construye la escena:
 cuerpo que respira, pelo que se mece, párpados que parpadean, burbujas en el
-frasco, y cuatro poses (quieto, señalando, sorprendido, eureka) mezcladas
+frasco, cuatro poses fijas (quieto, señalando, sorprendido, eureka) y una en
+loop (caminando: piernas con pivote en la cadera, braceo y rebote), mezcladas
 por una máquina de estados que lee la propiedad `pose` del view model
 `Personaje`. El sitio la cambia con `useViewModelInstanceEnum` en
 `components/personaje/PersonajeRive.tsx`; mientras el `.riv` carga se ve el
@@ -74,7 +75,11 @@ que el navegador no use la copia en caché.
 Cada `<Escena>` se queda clavada en pantalla y el scroll avanza su línea de
 tiempo (GSAP ScrollTrigger + Lenis). Lo que hay adentro suma animaciones con
 `useEscena().linea`. El `Director` sabe en qué escena está el visitante; el
-`<Personaje>` lee de ahí su `guion` (texto, pose y lado por escena).
+`<Personaje>` lee de ahí su `guion` (texto, pose y `posicion` por escena: de
+0, el borde izquierdo, a 1, el derecho). Si la posición cambia entre escenas,
+el científico camina hasta ahí a paso constante, mirando hacia donde va, y
+recién al llegar habla. Las mesas lo llevan al banco (`POSICION_MESA` en
+`app/page.tsx`); las demás escenas lo devuelven a la izquierda.
 
 - La primera escena lleva `solapar={false}`; la última, `cubierta={false}`.
   Las demás suben y cubren a la anterior, sin scroll común entre escenas.

@@ -21,19 +21,32 @@ if (typeof window !== "undefined") {
 
 // Subir este número cada vez que cambia public/personaje/cientifico.riv,
 // para que el navegador no muestre una versión vieja del personaje.
-const VERSION = 4;
+const VERSION = 5;
 
 // Las poses que conoce el archivo Rive (rive/cientifico/generar.mjs).
 // Las demás caen en "quieto".
-const POSES_RIVE = new Set(["quieto", "senalando", "sorprendido", "eureka"]);
+const POSES_RIVE = new Set(["quieto", "senalando", "sorprendido", "eureka", "caminando"]);
 
 // A cuántos píxeles del personaje la mirada llega al tope (-1 / 1).
 const ALCANCE_MIRADA = 420;
 
 // El científico animado en Rive. Respira, parpadea, cambia de pose según el
 // dato `pose` y sigue el mouse con los ojos. Mientras carga, se ve el SVG.
-export function PersonajeRive({ pose, className = "" }: { pose: Pose; className?: string }) {
+// `direccion` -1 lo da vuelta (mira a la izquierda); el dibujo mira a la derecha.
+export function PersonajeRive({
+  pose,
+  direccion = 1,
+  className = "",
+}: {
+  pose: Pose;
+  direccion?: 1 | -1;
+  className?: string;
+}) {
   const contenedor = useRef<HTMLDivElement>(null);
+  const direccionRef = useRef(direccion);
+  useEffect(() => {
+    direccionRef.current = direccion;
+  }, [direccion]);
   const { rive, RiveComponent } = useRive({
     src: `/personaje/cientifico.riv?v=${VERSION}`,
     stateMachine: "Personaje",
@@ -62,7 +75,8 @@ export function PersonajeRive({ pose, className = "" }: { pose: Pose; className?
     const animar = () => {
       // se acerca suavemente al objetivo: la mirada no "salta"
       actual = { x: actual.x + (objetivo.x - actual.x) * 0.15, y: actual.y + (objetivo.y - actual.y) * 0.15 };
-      fijarMiradaX(actual.x);
+      // si está dado vuelta, la mirada también
+      fijarMiradaX(actual.x * direccionRef.current);
       fijarMiradaY(actual.y);
       if (Math.abs(objetivo.x - actual.x) > 0.002 || Math.abs(objetivo.y - actual.y) > 0.002) {
         cuadro = requestAnimationFrame(animar);
@@ -101,7 +115,11 @@ export function PersonajeRive({ pose, className = "" }: { pose: Pose; className?
   }, [instancia, fijarMiradaX, fijarMiradaY]);
 
   return (
-    <div ref={contenedor} className={`relative aspect-[400/340] ${className}`}>
+    <div
+      ref={contenedor}
+      className={`relative aspect-[400/340] transition-transform duration-300 ${className}`}
+      style={{ transform: direccion < 0 ? "scaleX(-1)" : undefined }}
+    >
       {!rive && <PersonajeSVG pose={pose} className="absolute inset-0 m-auto h-[88%] w-auto" />}
       <RiveComponent className={`h-full w-full transition-opacity duration-500 ${rive ? "opacity-100" : "opacity-0"}`} />
     </div>

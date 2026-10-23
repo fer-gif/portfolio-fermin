@@ -1,4 +1,4 @@
-/* Personaje v0: vida, poses y movimiento por la pantalla. */
+/* Personaje: vida, poses y movimiento por la pantalla. */
 
 .personaje-svg * {
   transform-box: fill-box;
@@ -35,7 +35,7 @@
 .personaje-svg .burbuja-frasco { animation: personaje-burbuja 1.8s linear infinite; }
 .personaje-svg .burbuja-frasco:nth-child(odd) { animation-delay: 0.9s; }
 
-/* --- poses --- */
+/* --- poses (del SVG de respaldo) --- */
 .personaje-svg .brazo-senala,
 .personaje-svg .brazo-frasco {
   transform-origin: top center;
@@ -72,6 +72,13 @@
 .personaje-svg.pose-empujando .boca-o { opacity: 1; }
 .personaje-svg.pose-empujando .boca-sonrisa { opacity: 0; }
 
+/* El SVG de respaldo no tiene ciclo de caminata: mientras camina, se bambolea. */
+@keyframes personaje-bamboleo {
+  0%, 100% { transform: rotate(-3deg) translateY(0); }
+  50% { transform: rotate(3deg) translateY(-3px); }
+}
+.personaje-svg.pose-caminando { transform-origin: bottom center; animation: personaje-bamboleo 0.33s ease-in-out infinite; }
+
 /* La pose de empuje (dibujo aparte) tiembla un poco: esfuerzo. */
 @keyframes personaje-esfuerzo {
   0%, 100% { transform: translate(0, 0); }
@@ -83,18 +90,14 @@
 .personaje-contenedor.espera-intro { opacity: 0; transition: opacity 0.6s ease; }
 html.intro-lista .personaje-contenedor.espera-intro { opacity: 1; }
 
-/* --- dónde está en la pantalla --- */
-.personaje-contenedor {
+/* --- dónde está en la pantalla ---
+   El desplazamiento horizontal (la caminata) lo maneja Personaje.tsx cuadro a
+   cuadro con translateX sobre .personaje-contenedor. Acá solo queda "ausente". */
+.personaje-cuerpo {
   transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.personaje-contenedor.lado-derecha {
-  transform: translateX(calc(100vw - 100% - 2rem));
-}
-.personaje-contenedor.ausente {
+.personaje-cuerpo.ausente {
   transform: translateY(140%);
-}
-.personaje-contenedor.lado-derecha.ausente {
-  transform: translate(calc(100vw - 100% - 2rem), 140%);
 }
 
 /* --- globo de diálogo --- */
@@ -106,7 +109,8 @@ html.intro-lista .personaje-contenedor.espera-intro { opacity: 1; }
 
 @media (prefers-reduced-motion: reduce) {
   .personaje-svg *,
-  .personaje-contenedor,
+  .personaje-svg,
+  .personaje-cuerpo,
   .personaje-cursor {
     animation: none !important;
     transition: none !important;
