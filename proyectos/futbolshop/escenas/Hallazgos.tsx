@@ -65,7 +65,7 @@ function Visual({ tipo }: { tipo: Hallazgo["visual"] }) {
   );
 }
 
-// Tres bugs del núcleo que nadie había visto, y la lección: probar a mano.
+// Tres bugs que solo aparecieron con datos reales, y la lección: probar a mano.
 export function Hallazgos() {
   const { linea } = useEscena();
   const ref = useRef<HTMLDivElement>(null);
@@ -82,7 +82,7 @@ export function Hallazgos() {
     <div ref={ref} className="grid h-full place-items-center px-4">
       <div className="panel grid w-full max-w-5xl gap-4 sm:grid-cols-[18rem_1fr] sm:gap-10">
         <div>
-          <p className="mb-3 font-mono text-xs text-lab-tenue sm:text-sm">Tres bugs del núcleo · encontrados de paso</p>
+          <p className="mb-3 font-mono text-xs text-lab-tenue sm:text-sm">Tres bugs · aparecieron con los datos reales</p>
           <Pasos pasos={PASOS_HALLAZGOS.map((p) => p.panel)} actual={paso} />
         </div>
 

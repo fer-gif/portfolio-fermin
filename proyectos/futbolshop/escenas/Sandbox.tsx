@@ -321,7 +321,7 @@ export function Sandbox() {
           <span>
             mostrando {visibles.length} de {productos.length} productos
           </span>
-          <span>FutbolShop 6.2.2 · módulo propio sobre NexoPOS</span>
+          <span>FutbolShop · sistema a medida · Muove</span>
         </footer>
 
         {/* mensaje verde */}

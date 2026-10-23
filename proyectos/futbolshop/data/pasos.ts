@@ -13,7 +13,7 @@ const n = (v: number) => v.toLocaleString("es-AR");
 
 export const PASOS_LINEA: Paso[] = [
   {
-    panel: "31 de agosto de 2026: arranca el repo como fork de NexoPOS, con un módulo propio y seis reglas escritas. El 5 de septiembre están cerradas las 84 tareas del proyecto original, en seis olas sobre catorce dominios.",
+    panel: "31 de agosto de 2026: arranca el proyecto. La tienda lleva productos, stock y ventas en planillas de Excel. Se escriben seis reglas de trabajo y un plan en olas; el 5 de septiembre están cerradas las 84 tareas, sobre catorce dominios.",
     dice: "Del primer commit al cierre de las 84 tareas pasaron seis días. No es magia: es un sistema de trabajo escrito antes de empezar.",
     pose: "senalando",
   },
@@ -36,13 +36,13 @@ export const PASOS_LINEA: Paso[] = [
 
 export const PASOS_CONSTRUCCION: Paso[] = [
   {
-    panel: "Muove Stock es un fork de NexoPOS 6.2.2, un punto de venta libre. Regla número uno: el núcleo no se toca. Todo lo propio vive en un módulo aparte y se engancha por hooks, filtros y eventos. Así el núcleo sigue recibiendo actualizaciones sin conflictos.",
-    dice: "El núcleo es de otro y se actualiza solo. Lo nuestro vive al lado y se engancha con ganchos. Si lo tocás, lo pagás para siempre.",
+    panel: "FutbolShop llevaba el negocio en planillas de Excel: productos, stock por talle, ventas del día, proveedores. El sistema a medida reúne todo en un solo lugar: catálogo con variantes, stock por local, compras, caja, vendedores, clientes, permisos e informes.",
+    dice: "Antes: cinco planillas que no se hablaban entre sí. Ahora: un sistema donde cada venta descuenta el stock sola.",
     pose: "senalando",
   },
   {
-    panel: `Adentro del módulo: ${MODULO.piezas.map((p) => `${p.cantidad} ${p.nombre}`).join(", ")}. Unas ${n(MODULO.lineas.php)} líneas de PHP, ${n(MODULO.lineas.ts)} de TypeScript y ${n(MODULO.lineas.vue)} de Vue, todo con prefijo propio.`,
-    dice: "Cincuenta y dos filtros, sesenta y dos oyentes, cuarenta y cinco componentes. Todo con prefijo propio, para que nadie lo confunda con el núcleo.",
+    panel: `Cómo está hecho: Laravel y PHP en el servidor, Vue y TypeScript en la pantalla, MySQL para los datos. ${MODULO.piezas.map((p) => `${p.cantidad} ${p.nombre}`).join(", ")}. Unas ${n(MODULO.lineas.php)} líneas de PHP, ${n(MODULO.lineas.ts)} de TypeScript y ${n(MODULO.lineas.vue)} de Vue.`,
+    dice: "Laravel atrás, Vue adelante, MySQL abajo. Cuarenta y cinco componentes de pantalla y cuarenta y cuatro migraciones de base.",
     pose: "quieto",
   },
   {
@@ -59,7 +59,7 @@ export const PASOS_CONSTRUCCION: Paso[] = [
 
 export const PASOS_HALLAZGOS: Paso[] = [
   {
-    panel: "Bug 1 · Arrastrabas las categorías, el sistema decía «guardado»… y ninguna pantalla leía ese orden. Estaba en el núcleo desde siempre y nadie lo había notado.",
+    panel: "Bug 1 · Arrastrabas las categorías, el sistema decía «guardado»… y ninguna pantalla leía ese orden. Venía de antes y nadie lo había notado.",
     dice: "Decía «guardado» y era mentira: el orden se guardaba en un cajón que nadie abría.",
     pose: "sorprendido",
   },
@@ -69,8 +69,8 @@ export const PASOS_HALLAZGOS: Paso[] = [
     pose: "senalando",
   },
   {
-    panel: "Bug 3 · El pop-up de reordenar abría vacío: las categorías tienen parent_id = 0 y la consulta pedía IS NULL. El propio núcleo se contradecía, porque para el POS preguntaba null OR 0.",
-    dice: "Cero no es nulo. El núcleo lo sabía en una pantalla y lo olvidaba en la otra.",
+    panel: "Bug 3 · El pop-up de reordenar abría vacío: las categorías tienen parent_id = 0 y la consulta pedía IS NULL. Otra pantalla, para lo mismo, preguntaba null OR 0.",
+    dice: "Cero no es nulo. Una pantalla lo sabía y la otra lo olvidaba.",
     pose: "quieto",
   },
   {

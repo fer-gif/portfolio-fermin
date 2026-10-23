@@ -3,14 +3,14 @@
 import { useRef } from "react";
 import { useEscena, useGSAP, usePasoActual } from "@/components/recorrido";
 import { Pasos } from "@/components/laboratorio/Pasos";
-import { MODULO } from "../data/sistema";
+import { ALCANCE, ANTES, MODULO } from "../data/sistema";
 import { PASOS_CONSTRUCCION } from "../data/pasos";
 
 const n = (v: number) => v.toLocaleString("es-AR");
 const MAXIMO_PRUEBAS = Math.max(...MODULO.pruebas.map((p) => p.cantidad));
 
-// Cómo está hecho: el núcleo que no se toca, el módulo que se engancha, las
-// pruebas y la documentación. Cada paso enciende una parte del esquema.
+// De las planillas a un sistema: qué maneja, cómo está hecho, las pruebas y
+// la documentación. Cada paso enciende una parte del esquema.
 export function Construccion() {
   const { linea } = useEscena();
   const ref = useRef<HTMLDivElement>(null);
@@ -27,40 +27,66 @@ export function Construccion() {
     <div ref={ref} className="grid h-full place-items-center px-4">
       <div className="panel grid w-full max-w-5xl gap-4 sm:grid-cols-[18rem_1fr] sm:gap-10">
         <div>
-          <p className="mb-3 font-mono text-xs text-lab-tenue sm:text-sm">Cómo está hecho · módulo sobre NexoPOS</p>
+          <p className="mb-3 font-mono text-xs text-lab-tenue sm:text-sm">De las planillas a un sistema a medida</p>
           <Pasos pasos={PASOS_CONSTRUCCION.map((p) => p.panel)} actual={paso} />
         </div>
 
         <div className="space-y-3 self-center text-xs">
-          {/* el esquema (en celular, solo mientras la historia habla de él) */}
-          <div className={`grid-cols-[1fr_auto_1fr] items-stretch gap-2 sm:grid ${paso <= 1 ? "grid" : "hidden"}`}>
+          {/* antes → ahora (en celular, solo mientras la historia habla de eso) */}
+          <div className={`grid-cols-[1fr_auto_1.6fr] items-stretch gap-2 sm:grid ${paso === 0 ? "grid" : "hidden"}`}>
             <div className="rounded-xl border border-lab-borde bg-lab-panel/60 p-3 text-lab-tenue">
-              <p className="font-mono text-[10px] uppercase tracking-wider">Núcleo · NexoPOS 6.2.2</p>
-              <p className="mt-1 text-sm font-semibold text-lab-texto">No se toca</p>
-              <p className="mt-1 hidden sm:block">POS · catálogo · caja · contabilidad · usuarios</p>
-              <p className="mt-2 font-mono text-[10px]">app/ · resources/ · routes/ · database/</p>
-            </div>
-            <div className="flex flex-col items-center justify-center gap-1 font-mono text-[10px] text-lab-portal">
-              <span>hooks</span>
-              <span>←→</span>
-              <span>filtros</span>
-              <span>←→</span>
-              <span>eventos</span>
-            </div>
-            <div className={`rounded-xl border p-3 transition-colors duration-500 ${paso >= 1 ? "border-yellow-400/80 bg-yellow-400/10" : "border-lab-portal/60 bg-lab-panel"}`}>
-              <p className="font-mono text-[10px] uppercase tracking-wider text-yellow-300">Módulo · FutbolShop</p>
-              <p className="mt-1 text-sm font-semibold">Todo lo propio</p>
-              <div className={`mt-2 flex flex-wrap gap-1 transition-opacity duration-500 ${paso >= 1 ? "opacity-100" : "opacity-0"}`}>
-                {MODULO.piezas.map((p) => (
-                  <span key={p.clave} className="rounded-full border border-yellow-400/40 px-2 py-0.5 font-mono text-[10px]">
-                    {p.cantidad} {p.nombre}
-                  </span>
+              <p className="font-mono text-[10px] uppercase tracking-wider">Antes</p>
+              <p className="mt-1 text-sm font-semibold text-lab-texto">Planillas sueltas</p>
+              <p className="mt-1 text-[10px] sm:hidden">{ANTES.length} archivos de Excel que no se hablaban entre sí.</p>
+              <ul className="mt-2 hidden space-y-1 font-mono text-[10px] sm:block">
+                {ANTES.map((a) => (
+                  <li key={a} className="flex items-center gap-1.5">
+                    <span className="inline-block size-2 rounded-sm border border-emerald-500/60 bg-emerald-900/40" aria-hidden />
+                    {a}
+                  </li>
                 ))}
-              </div>
-              <p className={`mt-2 font-mono text-[10px] text-lab-tenue transition-opacity duration-500 ${paso >= 1 ? "opacity-100" : "opacity-0"}`}>
-                {n(MODULO.lineas.php)} PHP · {n(MODULO.lineas.ts)} TS · {n(MODULO.lineas.vue)} Vue
-              </p>
+              </ul>
             </div>
+            <div className="flex items-center font-mono text-lg text-lab-portal">→</div>
+            <div className="rounded-xl border border-yellow-400/70 bg-yellow-400/10 p-3">
+              <p className="font-mono text-[10px] uppercase tracking-wider text-yellow-300">Ahora · un solo sistema</p>
+              <p className="mt-1 text-sm font-semibold">Todo junto y conectado</p>
+              <ul className="mt-2 flex flex-wrap gap-1">
+                {ALCANCE.map((a, i) => (
+                  <li key={a} className={`rounded-full border border-yellow-400/40 px-2 py-0.5 text-[10px] ${i >= 5 ? "hidden sm:block" : ""}`}>
+                    {a}
+                  </li>
+                ))}
+                <li className="px-2 py-0.5 text-[10px] text-lab-tenue sm:hidden">y {ALCANCE.length - 5} cosas más</li>
+              </ul>
+            </div>
+          </div>
+
+          {/* cómo está hecho */}
+          <div className={`rounded-xl border border-lab-borde bg-lab-panel/60 p-3 transition-opacity duration-700 sm:block ${paso >= 1 ? "opacity-100" : "opacity-20"} ${paso === 1 ? "block" : "hidden"}`}>
+            <p className="font-mono text-[10px] uppercase tracking-wider text-lab-tenue">Cómo está hecho</p>
+            <div className="mt-2 grid grid-cols-3 gap-2 text-center font-mono">
+              {[
+                ["Laravel · PHP", "servidor"],
+                ["Vue · TypeScript", "pantalla"],
+                ["MySQL", "datos"],
+              ].map(([t, s]) => (
+                <div key={t} className="rounded-lg border border-lab-borde px-2 py-1.5">
+                  <p className="text-xs font-semibold text-lab-texto">{t}</p>
+                  <p className="text-[10px] text-lab-tenue">{s}</p>
+                </div>
+              ))}
+            </div>
+            <div className="mt-2 flex flex-wrap gap-1">
+              {MODULO.piezas.map((p) => (
+                <span key={p.clave} className="rounded-full border border-lab-borde px-2 py-0.5 font-mono text-[10px]">
+                  {p.cantidad} {p.nombre}
+                </span>
+              ))}
+            </div>
+            <p className="mt-2 font-mono text-[10px] text-lab-tenue">
+              {n(MODULO.lineas.php)} líneas de PHP · {n(MODULO.lineas.ts)} de TypeScript · {n(MODULO.lineas.vue)} de Vue
+            </p>
           </div>
 
           {/* pruebas */}
