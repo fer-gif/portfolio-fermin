@@ -3,7 +3,6 @@ import type { Proyecto } from "../tipos";
 // FutbolShop: sistema a medida de caja e inventario para una tienda de
 // insumos deportivos que llevaba todo en planillas (repo privado de Muove).
 // Números medidos el 23/10/2026.
-// PENDIENTE: que Fermín confirme su rol, "qué hice" y los créditos.
 export const meta: Proyecto = {
   slug: "futbolshop",
   titulo: "FutbolShop",

@@ -7,13 +7,13 @@ export const meta: Proyecto = {
   estado: "publicado",
   autoria: "individual",
   rol: "Recopilación, limpieza, normalización de datos y diseño de la API",
-  // PENDIENTE: que Fermín revise estas frases y sume el resultado medido
-  // (por ejemplo: cantidad de partidos cargados, diarios que usan el widget).
   queHice: [
     "Recopilé los resultados que solo existían en fotos, planillas y PDFs.",
     "Limpié y normalicé los nombres de clubes y jugadores (una máquina de normalización).",
     "Diseñé la API centralizada que hoy consumen los diarios con un widget.",
   ],
+  resultado:
+    "Más de 30 partidos cargados con goleadores, asistentes y tabla de posiciones dinámica, en el widget creado para Data eNe.",
   creditos: "Data eNe y Muove, con respaldo de VorkNews",
   resumen:
     "No existían datos digitales del fútbol local. Diseñé la recopilación, limpieza y normalización, y armé la primera API centralizada.",

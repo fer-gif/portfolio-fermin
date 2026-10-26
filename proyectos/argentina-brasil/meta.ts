@@ -18,7 +18,7 @@ export const meta: Proyecto = {
   // Stack según el informe publicado. PENDIENTE: confirmar con Fermín.
   stack: ["HTML + Tailwind", "Chart.js", "amCharts 5", "Three.js", "INDEC · BCR"],
   probar: "https://informe-br-ar.vercel.app/",
-  // PENDIENTE: repo del informe, si es público.
+  codigo: "https://github.com/fer-gif/InformeBrAr",
   enlaces: [],
   orden: 2,
 };
