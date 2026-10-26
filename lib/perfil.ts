@@ -1,5 +1,5 @@
 // Datos personales que se muestran en el laboratorio.
-// PENDIENTE: presentación en 2 frases, y el CV en PDF (public/cv-fermin-hernando.pdf).
+// PENDIENTE: revisar la presentación en 2 frases.
 export const perfil = {
   nombre: "Fermín",
   nombreCompleto: "Fermín Hernando",
@@ -14,9 +14,6 @@ export const perfil = {
   ],
   /** Repo de este mismo sitio. */
   repositorio: "https://github.com/fer-gif/portfolio-fermin",
-  /**
-   * Ruta del CV dentro de public/. Mientras sea null, el botón "CV" no aparece
-   * ni arriba ni en la salida. Cuando esté el PDF: "/cv-fermin-hernando.pdf".
-   */
-  cv: null as string | null,
+  /** Ruta del CV dentro de public/. */
+  cv: "/cv-fermin-hernando.pdf",
 };
