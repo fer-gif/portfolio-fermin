@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useDirector, useEscenaActual } from "@/components/recorrido";
 
 export interface Destino {
@@ -45,19 +46,27 @@ export function MenuLaboratorio({ destinos }: { destinos: Destino[] }) {
         {abierto ? "cerrar ×" : "saltar a ☰"}
       </button>
       {abierto && (
-        <ul
-          className="max-h-[70svh] w-64 overflow-y-auto rounded-xl border border-lab-borde bg-lab-panel/95 p-2 font-mono text-sm backdrop-blur"
-          data-lenis-prevent
-        >
-          {destinos.map((d) => (
-            <li key={d.escena}>
-              {boton(d.escena, d.etiqueta)}
-              {d.hijos?.map((h) => (
-                <div key={h.escena}>{boton(h.escena, h.etiqueta, true)}</div>
-              ))}
-            </li>
-          ))}
-        </ul>
+        <div className="flex w-64 flex-col gap-2">
+          <ul
+            className="max-h-[60svh] overflow-y-auto rounded-xl border border-lab-borde bg-lab-panel/95 p-2 font-mono text-sm backdrop-blur"
+            data-lenis-prevent
+          >
+            {destinos.map((d) => (
+              <li key={d.escena}>
+                {boton(d.escena, d.etiqueta)}
+                {d.hijos?.map((h) => (
+                  <div key={h.escena}>{boton(h.escena, h.etiqueta, true)}</div>
+                ))}
+              </li>
+            ))}
+          </ul>
+          <Link
+            href="/directo"
+            className="rounded-xl border border-lab-borde bg-lab-panel/95 px-3 py-2 text-right font-mono text-xs text-lab-tenue backdrop-blur transition-colors hover:border-lab-portal hover:text-lab-portal"
+          >
+            modo directo · sin recorrido ↗
+          </Link>
+        </div>
       )}
     </nav>
   );
