@@ -22,7 +22,7 @@ export const meta: Proyecto = {
   // PENDIENTE: que Fermín complete el stack real (lenguaje, base de datos, cómo se cargan los datos).
   stack: ["API REST · Vercel", "JSON", "Widget embebible"],
   probar: "https://widget-futbol-muove.vercel.app/api/goleadores",
-  // PENDIENTE: repo del proyecto, si es público.
+  // Repo privado (Data eNe / Muove): no hay link de código público.
   enlaces: [],
   orden: 1,
 };
