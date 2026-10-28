@@ -7,11 +7,11 @@ import { OBJETOS } from "./objetos";
 // las siluetas que reciben el mouse. Usa el mismo viewBox que la escenografía,
 // así cada zona cae exactamente sobre su dibujo.
 const ZONAS: Record<string, { x: number; y: number; w: number; h: number }> = {
-  estante: { x: 90, y: 60, w: 300, h: 84 },
-  surf: { x: 468, y: 84, w: 128, h: 92 },
-  jiujitsu: { x: 610, y: 60, w: 98, h: 120 },
-  rugby: { x: 732, y: 96, w: 116, h: 86 },
-  kimono: { x: 150, y: 286, w: 120, h: 242 },
+  estante: { x: 90, y: 110, w: 300, h: 84 },
+  surf: { x: 468, y: 128, w: 128, h: 92 },
+  jiujitsu: { x: 610, y: 104, w: 98, h: 120 },
+  rugby: { x: 732, y: 140, w: 116, h: 86 },
+  kimono: { x: 150, y: 320, w: 120, h: 242 },
   // la tabla: su mitad izquierda, para no pisar la barra de capítulos
   tabla: { x: 1340, y: 222, w: 90, h: 580 },
 };

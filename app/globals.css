@@ -15,9 +15,9 @@
   --color-lab-rosa: #ef6ad4;
   --color-lab-amarillo: #f2e05a;
   --color-lab-celeste: #9ad9ea;
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-inter);
   --font-mono: var(--font-geist-mono);
-  --font-display: var(--font-outfit);
+  --font-display: var(--font-space-grotesk);
   --font-mano: var(--font-caveat);
 }
 

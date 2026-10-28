@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
-import { Caveat, Geist, Geist_Mono, Outfit } from "next/font/google";
+import { Caveat, Geist_Mono, Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 
-// Cuatro voces: Geist para leer, Geist Mono para los datos, Outfit para los
-// títulos grandes y Caveat (manuscrita) para lo que dice el científico y las
-// notas al margen.
-const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
+// Tres voces: Inter para leer (moderna, legible, estándar de facto en UIs),
+// Geist Mono para los datos (código, stacks, monospace), Space Grotesk para
+// los títulos grandes (geométrica con carácter técnico), y Caveat (manuscrita)
+// para lo que dice el científico y las notas al margen.
+const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
-const outfit = Outfit({ variable: "--font-outfit", subsets: ["latin"], weight: ["500", "700", "800"] });
+const spaceGrotesk = Space_Grotesk({ variable: "--font-space-grotesk", subsets: ["latin"] });
 const caveat = Caveat({ variable: "--font-caveat", subsets: ["latin"], weight: ["500", "700"] });
 
 export const metadata: Metadata = {
@@ -22,7 +23,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="es"
-      className={`${geistSans.variable} ${geistMono.variable} ${outfit.variable} ${caveat.variable} h-full antialiased`}
+      className={`${inter.variable} ${geistMono.variable} ${spaceGrotesk.variable} ${caveat.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans">{children}</body>
     </html>

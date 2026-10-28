@@ -1,5 +1,6 @@
 import { ETIQUETA_CATEGORIA, type Proyecto } from "@/proyectos";
 import type { ReactNode } from "react";
+import { LogoStack } from "./LogoStack";
 
 // La ficha del modo directo: lo mismo que la ficha técnica del recorrido, pero
 // estática (sin GSAP ni Escena) para que un reclutador pueda leer todo de una,
@@ -31,7 +32,7 @@ export function FichaDirecta({ proyecto, numero }: { proyecto: Proyecto; numero:
     { etiqueta: "Resultado", contenido: proyecto.resultado },
     { etiqueta: "Con", contenido: proyecto.creditos },
     { etiqueta: "Modalidad", contenido: modalidad },
-    { etiqueta: "Stack", contenido: proyecto.stack.length ? proyecto.stack.join(" · ") : undefined },
+    { etiqueta: "Stack", contenido: proyecto.stack.length ? <LogoStack stack={proyecto.stack} /> : undefined },
     {
       etiqueta: "Enlaces",
       contenido: proyecto.enlaces.length ? (

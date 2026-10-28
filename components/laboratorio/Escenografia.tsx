@@ -34,7 +34,7 @@ export function Escenografia({ activo = null, tocado = null }: { activo?: string
 
       {/* estante con frascos, bien arriba para no chocar con el contenido
           (solo pantalla grande: en celular se vería entre el contenido) */}
-      <g className="hidden sm:block" transform="translate(0 -110)">
+      <g className="hidden sm:block" transform="translate(0 -60)">
         <g className={objeto("estante")}>
           <rect x="90" y="236" width="300" height="10" rx="3" fill={PARED} />
           <path d="M100 246 l14 20 M380 246 l-14 20" stroke={PARED} strokeWidth="4" strokeLinecap="round" />
@@ -58,7 +58,7 @@ export function Escenografia({ activo = null, tocado = null }: { activo?: string
       {/* tres cuadros en la pared: la ola, el kimono con el cinturón, los palos de rugby */}
       <g className="hidden sm:block">
         {/* surf */}
-        <g transform="translate(470 86) rotate(-1.5)">
+        <g transform="translate(470 130) rotate(-1.5)">
           <g className={objeto("surf")}>
             <rect width="124" height="88" rx="4" fill={MARCO} />
             <rect x="7" y="7" width="110" height="74" rx="2" fill={SOMBRA} />
@@ -70,7 +70,7 @@ export function Escenografia({ activo = null, tocado = null }: { activo?: string
           </g>
         </g>
         {/* jiu-jitsu */}
-        <g transform="translate(612 62) rotate(1)">
+        <g transform="translate(612 106) rotate(1)">
           <g className={objeto("jiujitsu")}>
             <rect width="94" height="116" rx="4" fill={MARCO} />
             <rect x="7" y="7" width="80" height="102" rx="2" fill={SOMBRA} />
@@ -82,7 +82,7 @@ export function Escenografia({ activo = null, tocado = null }: { activo?: string
           </g>
         </g>
         {/* rugby */}
-        <g transform="translate(734 98) rotate(-1)">
+        <g transform="translate(734 142) rotate(-1)">
           <g className={objeto("rugby")}>
             <rect width="112" height="82" rx="4" fill={MARCO} />
             <rect x="7" y="7" width="98" height="68" rx="2" fill={SOMBRA} />
@@ -96,7 +96,7 @@ export function Escenografia({ activo = null, tocado = null }: { activo?: string
       </g>
 
       {/* el kimono colgado de un gancho, a la izquierda */}
-      <g className="hidden sm:block" transform="translate(150 286)" opacity="0.9">
+      <g className="hidden sm:block" transform="translate(150 320)" opacity="0.9">
         <g className={objeto("kimono")}>
           <circle cx="60" cy="0" r="4" fill={MARCO} />
           <g className="kimono">
