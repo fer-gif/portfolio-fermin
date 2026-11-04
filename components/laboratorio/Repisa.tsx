@@ -24,7 +24,7 @@ export function Repisa() {
       {aviso && (
         <div
           role="status"
-          className="repisa-aviso max-w-[70vw] rounded-xl border border-lab-portal/60 bg-lab-panel/95 px-3 py-2 text-right backdrop-blur sm:max-w-xs"
+          className="repisa-aviso max-w-[70vw] rounded-xl border border-lab-portal/60 bg-lab-panel px-3 py-2 text-right sm:max-w-xs"
         >
           <p className="font-mono text-[10px] uppercase tracking-wider text-lab-portal">experimento desbloqueado</p>
           <p className="font-mano text-lg leading-tight text-lab-texto">{aviso.nombre}</p>
@@ -32,7 +32,7 @@ export function Repisa() {
       )}
       <div
         title={`${logros.length} de ${LOGROS.length} experimentos desbloqueados`}
-        className="flex items-end gap-1.5 rounded-full border border-lab-borde bg-lab-panel/90 px-3 py-1.5 backdrop-blur"
+        className="flex items-end gap-1.5 rounded-full border border-lab-borde bg-lab-panel px-3 py-1.5"
       >
         <svg width="12" height="14" viewBox="0 0 12 14" aria-hidden className="text-lab-portal">
           <rect x="3" y="0.5" width="6" height="2" rx="0.5" fill="currentColor" />

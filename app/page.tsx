@@ -103,7 +103,7 @@ export default function Laboratorio() {
       <Repisa />
       <Personaje guion={guion} esperarIntro />
 
-      <Escena id="entrada" duracion={1.2} solapar={false}>
+      <Escena id="entrada" duracion={0.7} solapar={false}>
         <EscenaEntrada nombre={perfil.nombre} titulo={perfil.titulo} />
       </Escena>
 
@@ -111,7 +111,8 @@ export default function Laboratorio() {
         const modulo = modulos[proyecto.slug];
         return (
           <div key={proyecto.slug} className="contents">
-            <Escena id={`mesa-${proyecto.slug}`} duracion={1.4}>
+            {/* cada proyecto llega por un portal */}
+            <Escena id={`mesa-${proyecto.slug}`} duracion={1.4} entrada="portal">
               <Mesa proyecto={proyecto} numero={i + 1} tieneEscenas={Boolean(modulo)} />
             </Escena>
             {modulo && <modulo.Escenas />}
@@ -119,13 +120,14 @@ export default function Laboratorio() {
         );
       })}
 
-      <Escena id="salida" duracion={0.8} cubierta={false}>
+      <Escena id="salida" duracion={0.8} cubierta={false} entrada="portal">
         <EscenaSalida
           nombre={perfil.nombreCompleto}
           presentacion={perfil.presentacion}
           enlaces={perfil.enlaces}
           cv={perfil.cv}
           repositorio={perfil.repositorio}
+          herramientas={perfil.herramientas}
         />
       </Escena>
     </Recorrido>

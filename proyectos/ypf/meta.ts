@@ -22,7 +22,9 @@ export const meta: Proyecto = {
     "Diez años de sismos del USGS (2016–2026), recortados al territorio argentino con capas del IGN: análisis exploratorio, limpieza y un modelo que estima cuántos sismos habrá en los próximos meses.",
   artefacto:
     "Recorrer el mapa de las tres zonas sísmicas, ver el mes que rompió la escala y preguntarle al modelo cuántos sismos esperar.",
-  stack: ["Python", "Pandas", "GeoPandas · Shapely", "Matplotlib", "USGS · IGN"],
+  // Los notebooks del repo usan scikit-learn (Dummy, regresión lineal, Random
+  // Forest) y XGBoost para la predicción mensual.
+  stack: ["Python", "Pandas", "GeoPandas · Shapely", "Matplotlib", "Jupyter", "scikit-learn · XGBoost", "USGS · IGN"],
   codigo: "https://github.com/fer-gif/proyecto_ypf",
   enlaces: [{ etiqueta: "Catálogo USGS", url: "https://earthquake.usgs.gov/earthquakes/search/" }],
   orden: 5,

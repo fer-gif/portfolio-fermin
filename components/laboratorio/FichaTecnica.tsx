@@ -3,6 +3,7 @@
 import { useRef, type ReactNode } from "react";
 import { gsap, useEscena, useGSAP } from "@/components/recorrido";
 import type { Proyecto } from "@/proyectos";
+import { LogoStack } from "./LogoStack";
 
 // Salida de todo proyecto: la ficha técnica, siempre con la misma forma.
 // Parte de la carcasa común; cada proyecto puede sumar filas propias.
@@ -44,7 +45,7 @@ export function FichaTecnica({
     { etiqueta: "Con", contenido: proyecto.creditos },
     { etiqueta: "Modalidad", contenido: proyecto.autoria === "equipo" ? "En equipo" : "Individual" },
     // El stack se completa en meta.ts de cada proyecto.
-    { etiqueta: "Stack", contenido: proyecto.stack.length ? proyecto.stack.join(" · ") : undefined },
+    { etiqueta: "Stack", contenido: proyecto.stack.length ? <LogoStack stack={proyecto.stack} /> : undefined },
     ...filasExtra,
     {
       etiqueta: "Enlaces",
@@ -63,10 +64,15 @@ export function FichaTecnica({
   const boton = "rounded-full px-4 py-2 font-mono text-sm transition-colors";
 
   return (
-    <div ref={ref} className="grid h-full place-items-center px-4">
-      <div className="max-h-full w-full max-w-xl overflow-y-auto" data-desborda>
+    // Va sobre una tarjeta, como la de la mesa: si no, el texto queda encima
+    // de los cuadros de la pared.
+    <div ref={ref} className="grid h-full place-items-center px-4 sm:py-[5svh]">
+      <div
+        className="max-h-full w-full max-w-2xl overflow-y-auto rounded-2xl border border-lab-borde bg-lab-panel p-5 shadow-[0_24px_40px_-20px_rgba(0,0,0,0.8)] sm:p-7"
+        data-desborda
+      >
         <p className="linea font-mano text-2xl text-lab-portal">ficha técnica</p>
-        <h2 className="linea font-display mt-1 text-3xl font-bold tracking-tight sm:text-4xl">{proyecto.titulo}</h2>
+        <h2 className="linea font-display mt-1 text-3xl font-extrabold sm:text-4xl">{proyecto.titulo}</h2>
 
         {(proyecto.probar || proyecto.codigo) && (
           <div className="linea mt-5 flex flex-wrap gap-3">

@@ -41,14 +41,14 @@ export function MenuLaboratorio({ destinos }: { destinos: Destino[] }) {
         type="button"
         onClick={() => setAbierto((a) => !a)}
         aria-expanded={abierto}
-        className="rounded-full border border-lab-borde bg-lab-panel/90 px-4 py-2 font-mono text-xs text-lab-tenue backdrop-blur transition-colors hover:border-lab-portal hover:text-lab-portal"
+        className="rounded-full border border-lab-borde bg-lab-panel px-4 py-2 font-mono text-xs text-lab-tenue transition-colors hover:border-lab-portal hover:text-lab-portal"
       >
         {abierto ? "cerrar ×" : "saltar a ☰"}
       </button>
       {abierto && (
         <div className="flex w-64 flex-col gap-2">
           <ul
-            className="max-h-[60svh] overflow-y-auto rounded-xl border border-lab-borde bg-lab-panel/95 p-2 font-mono text-sm backdrop-blur"
+            className="max-h-[60svh] overflow-y-auto rounded-xl border border-lab-borde bg-lab-panel p-2 font-mono text-sm"
             data-lenis-prevent
           >
             {destinos.map((d) => (
@@ -62,7 +62,7 @@ export function MenuLaboratorio({ destinos }: { destinos: Destino[] }) {
           </ul>
           <Link
             href="/directo"
-            className="rounded-xl border border-lab-borde bg-lab-panel/95 px-3 py-2 text-right font-mono text-xs text-lab-tenue backdrop-blur transition-colors hover:border-lab-portal hover:text-lab-portal"
+            className="rounded-xl border border-lab-borde bg-lab-panel px-3 py-2 text-right font-mono text-xs text-lab-tenue transition-colors hover:border-lab-portal hover:text-lab-portal"
           >
             modo directo · sin recorrido ↗
           </Link>

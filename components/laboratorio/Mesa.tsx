@@ -1,36 +1,71 @@
 "use client";
 
 import { useRef } from "react";
-import { gsap, useDirector, useEscena, useGSAP } from "@/components/recorrido";
+import { gsap, ScrollTrigger, useDirector, useEscena, useGSAP } from "@/components/recorrido";
 import { ETIQUETA_CATEGORIA, type Proyecto } from "@/proyectos";
+import { frascosDelStack } from "@/lib/tecnologias";
 import { Banco } from "./Banco";
+import { EtiquetaLogo } from "./LogoStack";
 import { tocarObjeto } from "./objetos";
 
-// Colores de las etiquetas de los frascos, en ronda.
-const COLORES = ["bg-lab-portal", "bg-lab-celeste", "bg-lab-amarillo", "bg-lab-rosa"];
-
-// Una mesa del laboratorio: el experimento entra deslizándose y es el portal
-// a sus escenas, que vienen justo después en el mismo recorrido. Las
-// tecnologías del proyecto caen sobre la mesada como frascos etiquetados.
+// Una mesa del laboratorio: el experimento sale girando del portal (que se
+// abrió al terminar el proyecto anterior) y aterriza sobre el banco. Las
+// tecnologías del proyecto caen sobre la mesada como frascos con su logo.
 export function Mesa({ proyecto, numero, tieneEscenas }: { proyecto: Proyecto; numero: number; tieneEscenas: boolean }) {
   const { linea } = useEscena();
   const director = useDirector();
   const ref = useRef<HTMLDivElement>(null);
   const enProceso = proyecto.estado === "en-proceso";
-  // "Laravel 12 · PHP 8.3" son dos frascos, no uno.
-  const frascos = proyecto.stack.flatMap((s) => s.split(" · ")).slice(0, 9);
+  const frascos = frascosDelStack(proyecto.stack).slice(0, 9);
 
   useGSAP(
     () => {
-      gsap.set(".ficha", { x: "60vw", opacity: 0, rotate: 3 });
+      const raiz = ref.current;
+      const ficha = raiz?.querySelector<HTMLElement>(".ficha");
+      const seccion = raiz?.closest("section");
+      if (!raiz || !ficha || !seccion) return;
+
+      // Cuánto hay que mover la ficha para que su centro caiga en el del
+      // portal. Se mide sobre el layout (offset*, sin transformaciones), en
+      // coordenadas de la sección, que clavada ocupa la pantalla entera.
+      const desdeElPortal = () => {
+        let x = ficha.offsetWidth / 2;
+        let y = ficha.offsetHeight / 2;
+        for (let el: HTMLElement | null = ficha; el && el !== seccion; el = el.offsetParent as HTMLElement | null) {
+          x += el.offsetLeft;
+          y += el.offsetTop;
+        }
+        const portal = seccion.querySelector<HTMLElement>(".portal");
+        const px = portal ? portal.offsetLeft + portal.offsetWidth / 2 : seccion.clientWidth / 2;
+        const py = portal ? portal.offsetTop + portal.offsetHeight / 2 : seccion.clientHeight / 2;
+        return { x: px - x, y: py - y };
+      };
+
       gsap.set(".detalle", { opacity: 0, y: 14 });
       gsap.set(".frasco", { y: "-70vh", opacity: 0, rotation: (i: number) => (i % 2 ? 16 : -16) });
+      const salida = gsap.fromTo(
+        ficha,
+        {
+          x: () => desdeElPortal().x,
+          y: () => desdeElPortal().y,
+          scale: 0.12,
+          rotation: -32,
+          opacity: 0,
+        },
+        { x: 0, y: 0, scale: 1, rotation: 0, opacity: 1, duration: 1.1, ease: "power3.out", immediateRender: true },
+      );
       linea
-        .to(".ficha", { x: 0, opacity: 1, rotate: 0, duration: 1.4, ease: "power3.out" })
-        .to(".detalle", { opacity: 1, y: 0, duration: 0.5, stagger: 0.2 }, "-=0.6")
+        .add(salida, 0.15)
+        .to(".detalle", { opacity: 1, y: 0, duration: 0.5, stagger: 0.15 }, "-=0.45")
         // los frascos caen y rebotan sobre la mesada, uno atrás del otro
-        .to(".frasco", { y: 0, opacity: 1, rotation: (i: number) => ((i % 3) - 1) * 2, duration: 0.8, ease: "bounce.out", stagger: 0.15 }, 0.5)
-        .to({}, { duration: 1.5 }); // tiempo para leer antes de que se vaya
+        .to(".frasco", { y: 0, opacity: 1, rotation: (i: number) => ((i % 3) - 1) * 2, duration: 0.8, ease: "bounce.out", stagger: 0.12 }, 0.9)
+        .to({}, { duration: 1.2 }); // tiempo para leer antes de que se vaya
+
+      // Si cambia el tamaño de la pantalla, el portal y la ficha quedan en
+      // otro lugar: el punto de partida se vuelve a medir.
+      const remedir = () => salida.invalidate();
+      ScrollTrigger.addEventListener("refreshInit", remedir);
+      return () => ScrollTrigger.removeEventListener("refreshInit", remedir);
     },
     { scope: ref },
   );
@@ -50,19 +85,21 @@ export function Mesa({ proyecto, numero, tieneEscenas }: { proyecto: Proyecto; n
       {frascos.length > 0 && (
         <div aria-hidden className="pointer-events-none absolute bottom-[16.2svh] left-1/2 hidden w-[86.67svh] -translate-x-1/2 sm:block">
           <ul className="absolute bottom-0 left-[5%] flex w-[46%] flex-wrap-reverse items-end gap-x-1.5 gap-y-1">
-            {frascos.map((t, i) => (
+            {frascos.map((tec) => (
               <li
-                key={t}
-                className="frasco flex items-center gap-1.5 rounded-lg border border-lab-borde bg-lab-panel px-2.5 py-1 font-mano text-base leading-none whitespace-nowrap text-lab-texto shadow-[0_8px_14px_-6px_rgba(0,0,0,0.9)]"
+                key={tec.etiqueta}
+                className={`frasco flex items-center gap-1.5 rounded-lg border bg-lab-panel py-1 pr-2.5 pl-1 font-mono text-[11px] leading-none whitespace-nowrap text-lab-texto shadow-[0_8px_14px_-6px_rgba(0,0,0,0.9)] ${
+                  tec.tipo === "datos" ? "border-dashed border-lab-borde text-lab-tenue" : "border-lab-borde"
+                }`}
               >
-                <span className={`size-2 shrink-0 rounded-full ${COLORES[i % COLORES.length]}`} />
-                {t}
+                <EtiquetaLogo tec={tec} />
+                {tec.etiqueta}
               </li>
             ))}
           </ul>
         </div>
       )}
-      <article className="ficha relative w-full max-w-xl rounded-2xl border border-lab-borde bg-lab-panel/95 p-6 shadow-[0_24px_40px_-20px_rgba(0,0,0,0.8),0_0_60px_-20px_rgba(151,206,76,0.45)] backdrop-blur sm:p-8">
+      <article className="ficha relative w-full max-w-xl rounded-2xl border border-lab-borde bg-lab-panel p-6 shadow-[0_24px_40px_-20px_rgba(0,0,0,0.8),0_0_60px_-20px_rgba(151,206,76,0.45)] sm:p-8">
         {/* la etiqueta del frasco: número a mano */}
         <header className="flex items-center justify-between font-mono text-[10px] uppercase tracking-wider text-lab-tenue">
           <span className="rounded-full border border-lab-portal bg-lab-fondo px-3 py-0.5 font-mano text-lg normal-case tracking-normal text-lab-portal sm:absolute sm:-top-4 sm:left-6">
@@ -71,7 +108,7 @@ export function Mesa({ proyecto, numero, tieneEscenas }: { proyecto: Proyecto; n
           <span>{ETIQUETA_CATEGORIA[proyecto.categoria]}</span>
         </header>
 
-        <h2 className="font-display mt-2 text-3xl font-bold tracking-tight sm:text-4xl">{proyecto.titulo}</h2>
+        <h2 className="font-display mt-2 text-3xl font-extrabold tracking-tight sm:text-4xl">{proyecto.titulo}</h2>
 
         <p className="detalle mt-3 text-sm text-lab-tenue sm:text-base">{proyecto.resumen}</p>
 
@@ -80,10 +117,16 @@ export function Mesa({ proyecto, numero, tieneEscenas }: { proyecto: Proyecto; n
           {proyecto.artefacto}
         </p>
 
+        {/* en celular no hay lugar para los frascos: los logos van en fila */}
         {frascos.length > 0 && (
-          <p className="detalle mt-3 truncate font-mono text-[10px] text-lab-tenue sm:hidden">
-            <span className="text-lab-portal">con</span> {frascos.join(" · ")}
-          </p>
+          <ul aria-label="Tecnologías" className="detalle mt-3 flex flex-wrap items-center gap-1 sm:hidden">
+            {frascos.map((tec) => (
+              <li key={tec.etiqueta} title={tec.etiqueta}>
+                <EtiquetaLogo tec={tec} className="size-6" />
+                <span className="sr-only">{tec.etiqueta}</span>
+              </li>
+            ))}
+          </ul>
         )}
 
         <footer className="detalle mt-6 flex items-center justify-between gap-3 font-mono text-xs">

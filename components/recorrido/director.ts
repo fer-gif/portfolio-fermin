@@ -1,6 +1,7 @@
 "use client";
 
-import { createContext, useContext, useEffect, useSyncExternalStore } from "react";
+import { createContext, useContext, useEffect, useRef, useSyncExternalStore } from "react";
+import { EscenaContext } from "./contexto";
 
 // El Director es la única fuente de verdad del recorrido: en qué escena está
 // el visitante, qué porcentaje de esa escena lleva, y si el personaje tiene
@@ -132,13 +133,22 @@ export function useDicho(): Dicho | null {
  * En qué paso (0..cantidad-1) de la escena actual está el visitante: la parte
  * animada de la escena se divide en tramos iguales. Re-renderiza solo cuando
  * cambia el paso. Con cantidad 0 devuelve siempre 0.
+ *
+ * Dentro de una Escena, solo escucha a su propia escena: mientras el visitante
+ * está en otra, el paso queda quieto (si no, un mapa con miles de puntos se
+ * redibujaría cada vez que avanza cualquier otra escena del recorrido).
+ * Fuera de una Escena (el personaje) sigue a la escena actual.
  */
 export function usePasoActual(cantidad: number): number {
   const director = useDirector();
+  const propia = useContext(EscenaContext)?.id ?? null;
+  const ultimo = useRef(0);
   const calcular = () => {
     if (cantidad <= 0) return 0;
-    const p = director.obtener().progresoAnimacion;
-    return Math.min(cantidad - 1, Math.floor(p * cantidad));
+    const { escena, progresoAnimacion } = director.obtener();
+    if (propia && escena !== propia) return ultimo.current;
+    ultimo.current = Math.min(cantidad - 1, Math.floor(progresoAnimacion * cantidad));
+    return ultimo.current;
   };
   return useSyncExternalStore(director.suscribir, calcular, () => 0);
 }

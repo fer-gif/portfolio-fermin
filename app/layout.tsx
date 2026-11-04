@@ -1,15 +1,19 @@
 import type { Metadata } from "next";
-import { Caveat, Geist_Mono, Inter, Space_Grotesk } from "next/font/google";
+import { Bricolage_Grotesque, Martian_Mono, Shantell_Sans } from "next/font/google";
 import "./globals.css";
 
-// Tres voces: Inter para leer (moderna, legible, estándar de facto en UIs),
-// Geist Mono para los datos (código, stacks, monospace), Space Grotesk para
-// los títulos grandes (geométrica con carácter técnico), y Caveat (manuscrita)
-// para lo que dice el científico y las notas al margen.
-const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
-const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
-const spaceGrotesk = Space_Grotesk({ variable: "--font-space-grotesk", subsets: ["latin"] });
-const caveat = Caveat({ variable: "--font-caveat", subsets: ["latin"], weight: ["500", "700"] });
+// Tres voces, ninguna de plantilla:
+// - Bricolage Grotesque para títulos y texto: una grotesca con trazos de
+//   imprenta (tinta en las uniones) y carácter, que en los títulos va angosta
+//   y pesada, como un cartel pegado en la pared del laboratorio;
+// - Martian Mono para los datos (stacks, etiquetas, botones): una monoespaciada
+//   ancha, de instrumento de laboratorio;
+// - Shantell Sans para lo que dice el científico y las notas al margen: letra
+//   de marcador, de historieta, que se lee bien hasta en chico.
+// Son variables: un archivo por familia cubre todos los pesos y anchos.
+const bricolage = Bricolage_Grotesque({ variable: "--font-bricolage", subsets: ["latin"], axes: ["opsz", "wdth"] });
+const martian = Martian_Mono({ variable: "--font-martian", subsets: ["latin"], axes: ["wdth"] });
+const shantell = Shantell_Sans({ variable: "--font-shantell", subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: {
@@ -23,7 +27,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="es"
-      className={`${inter.variable} ${geistMono.variable} ${spaceGrotesk.variable} ${caveat.variable} h-full antialiased`}
+      className={`${bricolage.variable} ${martian.variable} ${shantell.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans">{children}</body>
     </html>

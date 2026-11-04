@@ -23,8 +23,9 @@ export function FondoLaboratorio() {
 
   return (
     <>
-      <div aria-hidden className="fondo-laboratorio pointer-events-none fixed inset-0 z-0">
+      <div aria-hidden className="fondo-laboratorio pointer-events-none fixed inset-0 z-0 overflow-hidden">
         <Escenografia activo={activo} tocado={tocado} />
+        <div className="grano absolute inset-0 opacity-[0.05]" />
       </div>
       <CapaDeObjetos onEntrar={setActivo} onSalir={() => setActivo(null)} onTocar={tocar} />
     </>

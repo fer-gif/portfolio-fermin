@@ -16,4 +16,15 @@ export const perfil = {
   repositorio: "https://github.com/fer-gif/portfolio-fermin",
   /** Ruta del CV dentro de public/. */
   cv: "/cv-fermin-hernando.pdf",
+  /**
+   * Con qué trabajo, agrupado. Sale de los stacks de los proyectos; cada nombre
+   * busca su logo en lib/tecnologias.ts.
+   * PENDIENTE: que Fermín confirme la lista (sumar o sacar lo que haga falta).
+   */
+  herramientas: [
+    { grupo: "lenguajes", items: ["Python", "JavaScript", "TypeScript", "PHP", "HTML", "CSS"] },
+    { grupo: "datos", items: ["Pandas", "GeoPandas", "Matplotlib", "scikit-learn", "Jupyter", "MySQL", "Chart.js"] },
+    { grupo: "desarrollo", items: ["Laravel", "Vue", "Tailwind", "Vite", "Three.js", "Playwright"] },
+    { grupo: "y además", items: ["Git", "GitHub", "Vercel"] },
+  ],
 };

@@ -14,6 +14,14 @@ const ETIQUETAS: { x: number; y: number; anclaje: "start" | "middle" | "end" }[]
 ];
 const NEUTRO = "#8fa396";
 
+// Los puntos se agrupan por zona y el color y la transparencia se ponen en el
+// grupo (los puntos los heredan). Así, al pasar de paso cambian tres atributos
+// y no dos mil, y los círculos (que nunca cambian) se arman una sola vez.
+// Cada punto sigue pintándose solo: donde hay muchos juntos, brilla más.
+const CIRCULOS_POR_ZONA = ZONAS.map((_, z) =>
+  PUNTOS.filter((p) => p[2] === z).map(([x, y, , m], i) => <circle key={i} cx={x} cy={y} r={m >= 6 ? 2.4 : 1.3} />),
+);
+
 // El mapa: diez años de sismos, y las tres zonas que se van encendiendo paso
 // a paso. Las zonas ya contadas quedan prendidas.
 export function Mapa() {
@@ -48,23 +56,20 @@ export function Mapa() {
             <path d={MAPA.plataforma} fill="#16231c" />
             <path d={MAPA.provincias} fill="#1c2a22" stroke="#243129" strokeWidth={0.4} />
             <path d={MAPA.limites} fill="none" stroke={NEUTRO} strokeWidth={0.4} opacity={0.3} />
-            <g>
-              {PUNTOS.map(([x, y, z, m], i) => {
-                const contada = z <= zonaActiva;
-                const actual = z === zonaActiva;
-                return (
-                  <circle
-                    key={i}
-                    cx={x}
-                    cy={y}
-                    r={m >= 6 ? 2.4 : 1.3}
-                    fill={contada ? ZONAS[z].color : NEUTRO}
-                    opacity={zonaActiva < 0 ? 0.55 : actual ? 0.9 : contada ? 0.55 : 0.12}
-                    className="transition-[opacity,fill] duration-500"
-                  />
-                );
-              })}
-            </g>
+            {CIRCULOS_POR_ZONA.map((circulos, z) => {
+              const contada = z <= zonaActiva;
+              const actual = z === zonaActiva;
+              return (
+                <g
+                  key={ZONAS[z].clave}
+                  fill={contada ? ZONAS[z].color : NEUTRO}
+                  fillOpacity={zonaActiva < 0 ? 0.55 : actual ? 0.9 : contada ? 0.55 : 0.12}
+                  className="transition-[fill-opacity,fill] duration-500"
+                >
+                  {circulos}
+                </g>
+              );
+            })}
             {ZONAS.map(
               (zona, i) =>
                 i <= zonaActiva && (

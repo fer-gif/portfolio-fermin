@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { CajaDeHerramientas } from "@/components/laboratorio/CajaDeHerramientas";
 import { ContactoFijo } from "@/components/laboratorio/ContactoFijo";
 import { FichaDirecta } from "@/components/laboratorio/FichaDirecta";
 import { perfil } from "@/lib/perfil";
@@ -29,6 +30,10 @@ export default function Directo() {
           </h1>
           <p className="mt-3 text-lg text-lab-tenue">{perfil.titulo}</p>
           <p className="mx-auto mt-4 max-w-md text-base text-lab-tenue">{perfil.presentacion}</p>
+          <div className="mx-auto mt-8 max-w-xl rounded-2xl border border-lab-borde bg-lab-panel/60 p-4 sm:p-5">
+            <p className="mb-3 text-left font-mono text-[10px] uppercase tracking-wider text-lab-tenue">con qué trabajo</p>
+            <CajaDeHerramientas herramientas={perfil.herramientas} />
+          </div>
           <p className="mt-6 font-mono text-xs text-lab-tenue">
             ¿preferís el recorrido?{" "}
             <Link href="/" className="text-lab-portal underline underline-offset-4">

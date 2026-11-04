@@ -117,6 +117,27 @@ export function Personaje({ guion, esperarIntro = false }: { guion: Guion; esper
   const { visible, escribiendo } = useMaquinaDeEscribir(texto);
   const aLaDerecha = posicion > 0.5;
 
+  // El globo nunca se sale de la pantalla: mientras se escribe (y crece) se
+  // mide, y si se pasa de un borde se corre lo justo para volver a entrar.
+  const globoRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const globo = globoRef.current;
+    if (!globo) return;
+    const acomodar = () => {
+      globo.style.translate = "";
+      const caja = globo.getBoundingClientRect();
+      const borde = 8;
+      const derecha = caja.right - (window.innerWidth - borde);
+      const izquierda = borde - caja.left;
+      const corrimiento = derecha > 0 ? -derecha : izquierda > 0 ? izquierda : 0;
+      if (corrimiento) globo.style.translate = `${Math.round(corrimiento)}px 0`;
+    };
+    acomodar();
+    const observador = new ResizeObserver(acomodar);
+    observador.observe(globo);
+    return () => observador.disconnect();
+  }, [texto, caminando]);
+
   const hablar = () => {
     const frase = fraseDelCientifico();
     director.decir(frase.texto, frase.pose);
@@ -124,7 +145,7 @@ export function Personaje({ guion, esperarIntro = false }: { guion: Guion; esper
   };
 
   const globo = [
-    "personaje-globo absolute bottom-full mb-2 w-max max-w-[80vw] rounded-2xl border border-lab-portal/40 bg-lab-panel/95 px-3 py-1.5 font-mano text-lg leading-tight backdrop-blur sm:bottom-6 sm:mb-0 sm:max-w-xs sm:px-4 sm:py-2.5 sm:text-2xl",
+    "personaje-globo absolute bottom-full mb-2 w-max max-w-[80vw] rounded-2xl border border-lab-portal/40 bg-lab-panel px-3 py-1.5 font-mano text-lg leading-tight sm:bottom-6 sm:mb-0 sm:max-w-xs sm:px-4 sm:py-2.5 sm:text-2xl",
     aLaDerecha
       ? "right-0 rounded-br-sm sm:right-full sm:mr-3 sm:rounded-br-2xl sm:rounded-tr-sm"
       : "left-0 rounded-bl-sm sm:left-full sm:ml-3 sm:rounded-bl-2xl sm:rounded-tl-sm",
@@ -157,7 +178,7 @@ export function Personaje({ guion, esperarIntro = false }: { guion: Guion; esper
           <PersonajeRive pose={pose} direccion={direccion} className="h-24 sm:h-44" />
         </div>
         {texto && (
-          <div className={globo}>
+          <div ref={globoRef} className={globo}>
             {visible}
             {escribiendo && <span className="personaje-cursor text-lab-portal">▍</span>}
           </div>

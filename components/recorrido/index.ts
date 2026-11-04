@@ -1,5 +1,5 @@
 export { Recorrido } from "./Recorrido";
-export { Escena, useEscena } from "./Escena";
+export { Escena, useEscena, SALIDA } from "./Escena";
 export { BarraProgreso } from "./BarraProgreso";
 export { useDirector, useEscenaActual, useDicho, useProgreso, usePasoActual } from "./director";
 export type { Director } from "./director";

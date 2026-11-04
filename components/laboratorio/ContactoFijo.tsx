@@ -28,7 +28,7 @@ export function ContactoFijo({
   };
 
   const estilo =
-    "flex items-center gap-1.5 rounded-full border border-lab-borde bg-lab-panel/90 px-3 py-2 font-mono text-xs text-lab-tenue backdrop-blur transition-colors hover:border-lab-portal hover:text-lab-portal";
+    "flex items-center gap-1.5 rounded-full border border-lab-borde bg-lab-panel px-3 py-2 font-mono text-xs text-lab-tenue transition-colors hover:border-lab-portal hover:text-lab-portal";
 
   return (
     <nav aria-label="Contacto" className="fixed top-4 left-4 z-50 flex items-center gap-2">

@@ -3,17 +3,19 @@
 import { useRef } from "react";
 import { useEscena, useGSAP } from "@/components/recorrido";
 
-// La puerta del laboratorio: el nombre enorme te recibe y al scrollear se abre paso.
+// La puerta del laboratorio: el nombre enorme te recibe y al scrollear se lo
+// traga el portal que lleva al primer experimento.
 export function EscenaEntrada({ nombre, titulo }: { nombre: string; titulo: string }) {
   const { linea } = useEscena();
   const ref = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
-      // Todo visible desde el primer momento; al scrollear el cartel se abre paso.
+      // Todo visible desde el primer momento. Al scrollear se va la pista y el
+      // cartel se achica apenas: enseguida se abre el portal y se lo traga.
       linea
         .to(".pista", { opacity: 0, duration: 0.4 })
-        .to(".cartel", { scale: 0.85, opacity: 0, y: -60, duration: 1.5, ease: "power2.in" }, "<+=0.2");
+        .to(".cartel", { scale: 0.94, y: -16, duration: 1, ease: "power1.in" }, "<+=0.1");
     },
     { scope: ref },
   );

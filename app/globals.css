@@ -15,10 +15,29 @@
   --color-lab-rosa: #ef6ad4;
   --color-lab-amarillo: #f2e05a;
   --color-lab-celeste: #9ad9ea;
-  --font-sans: var(--font-inter);
-  --font-mono: var(--font-geist-mono);
-  --font-display: var(--font-space-grotesk);
-  --font-mano: var(--font-caveat);
+  --font-sans: var(--font-bricolage);
+  --font-mono: var(--font-martian);
+  --font-display: var(--font-bricolage);
+  --font-mano: var(--font-shantell);
+}
+
+/* Los títulos: la misma Bricolage, angosta y pesada. */
+.font-display {
+  font-stretch: 80%;
+  letter-spacing: -0.01em;
+}
+/* Martian Mono es ancha y de letra alta: se angosta un poco y se empareja
+   por altura de la x con el resto, así entra en los chips y etiquetas. */
+.font-mono {
+  font-stretch: 87.5%;
+  font-size-adjust: 0.56;
+}
+/* Shantell es mucho más grande y ancha que la manuscrita anterior: se
+   empareja por altura de la x para que los tamaños de todo el sitio sigan
+   valiendo (globo del científico, notas al margen). */
+.font-mano {
+  font-size-adjust: 0.4;
+  font-weight: 500;
 }
 
 body {
@@ -42,15 +61,20 @@ body {
   padding-bottom: 0.3em;
 }
 
-/* Grano fino sobre toda la página: saca el aspecto de plástico. */
+/* Grano fino sobre el laboratorio: saca el aspecto de plástico. Es una
+   imagen de ruido ya hecha (public/grano.png): antes era un filtro SVG de
+   ruido (feTurbulence) que la placa de video recalculaba de golpe cada tanto
+   y congelaba la pantalla varios segundos. */
 .grano {
-  background-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size: 160px 160px;
+  background-image: url("/grano.png");
+  background-size: 128px 128px;
 }
 
 /* Escenografía: pared azulejada y piso del laboratorio. Es idéntica en todas
    las escenas, así cuando una cubre a la otra el laboratorio queda quieto. */
 .fondo-laboratorio {
+  /* las capas de adentro se ubican con unidades de este contenedor (cqw/cqh) */
+  container-type: size;
   background-color: var(--color-lab-fondo);
   background-image:
     /* piso */
@@ -69,11 +93,14 @@ body {
   0%, 100% { opacity: 0.25; }
   50% { opacity: 1; }
 }
+/* La mota vive en un carril del alto de la pantalla y el carril entero sube
+   su propia altura: en porcentajes (y no en vh) el navegador la anima solo,
+   sin pasar por el hilo principal. */
 @keyframes subir {
-  from { transform: translateY(0) translateX(0); opacity: 0; }
+  from { transform: translate(0, 0); opacity: 0; }
   15% { opacity: 0.7; }
-  50% { transform: translateY(-50vh) translateX(14px); }
-  to { transform: translateY(-100vh) translateX(-6px); opacity: 0; }
+  50% { transform: translate(14px, -50%); }
+  to { transform: translate(-6px, -100%); opacity: 0; }
 }
 .luz { animation: parpadeo 2s ease-in-out infinite; }
 .mota { animation: subir 14s linear infinite; }
@@ -132,12 +159,58 @@ html.intro-lista .aparece-tras-intro { opacity: 1; }
 }
 .repisa-aviso { animation: repisa-entrada 0.4s cubic-bezier(0.22, 1, 0.36, 1); }
 
-.burbuja-tubo { animation: burbuja-tubo 2.6s linear infinite; }
-.lampara { transform-origin: top center; animation: lampara-vaiven 6s ease-in-out infinite; }
-.pantalla { animation: pantalla-titila 7s linear infinite; }
-.kimono { transform-box: fill-box; transform-origin: top center; animation: kimono-vaiven 7s ease-in-out infinite; }
+/* Las burbujas y la pantalla del banco están dentro de un dibujo: animarlas
+   obliga a repintarlo. Solo se mueven mientras su escena está en pantalla. */
+.burbuja-tubo { animation: burbuja-tubo 2.6s linear infinite paused; }
+.pantalla { animation: pantalla-titila 7s linear infinite paused; }
+.escena-activa .burbuja-tubo,
+.escena-activa .pantalla { animation-play-state: running; }
+
+/* La lámpara y el kimono se hamacan en capas propias del tamaño del
+   laboratorio. El dibujo usa un lienzo de 1600×900 recortado desde abajo al
+   centro (xMidYMax slice): --s es cuánto mide una unidad del lienzo en
+   pantalla, y con eso se ubica el punto del que cuelga cada uno. */
+.capa-hamaca {
+  --s: max(100cqw / 1600, 100cqh / 900);
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+}
+/* la lámpara cuelga de (1180, 0) */
+.capa-lampara {
+  transform-origin: calc(50% + 380 * var(--s)) calc(100% - 900 * var(--s));
+  animation: lampara-vaiven 6s ease-in-out infinite;
+}
+/* el kimono, de su gancho en (210, 324) */
+.capa-kimono {
+  transform-origin: calc(50% - 590 * var(--s)) calc(100% - 576 * var(--s));
+  animation: kimono-vaiven 7s ease-in-out infinite;
+}
+
+/* El portal entre proyectos: Escena lo escala y lo gira con el scroll; los
+   brazos y el borde además giran solos (capas que no se repintan). */
+.portal {
+  --tam: min(64vmin, 540px);
+  width: var(--tam);
+  height: var(--tam);
+  margin: calc(var(--tam) / -2) 0 0 calc(var(--tam) / -2);
+}
+.portal-halo {
+  position: absolute;
+  inset: -38%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(198, 243, 106, 0.42), rgba(151, 206, 76, 0.16) 55%, rgba(151, 206, 76, 0) 100%);
+}
+@keyframes portal-gira {
+  to { transform: rotate(360deg); }
+}
+.portal-remolino { animation: portal-gira 4.5s linear infinite paused; }
+.portal-borde { animation: portal-gira 13s linear infinite reverse paused; }
+/* cerrado no gira: una animación invisible igual le cuesta un cuadro al navegador */
+.portal.abierto .portal-remolino,
+.portal.abierto .portal-borde { animation-play-state: running; }
 
 @media (prefers-reduced-motion: reduce) {
-  .luz, .mota, .burbuja-tubo, .lampara, .pantalla, .kimono, .objeto, .repisa-aviso { animation: none; }
+  .luz, .mota, .burbuja-tubo, .pantalla, .capa-lampara, .capa-kimono, .portal-remolino, .portal-borde, .objeto, .repisa-aviso { animation: none; }
   .objeto, .pan-tocable, .aparece-tras-intro { transition: none; }
 }

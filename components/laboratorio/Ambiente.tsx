@@ -1,5 +1,7 @@
-// Capa "ambiente": grano fino sobre todo, motas de polvo que flotan en la luz
-// y las luces de estado del laboratorio. Vive aunque nadie scrollee.
+// Capa "ambiente": motas de polvo que flotan en la luz y las luces de estado
+// del laboratorio. Vive aunque nadie scrollee. (El grano está en el fondo: por
+// encima de todo y mezclado con el contenido costaba recomponer la pantalla
+// entera en cada cuadro.)
 const MOTAS = [
   { left: "12%", delay: "0s", dur: "16s", size: 2, color: "bg-lab-portal" },
   { left: "27%", delay: "4s", dur: "19s", size: 3, color: "bg-lab-celeste" },
@@ -11,15 +13,15 @@ const MOTAS = [
 
 export function Ambiente() {
   return (
-    // Va por encima de las escenas (son opacas), así que es sutil a propósito.
-    <div aria-hidden className="pointer-events-none fixed inset-0 z-10">
-      <div className="grano absolute inset-0 opacity-[0.07] mix-blend-soft-light" />
+    <div aria-hidden className="pointer-events-none fixed inset-0 z-10 overflow-hidden">
       {MOTAS.map((m, i) => (
         <span
           key={i}
-          className={`mota absolute bottom-0 rounded-full ${m.color} opacity-0`}
-          style={{ left: m.left, width: m.size, height: m.size, animationDelay: m.delay, animationDuration: m.dur }}
-        />
+          className="mota absolute bottom-0 h-full opacity-0"
+          style={{ left: m.left, width: m.size, animationDelay: m.delay, animationDuration: m.dur }}
+        >
+          <span className={`absolute bottom-0 left-0 rounded-full ${m.color}`} style={{ width: m.size, height: m.size }} />
+        </span>
       ))}
       <span className="luz absolute top-6 right-6 size-2 rounded-full bg-lab-portal opacity-60" />
       <span className="luz absolute top-6 right-12 size-2 rounded-full bg-lab-amarillo opacity-60 [animation-delay:0.7s]" />
