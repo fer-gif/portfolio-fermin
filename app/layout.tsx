@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Bricolage_Grotesque, Martian_Mono, Shantell_Sans } from "next/font/google";
+import { Bricolage_Grotesque, Martian_Mono, Patrick_Hand } from "next/font/google";
 import "./globals.css";
 
 // Tres voces, ninguna de plantilla:
@@ -8,12 +8,12 @@ import "./globals.css";
 //   y pesada, como un cartel pegado en la pared del laboratorio;
 // - Martian Mono para los datos (stacks, etiquetas, botones): una monoespaciada
 //   ancha, de instrumento de laboratorio;
-// - Shantell Sans para lo que dice el científico y las notas al margen: letra
-//   de marcador, de historieta, que se lee bien hasta en chico.
-// Son variables: un archivo por familia cubre todos los pesos y anchos.
+// - Patrick Hand para lo que dice el científico y las notas al margen: letra
+//   de historieta prolija, que se lee bien aunque la frase sea larga.
+// Bricolage y Martian son variables: un archivo cubre todos los pesos y anchos.
 const bricolage = Bricolage_Grotesque({ variable: "--font-bricolage", subsets: ["latin"], axes: ["opsz", "wdth"] });
 const martian = Martian_Mono({ variable: "--font-martian", subsets: ["latin"], axes: ["wdth"] });
-const shantell = Shantell_Sans({ variable: "--font-shantell", subsets: ["latin"] });
+const patrick = Patrick_Hand({ variable: "--font-patrick", subsets: ["latin"], weight: "400" });
 
 export const metadata: Metadata = {
   title: {
@@ -27,7 +27,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="es"
-      className={`${bricolage.variable} ${martian.variable} ${shantell.variable} h-full antialiased`}
+      className={`${bricolage.variable} ${martian.variable} ${patrick.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans">{children}</body>
     </html>

@@ -12,7 +12,7 @@ Publicado en https://portfolio-fermin.vercel.app (cada push a `main` se desplieg
 
 ```
 app/page.tsx                  ← el recorrido completo: intro → entrada → mesas → salida
-app/layout.tsx                ← las tres tipografías (Bricolage Grotesque, Martian Mono, Shantell Sans)
+app/layout.tsx                ← las tres tipografías (Bricolage Grotesque, Martian Mono, Patrick Hand)
 app/globals.css               ← paleta del laboratorio, ajustes de cada tipografía y animaciones de ambiente
 
 components/

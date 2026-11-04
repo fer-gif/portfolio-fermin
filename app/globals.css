@@ -18,7 +18,7 @@
   --font-sans: var(--font-bricolage);
   --font-mono: var(--font-martian);
   --font-display: var(--font-bricolage);
-  --font-mano: var(--font-shantell);
+  --font-mano: var(--font-patrick);
 }
 
 /* Los títulos: la misma Bricolage, angosta y pesada. */
@@ -32,12 +32,9 @@
   font-stretch: 87.5%;
   font-size-adjust: 0.56;
 }
-/* Shantell es mucho más grande y ancha que la manuscrita anterior: se
-   empareja por altura de la x para que los tamaños de todo el sitio sigan
-   valiendo (globo del científico, notas al margen). */
+/* Patrick Hand tiene un solo peso: sin negrita inventada por el navegador. */
 .font-mano {
-  font-size-adjust: 0.4;
-  font-weight: 500;
+  font-weight: 400;
 }
 
 body {
