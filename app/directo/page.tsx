@@ -24,12 +24,12 @@ export default function Directo() {
       <main className="mx-auto w-full max-w-2xl px-4 pb-20 pt-24 sm:pt-28">
         <header className="text-center">
           <p className="font-mono text-xs uppercase tracking-wider text-lab-tenue">modo directo · sin recorrido</p>
-          <p className="font-mano mt-3 text-2xl text-lab-portal">el laboratorio de</p>
+          <p className="font-mano mt-3 text-2xl text-lab-portal">el portafolio de</p>
           <h1 className="brillo-portal font-display text-6xl font-extrabold tracking-tight uppercase sm:text-7xl">
             {perfil.nombre}
           </h1>
           <p className="mt-3 text-lg text-lab-tenue">{perfil.titulo}</p>
-          <p className="mx-auto mt-4 max-w-md text-base text-lab-tenue">{perfil.presentacion}</p>
+          <p className="mx-auto mt-4 max-w-md text-base text-lab-tenue">{perfil.sobreMi.parrafos.join(" ")}</p>
           <div className="mx-auto mt-8 max-w-xl rounded-2xl border border-lab-borde bg-lab-panel/60 p-4 sm:p-5">
             <p className="mb-3 text-left font-mono text-[10px] uppercase tracking-wider text-lab-tenue">con qué trabajo</p>
             <CajaDeHerramientas herramientas={perfil.herramientas} />

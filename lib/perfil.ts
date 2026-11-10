@@ -6,6 +6,18 @@ export const perfil = {
   titulo: "Programador y Data Analyst",
   presentacion:
     "Armo sistemas y analizo datos. Este laboratorio es donde mis proyectos se pueden tocar.",
+  /**
+   * La segunda pantalla, "quién soy": un saludo y dos frases.
+   * PENDIENTE: que Fermín la revise y la cambie con sus palabras.
+   */
+  sobreMi: {
+    saludo: "Hola, soy Fermín Hernando.",
+    parrafos: [
+      "Programo sistemas a medida y analizo datos para responder preguntas concretas.",
+      "Me gusta que lo que hago se pueda tocar: por eso cada proyecto de acá es un experimento.",
+    ],
+    fueraDelLab: "fuera del laboratorio: surf, jiu-jitsu, rugby y cocina",
+  },
   email: "ferminhernando00@gmail.com",
   enlaces: [
     { etiqueta: "LinkedIn", url: "https://www.linkedin.com/in/fermin-hernando-0530631b5" },

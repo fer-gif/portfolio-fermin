@@ -1,58 +1,57 @@
 "use client";
 
-import { useRef, type CSSProperties } from "react";
+import { useRef } from "react";
 import { useDirector, useEscena, useGSAP } from "@/components/recorrido";
 import type { Proyecto } from "@/proyectos";
 import { frascosDelStack } from "@/lib/tecnologias";
 import { EtiquetaLogo } from "./LogoStack";
 
-// La puerta del laboratorio y la vidriera: el nombre arriba y todos los
-// experimentos apoyados sobre la mesada, a la vista en el primer pantallazo.
-// Tocar uno abre el portal y lleva directo a su mesa; si se baja, el recorrido
-// los muestra de a uno y el portal se traga la vidriera.
-export function EscenaEntrada({
-  nombre,
-  titulo,
-  proyectos,
-}: {
-  nombre: string;
-  titulo: string;
-  proyectos: Proyecto[];
-}) {
+// La tercera pantalla, la vidriera: todos los experimentos apoyados sobre la
+// mesada. Tocar uno abre el portal, que se traga la pantalla y lleva directo
+// a su mesa; si se baja, el recorrido los muestra de a uno y el portal se
+// traga la vidriera.
+export function EscenaVidriera({ proyectos }: { proyectos: Proyecto[] }) {
   const { linea } = useEscena();
   const director = useDirector();
   const ref = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
-      // Todo visible desde el primer momento. Al scrollear se va la pista y la
-      // vidriera se achica apenas: enseguida se abre el portal y se la traga.
+      // Los experimentos se apoyan uno atrás del otro mientras entra la escena
+      // (listos antes del punto donde aterriza un salto); al seguir bajando,
+      // la vidriera se achica apenas y enseguida se la traga el portal.
       linea
-        .to(".pista", { opacity: 0, duration: 0.4 })
-        .to(".cartel", { scale: 0.96, y: -12, duration: 1, ease: "power1.in" }, "<+=0.1");
+        .fromTo(
+          ".tarjeta-vidriera",
+          { opacity: 0, y: 26, rotation: -1.5 },
+          { opacity: 1, y: 0, rotation: 0, duration: 0.18, stagger: 0.025, ease: "power2.out" },
+          0.04,
+        )
+        .to(".pista", { opacity: 0, duration: 0.25 }, 0.7)
+        .to(".cartel", { scale: 0.96, y: -12, duration: 0.3, ease: "power1.in" }, 0.7);
     },
     { scope: ref },
   );
 
   return (
     // Abajo queda lugar para el científico y su globo.
-    <div ref={ref} className="flex h-full flex-col items-center justify-center px-4 sm:px-8 sm:pb-[15svh]">
+    <div ref={ref} className="flex h-full flex-col items-center justify-center px-4 sm:px-8 sm:pb-[8svh]">
       <div className="cartel flex w-full max-w-6xl flex-col items-center">
         <header className="text-center">
-          <p className="font-mano text-xl text-lab-portal sm:text-2xl">el laboratorio de</p>
-          <h1 className="brillo-portal font-display text-[19vw] leading-[0.85] font-extrabold uppercase sm:text-[min(9.5vw,15svh)]">
-            {nombre}
-          </h1>
-          <p className="mt-2 text-base text-lab-tenue sm:text-lg">{titulo}</p>
+          <p className="font-mano text-xl text-lab-portal sm:text-2xl">mis proyectos</p>
+          <h2 className="font-display text-[11vw] leading-[0.9] font-extrabold uppercase sm:text-[min(6.4vw,11svh)]">
+            Elegí un experimento
+          </h2>
+          <p className="pista mt-2 text-sm text-lab-tenue sm:text-lg">Tocá uno y el portal te lleva directo. O bajá y te los muestro de a uno.</p>
         </header>
 
-        <ul className="mt-5 grid w-full gap-2 sm:mt-[5svh] sm:grid-cols-5 sm:gap-3">
+        <ul className="mt-4 grid w-full gap-2 sm:mt-[5svh] sm:grid-cols-5 sm:gap-3">
           {proyectos.map((p, i) => {
             const logos = frascosDelStack(p.stack)
               .filter((t) => t.tipo === "logo")
               .slice(0, 4);
             return (
-              <li key={p.slug} className="tarjeta-vidriera" style={{ "--i": i } as CSSProperties}>
+              <li key={p.slug} className="tarjeta-vidriera">
                 <button
                   type="button"
                   onClick={() => director.irA(`mesa-${p.slug}`)}
@@ -90,8 +89,6 @@ export function EscenaEntrada({
           <div className="h-1.5 rounded-t-sm bg-[#2b4a52]" />
           <div className="h-3 rounded-b-sm bg-[#1f3a42] shadow-[0_12px_20px_-10px_rgba(0,0,0,0.8)]" />
         </div>
-
-        <p className="pista mt-4 font-mano text-base text-lab-tenue sm:text-lg">o bajá y te los muestro de a uno ↓</p>
       </div>
     </div>
   );

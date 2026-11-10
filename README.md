@@ -11,13 +11,14 @@ Publicado en https://portfolio-fermin.vercel.app (cada push a `main` se desplieg
 ## Cómo está armado
 
 ```
-app/page.tsx                  ← el recorrido completo: intro → entrada → mesas → salida
+app/page.tsx                  ← el recorrido completo: intro → portada → quién soy → vidriera → mesas → salida
 app/layout.tsx                ← las tres tipografías (Bricolage Grotesque, Martian Mono, Patrick Hand)
 app/globals.css               ← paleta del laboratorio, ajustes de cada tipografía y animaciones de ambiente
 
 components/
 ├─ recorrido/                 ← motor del scrollytelling: Recorrido, Escena, Director, barra
-├─ laboratorio/               ← la carcasa: Cortina (intro), EscenaEntrada, Mesa, EscenaSalida,
+├─ laboratorio/               ← la carcasa: Cortina (intro), EscenaPortada, EscenaPresentacion
+│                                (con RetratoCientifico), EscenaVidriera, Mesa, EscenaSalida,
 │                                MenuLaboratorio ("saltar a"), ContactoFijo (mail/LinkedIn/
 │                                GitHub/CV arriba a la izquierda), BarraCapitulos (puntos a la
 │                                derecha), FichaTecnica (con "probarlo" y "ver el código"),
@@ -100,15 +101,25 @@ recién al llegar habla. Las mesas lo llevan al banco (`POSICION_MESA` en
 - Cada escena dice dónde aterriza un salto (`data-llegada`): el menú, la barra
   de capítulos y los enlaces `#escena` llevan a ese punto, con el contenido ya
   a la vista, y no al borde (donde la escena todavía está vacía).
-- **La vidriera.** La primera escena (`EscenaEntrada`) muestra el nombre y
-  todos los proyectos como tarjetas sobre una mesada (en celular, una lista).
-  Cada tarjeta usa `gancho` de su `meta.ts`. Tocarla, igual que el menú y los
-  capítulos, hace un **salto por portal** (`Recorrido.tsx`): el portal se
-  abre, la pantalla se llena de verde, se cambia de lugar sin desfilar por las
-  escenas del medio y el portal se cierra sobre el destino.
+- **Las tres pantallas del principio.** `entrada` (`EscenaPortada`): "el
+  portafolio de Fermín, Programador y Data Analyst", nada más. `quien-soy`
+  (`EscenaPresentacion`): el saludo y dos frases de `perfil.sobreMi`, los
+  lenguajes con su logo y el retrato de Fermín en versión científico
+  (`RetratoCientifico`, un SVG). `experimentos` (`EscenaVidriera`): todos los
+  proyectos como tarjetas sobre una mesada (en celular, una lista); cada
+  tarjeta usa `gancho` de su `meta.ts`.
+- **El salto por portal.** Tocar una tarjeta, el menú o un capítulo
+  (`director.irA`) pasa por `saltar()` en `Recorrido.tsx`. Con View
+  Transitions, el navegador fotografía la pantalla entera y, aparte, el portal
+  abierto (`view-transition-name: salto-portal`); la página real ya cambia de
+  lugar sin desfilar por las escenas del medio, y el CSS (`globals.css`, "el
+  salto por portal") abre el portal, le hace tragarse la foto girando y hace
+  salir el destino. Sin View Transitions, el portal se abre, la pantalla se
+  llena de verde y se cambia de lugar. Con "reducir movimiento", se salta
+  directo.
 - **Largo.** Cada proyecto tiene a lo sumo tres paradas después de su mesa: lo
   que se toca, la historia más fuerte y la ficha técnica. Las escenas por
-  pasos duran 1,8 pantallas (unas 0,45 por paso); el recorrido entero, unas 35.
+  pasos duran 1,8 pantallas (unas 0,45 por paso); el recorrido entero, unas 37.
 - Las escenas reservan espacio en celular para los botones fijos (arriba) y el
   personaje (abajo).
 - La `Cortina` es la intro (el científico empuja la puerta). Se ve una vez por

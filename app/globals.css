@@ -207,26 +207,64 @@ html.intro-lista .aparece-tras-intro { opacity: 1; }
 .portal.abierto .portal-remolino,
 .portal.abierto .portal-borde { animation-play-state: running; }
 
-/* La vidriera del principio: cuando se corre la puerta, los experimentos se
-   apoyan uno atrás del otro sobre la mesada. */
-@keyframes vidriera-entra {
-  from { opacity: 0; transform: translateY(22px) rotate(-1.5deg); }
-  to { opacity: 1; transform: none; }
+/* La flecha de "bajá" en la portada: solo se mueve mientras se ve. */
+@keyframes pista-baja {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(5px); }
 }
-.tarjeta-vidriera { opacity: 0; }
-html.intro-lista .tarjeta-vidriera {
-  animation: vidriera-entra 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
-  animation-delay: calc(var(--i, 0) * 90ms + 150ms);
+.flecha-pista { animation: pista-baja 1.6s ease-in-out infinite paused; }
+.escena-activa .flecha-pista { animation-play-state: running; }
+
+/* El salto por portal (vidriera, menú, capítulos), con View Transitions (ver
+   Recorrido.tsx): el navegador saca una foto de la pantalla y otra del portal
+   abierto. El portal se abre en el medio, se traga la foto girando, traga
+   (se infla un poco) y se cierra mientras del otro lado sale el destino.
+   Detrás de todo, el vacío entre dimensiones. */
+html { --centro-salto: calc(50% - 60px); } /* en celular el contenido va 60 px más arriba */
+@media (min-width: 40rem) {
+  html { --centro-salto: 50%; }
+}
+html.salto-portal::view-transition {
+  background: radial-gradient(circle at 50% var(--centro-salto), #2a5a22 0%, #0c1d1f 42%, #050a0c 100%);
+}
+html.salto-portal::view-transition-group(root) { animation: none; }
+html.salto-portal::view-transition-old(root) {
+  transform-origin: 50% var(--centro-salto);
+  animation: salto-tragado 0.7s cubic-bezier(0.55, 0, 0.85, 0.35) 0.12s both;
+}
+html.salto-portal::view-transition-new(root) {
+  transform-origin: 50% var(--centro-salto);
+  animation: salto-emerge 0.6s cubic-bezier(0.16, 0.85, 0.3, 1) 0.8s both;
+}
+html.salto-portal::view-transition-old(salto-portal) {
+  animation: salto-portal 1.4s cubic-bezier(0.45, 0, 0.4, 1) both;
+}
+@keyframes salto-tragado {
+  0% { transform: none; opacity: 1; }
+  80% { opacity: 1; }
+  100% { transform: scale(0.02) rotate(320deg); opacity: 0; }
+}
+@keyframes salto-emerge {
+  0% { transform: scale(0.04) rotate(-150deg); opacity: 0; }
+  25% { opacity: 1; }
+  100% { transform: none; opacity: 1; }
+}
+@keyframes salto-portal {
+  0% { transform: scale(0) rotate(-160deg); }
+  24% { transform: scale(1) rotate(0deg); }
+  54% { transform: scale(1.06) rotate(150deg); }
+  62% { transform: scale(1.24) rotate(190deg); }
+  100% { transform: scale(0) rotate(560deg); }
 }
 
-/* El salto del menú o de la vidriera: el portal se abre, la pantalla se llena
-   de verde, se cambia de lugar y el portal se cierra. */
+/* Sin View Transitions: el portal se abre, la pantalla se llena de verde, se
+   cambia de lugar y el portal se cierra. */
 .salto-destello {
   background: radial-gradient(circle at 50% 50%, #f4ffd6 0%, #c6f36a 28%, #97ce4c 58%, #3f7a25 100%);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .tarjeta-vidriera, html.intro-lista .tarjeta-vidriera { opacity: 1; animation: none; }
+  .flecha-pista,
   .luz, .mota, .burbuja-tubo, .pantalla, .capa-lampara, .capa-kimono, .portal-remolino, .portal-borde, .objeto, .repisa-aviso { animation: none; }
   .objeto, .pan-tocable, .aparece-tras-intro { transition: none; }
 }

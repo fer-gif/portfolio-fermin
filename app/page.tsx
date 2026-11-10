@@ -7,7 +7,9 @@ import { BarraCapitulos, type Capitulo } from "@/components/laboratorio/BarraCap
 import { ContactoFijo } from "@/components/laboratorio/ContactoFijo";
 import { Cortina } from "@/components/laboratorio/Cortina";
 import { EscenaLab as Escena } from "@/components/laboratorio/EscenaLab";
-import { EscenaEntrada } from "@/components/laboratorio/EscenaEntrada";
+import { EscenaPortada } from "@/components/laboratorio/EscenaPortada";
+import { EscenaPresentacion } from "@/components/laboratorio/EscenaPresentacion";
+import { EscenaVidriera } from "@/components/laboratorio/EscenaVidriera";
 import { EscenaSalida } from "@/components/laboratorio/EscenaSalida";
 import { FondoLaboratorio } from "@/components/laboratorio/FondoLaboratorio";
 import { Mesa } from "@/components/laboratorio/Mesa";
@@ -21,8 +23,9 @@ import * as zonaFria from "@/proyectos/zona-fria/escenas";
 import * as ypf from "@/proyectos/ypf/escenas";
 import * as futbolshop from "@/proyectos/futbolshop/escenas";
 
-// Todo el portfolio es un solo recorrido: entrada → cada mesa con las escenas
-// de su proyecto justo después → salida. Un proyecto "vive" acá cuando tiene
+// Todo el portfolio es un solo recorrido: portada → quién soy → vidriera con
+// los experimentos → cada mesa con las escenas de su proyecto justo después →
+// salida. Un proyecto "vive" acá cuando tiene
 // su módulo de escenas; mientras no lo tenga, solo muestra su mesa.
 interface ModuloProyecto {
   Escenas: ComponentType;
@@ -41,8 +44,10 @@ const modulos: Record<string, ModuloProyecto> = {
 // Lo que dice el científico en las paradas comunes. Cada proyecto trae las suyas.
 // PENDIENTE: revisar el tono con Fermín.
 const guionBase: Record<string, Linea> = {
-  entrada: {
-    texto: "Cada proyecto es un experimento que se puede tocar. Elegí uno y te llevo, o bajá y te los muestro de a uno.",
+  entrada: { texto: `Hola, soy ${perfil.nombre}. Bienvenido a mi laboratorio.` },
+  "quien-soy": { texto: "El de la foto soy yo, versión laboratorio.", pose: "senalando" },
+  experimentos: {
+    texto: "Cada proyecto es un experimento que se puede tocar. Elegí uno y te llevo por el portal.",
     pose: "senalando",
   },
   salida: {
@@ -70,8 +75,15 @@ const guion: Guion = {
   escenas: escenasDelGuion,
 };
 
+// Las tres pantallas del principio, en el menú y en la barra de capítulos.
+const inicio = [
+  { escena: "entrada", etiqueta: "Inicio" },
+  { escena: "quien-soy", etiqueta: "Quién soy" },
+  { escena: "experimentos", etiqueta: "Experimentos" },
+];
+
 const destinos: Destino[] = [
-  { escena: "entrada", etiqueta: "Entrada" },
+  ...inicio,
   ...proyectos.map((p) => ({
     escena: `mesa-${p.slug}`,
     etiqueta: p.titulo,
@@ -83,7 +95,7 @@ const destinos: Destino[] = [
 // Los capítulos de la barra lateral: un punto por parada; las dimensiones
 // de un proyecto cuentan como su mesa.
 const capitulos: Capitulo[] = [
-  { escena: "entrada", etiqueta: "Entrada" },
+  ...inicio,
   ...proyectos.map((p) => ({ escena: `mesa-${p.slug}`, etiqueta: p.titulo, prefijos: [`${p.slug}-`] })),
   { escena: "salida", etiqueta: "Contacto" },
 ];
@@ -103,8 +115,17 @@ export default function Laboratorio() {
       <Repisa />
       <Personaje guion={guion} esperarIntro />
 
-      <Escena id="entrada" duracion={0.7} solapar={false}>
-        <EscenaEntrada nombre={perfil.nombre} titulo={perfil.titulo} proyectos={proyectos} />
+      <Escena id="entrada" duracion={0.5} solapar={false}>
+        <EscenaPortada nombre={perfil.nombre} titulo={perfil.titulo} />
+      </Escena>
+      <Escena id="quien-soy" duracion={0.8}>
+        <EscenaPresentacion
+          sobreMi={perfil.sobreMi}
+          lenguajes={perfil.herramientas.find((h) => h.grupo === "lenguajes")?.items ?? []}
+        />
+      </Escena>
+      <Escena id="experimentos" duracion={0.7}>
+        <EscenaVidriera proyectos={proyectos} />
       </Escena>
 
       {proyectos.map((proyecto, i) => {

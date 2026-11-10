@@ -41,11 +41,12 @@ export function Recorrido({ children }: { children: ReactNode }) {
     };
 
     // Un salto pedido por el visitante (vidriera, menú, capítulos) pasa por
-    // un portal: se abre, la pantalla se llena de verde, se cambia de lugar
-    // de una (sin desfilar por todas las escenas del medio) y el portal se
-    // cierra sobre el destino.
+    // un portal, y se cambia de lugar de una, sin desfilar por todas las
+    // escenas del medio.
     let saltando = false;
+    let scrollPausado = false;
     const reducido = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const raiz = document.documentElement;
     const saltar = (escena: string) => {
       const capa = capaSalto.current;
       const anillo = anilloSalto.current;
@@ -53,6 +54,37 @@ export function Recorrido({ children }: { children: ReactNode }) {
       if (!document.getElementById(escena) || saltando) return;
       if (reducido || !capa || !anillo || !verde) return llegar(escena);
       saltando = true;
+
+      // Con View Transitions, el navegador saca una foto de la pantalla tal
+      // como está (fondo, escena, científico, botones) y otra del portal
+      // abierto, aparte. Mientras la página real ya cambió de lugar, el CSS
+      // (globals.css, "el salto por portal") abre el portal, le hace tragarse
+      // la foto girando y del otro lado hace salir el destino. Son dos fotos
+      // que se mueven enteras: no hay que volver a pintar nada en el camino.
+      if (typeof document.startViewTransition === "function") {
+        gsap.set(capa, { autoAlpha: 1 });
+        gsap.set(verde, { opacity: 0 });
+        gsap.set(anillo, { autoAlpha: 1, scale: 1, rotation: 0 });
+        anillo.style.viewTransitionName = "salto-portal";
+        raiz.classList.add("salto-portal");
+        lenis.stop();
+        const transicion = document.startViewTransition(() => {
+          // en la foto de después el portal ya no está: solo queda el de antes
+          anillo.style.viewTransitionName = "";
+          gsap.set([capa, anillo], { autoAlpha: 0 });
+          llegar(escena);
+        });
+        transicion.ready.catch(() => {});
+        transicion.finished.finally(() => {
+          raiz.classList.remove("salto-portal");
+          if (!scrollPausado) lenis.start();
+          saltando = false;
+        });
+        return;
+      }
+
+      // Sin View Transitions: el portal se abre, la pantalla se llena de
+      // verde, se cambia de lugar y el portal se cierra sobre el destino.
       anillo.classList.add("abierto");
       gsap
         .timeline({
@@ -70,7 +102,11 @@ export function Recorrido({ children }: { children: ReactNode }) {
         .set(capa, { autoAlpha: 0 });
     };
 
-    director.conectarNavegacion(saltar, (pausado) => (pausado ? lenis.stop() : lenis.start()));
+    director.conectarNavegacion(saltar, (pausado) => {
+      scrollPausado = pausado;
+      if (pausado) lenis.stop();
+      else if (!raiz.classList.contains("salto-portal")) lenis.start();
+    });
 
     // Si se llega con un #escena (o desde /proyectos/:slug), el navegador
     // saltó antes de que existieran las escenas clavadas: con todo medido, se
@@ -91,6 +127,7 @@ export function Recorrido({ children }: { children: ReactNode }) {
 
     return () => {
       cancelAnimationFrame(cuadroAncla);
+      raiz.classList.remove("salto-portal");
       director.conectarNavegacion(() => {}, () => {});
       gsap.ticker.remove(tick);
       lenis.destroy();
