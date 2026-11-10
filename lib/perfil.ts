@@ -18,6 +18,8 @@ export const perfil = {
     ],
     fueraDelLab: "fuera del laboratorio: surf, jiu-jitsu, rugby y cocina",
   },
+  /** La frase de la pantalla de contacto. PENDIENTE: que Fermín la revise. */
+  contacto: "Si algo de lo que viste te sirve, o querés armar algo juntos, escribime.",
   email: "ferminhernando00@gmail.com",
   enlaces: [
     { etiqueta: "LinkedIn", url: "https://www.linkedin.com/in/fermin-hernando-0530631b5" },

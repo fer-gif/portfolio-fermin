@@ -6,6 +6,7 @@ import "lenis/dist/lenis.css";
 import { gsap, ScrollTrigger } from "./gsap";
 import { crearDirector, DirectorContext } from "./director";
 import { Portal } from "./Portal";
+import { avisarLlegada } from "./viajes";
 
 // Contenedor de un recorrido: suaviza el scroll (Lenis), lo sincroniza con
 // ScrollTrigger y pone a disposición el Director para todo lo que hay adentro.
@@ -108,7 +109,7 @@ export function Recorrido({ children }: { children: ReactNode }) {
       else if (!raiz.classList.contains("salto-portal")) lenis.start();
     });
 
-    // Si se llega con un #escena (o desde /proyectos/:slug), el navegador
+    // Si se llega con un #escena, el navegador
     // saltó antes de que existieran las escenas clavadas: con todo medido, se
     // va ahí de una.
     const destino = decodeURIComponent(window.location.hash.slice(1));
@@ -120,6 +121,15 @@ export function Recorrido({ children }: { children: ReactNode }) {
       });
     }
 
+    // Si se llegó por el portal desde otra página, se avisa que esta ya está
+    // armada y medida (después del salto al #ancla, si había uno).
+    let cuadroLlegada = requestAnimationFrame(() => {
+      cuadroLlegada = requestAnimationFrame(() => {
+        if (!cuadroAncla) ScrollTrigger.refresh();
+        avisarLlegada();
+      });
+    });
+
     // Un solo reloj: GSAP mueve a Lenis, y Lenis avisa a ScrollTrigger.
     const tick = (tiempo: number) => lenis.raf(tiempo * 1000);
     gsap.ticker.add(tick);
@@ -127,6 +137,7 @@ export function Recorrido({ children }: { children: ReactNode }) {
 
     return () => {
       cancelAnimationFrame(cuadroAncla);
+      cancelAnimationFrame(cuadroLlegada);
       raiz.classList.remove("salto-portal");
       director.conectarNavegacion(() => {}, () => {});
       gsap.ticker.remove(tick);

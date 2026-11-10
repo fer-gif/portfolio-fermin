@@ -1,16 +1,18 @@
 "use client";
 
 import { useRef } from "react";
-import { gsap, ScrollTrigger, useDirector, useEscena, useGSAP } from "@/components/recorrido";
+import { cuandoSeVea, gsap, ScrollTrigger, useDirector, useEscena, useGSAP } from "@/components/recorrido";
 import { ETIQUETA_CATEGORIA, type Proyecto } from "@/proyectos";
 import { frascosDelStack } from "@/lib/tecnologias";
 import { Banco } from "./Banco";
 import { EtiquetaLogo } from "./LogoStack";
 import { tocarObjeto } from "./objetos";
 
-// Una mesa del laboratorio: el experimento sale girando del portal (que se
-// abrió al terminar el proyecto anterior) y aterriza sobre el banco. Las
-// tecnologías del proyecto caen sobre la mesada como frascos con su logo.
+// La mesa del proyecto, la primera pantalla de su página: el experimento sale
+// girando del portal (por el que se llegó) y aterriza sobre el banco. Las
+// tecnologías caen sobre la mesada como frascos con su logo. Como es lo
+// primero que se ve, la llegada no espera al scroll: arranca sola cuando la
+// página sale del portal; el scroll solo la hace irse.
 export function Mesa({ proyecto, numero, tieneEscenas }: { proyecto: Proyecto; numero: number; tieneEscenas: boolean }) {
   const { linea } = useEscena();
   const director = useDirector();
@@ -54,18 +56,24 @@ export function Mesa({ proyecto, numero, tieneEscenas }: { proyecto: Proyecto; n
         },
         { x: 0, y: 0, scale: 1, rotation: 0, opacity: 1, duration: 1.1, ease: "power3.out", immediateRender: true },
       );
-      linea
-        .add(salida, 0.15)
+      const llegada = gsap
+        .timeline({ paused: true })
+        .add(salida, 0)
         .to(".detalle", { opacity: 1, y: 0, duration: 0.5, stagger: 0.15 }, "-=0.45")
         // los frascos caen y rebotan sobre la mesada, uno atrás del otro
-        .to(".frasco", { y: 0, opacity: 1, rotation: (i: number) => ((i % 3) - 1) * 2, duration: 0.8, ease: "bounce.out", stagger: 0.12 }, 0.9)
-        .to({}, { duration: 1.2 }); // tiempo para leer antes de que se vaya
+        .to(".frasco", { y: 0, opacity: 1, rotation: (i: number) => ((i % 3) - 1) * 2, duration: 0.8, ease: "bounce.out", stagger: 0.12 }, 0.75);
+      const cancelar = cuandoSeVea(() => llegada.play());
+      // el scroll de la mesa: un rato para leer antes de que se vaya
+      linea.to({}, { duration: 1 });
 
-      // Si cambia el tamaño de la pantalla, el portal y la ficha quedan en
-      // otro lugar: el punto de partida se vuelve a medir.
+      // Si cambia el tamaño de la pantalla, la ficha queda en otro lugar: el
+      // punto de partida se vuelve a medir.
       const remedir = () => salida.invalidate();
       ScrollTrigger.addEventListener("refreshInit", remedir);
-      return () => ScrollTrigger.removeEventListener("refreshInit", remedir);
+      return () => {
+        cancelar();
+        ScrollTrigger.removeEventListener("refreshInit", remedir);
+      };
     },
     { scope: ref },
   );

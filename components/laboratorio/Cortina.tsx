@@ -5,8 +5,11 @@ import { gsap, useDirector, useGSAP } from "@/components/recorrido";
 import { PersonajeEmpujando } from "@/components/personaje/PersonajeEmpujando";
 
 // La intro: la puerta del laboratorio tapa todo y el científico entra y la
-// empuja hasta sacarla de la pantalla. Se ve en cada carga; si el visitante
-// llega con un #ancla o pide reducir movimiento, se saltea.
+// empuja hasta sacarla de la pantalla. Se ve al cargar el sitio; si el
+// visitante llega con un #ancla, pide reducir movimiento o vuelve de un
+// proyecto (la puerta ya se abrió), se saltea.
+let puertaAbierta = false;
+
 export function Cortina() {
   const ref = useRef<HTMLDivElement>(null);
   const director = useDirector();
@@ -15,13 +18,14 @@ export function Cortina() {
   useGSAP(
     () => {
       const terminar = () => {
+        puertaAbierta = true;
         document.documentElement.classList.add("intro-lista");
         director.pausarScroll(false);
         setVisible(false);
       };
 
       const saltar =
-        window.location.hash !== "" || window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        puertaAbierta || window.location.hash !== "" || window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       if (saltar) {
         terminar();
         return;

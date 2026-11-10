@@ -1,8 +1,10 @@
 # Laboratorio: portfolio interactivo
 
-Portfolio de Programador y Data Analyst. No es una vitrina estática: todo el
-sitio es **un solo recorrido** por un laboratorio, guiado por un científico
-loco (el personaje), donde cada proyecto es un experimento que se puede usar.
+Portfolio de Programador y Data Analyst. No es una vitrina estática: el sitio
+es un laboratorio, guiado por un científico loco (el personaje), donde cada
+proyecto es un experimento que se puede usar. La página principal es corta
+(portada, quién soy, los experimentos y contacto) y cada experimento tiene su
+propia página, a la que se llega por un portal.
 
 Stack: Next.js (App Router) · TypeScript · Tailwind CSS · GSAP + ScrollTrigger · Lenis.
 
@@ -11,14 +13,16 @@ Publicado en https://portfolio-fermin.vercel.app (cada push a `main` se desplieg
 ## Cómo está armado
 
 ```
-app/page.tsx                  ← el recorrido completo: intro → portada → quién soy → vidriera → mesas → salida
+app/page.tsx                  ← la principal: intro → portada → quién soy → vidriera → contacto
+app/proyectos/[slug]/page.tsx ← la página de cada experimento: mesa → sus paradas → el que sigue
 app/layout.tsx                ← las tres tipografías (Bricolage Grotesque, Martian Mono, Patrick Hand)
 app/globals.css               ← paleta del laboratorio, ajustes de cada tipografía y animaciones de ambiente
 
 components/
 ├─ recorrido/                 ← motor del scrollytelling: Recorrido, Escena, Director, barra
 ├─ laboratorio/               ← la carcasa: Cortina (intro), EscenaPortada, EscenaPresentacion
-│                                (con RetratoCientifico), EscenaVidriera, Mesa, EscenaSalida,
+│                                (con RetratoCientifico), EscenaVidriera, EscenaContacto, Mesa,
+│                                EscenaSiguiente (el final de cada proyecto),
 │                                MenuLaboratorio ("saltar a"), ContactoFijo (mail/LinkedIn/
 │                                GitHub/CV arriba a la izquierda), BarraCapitulos (puntos a la
 │                                derecha), FichaTecnica (con "probarlo" y "ver el código"),
@@ -93,22 +97,34 @@ recién al llegar habla. Las mesas lo llevan al banco (`POSICION_MESA` en
   media pantalla de salida (`SALIDA` en `Escena.tsx`). Hay dos transiciones:
   - **Relevo**, entre escenas de un mismo proyecto: lo que había sube y se
     apaga; lo nuevo sube y se enciende.
-  - **Portal**, entre proyectos: la escena que llega lleva `entrada="portal"`
-    (las mesas y la salida, en `app/page.tsx`). Se abre un portal verde en el
-    medio que se traga la escena anterior (la anterior se entera sola: mira si
+  - **Portal** (hoy sin uso: era el paso entre proyectos cuando todo estaba
+    en una sola página): la escena que llega lleva `entrada="portal"`. Se
+    abre un portal verde en el medio que se traga la escena anterior (la anterior se entera sola: mira si
     la siguiente tiene `data-entrada="portal"`), y la tarjeta del proyecto
     nuevo sale girando de ahí (`Mesa.tsx`). El dibujo está en `Portal.tsx`.
 - Cada escena dice dónde aterriza un salto (`data-llegada`): el menú, la barra
   de capítulos y los enlaces `#escena` llevan a ese punto, con el contenido ya
   a la vista, y no al borde (donde la escena todavía está vacía).
-- **Las tres pantallas del principio.** `entrada` (`EscenaPortada`): "el
+- **La página principal.** `entrada` (`EscenaPortada`): "el
   portafolio de Fermín, Programador y Data Analyst", nada más. `quien-soy`
   (`EscenaPresentacion`): el saludo y dos frases de `perfil.sobreMi`, los
   lenguajes con su logo y el retrato de Fermín en versión científico
   (`RetratoCientifico`, un SVG). `experimentos` (`EscenaVidriera`): todos los
   proyectos como tarjetas sobre una mesada (en celular, una lista); cada
-  tarjeta usa `gancho` de su `meta.ts`.
-- **El salto por portal.** Tocar una tarjeta, el menú o un capítulo
+  tarjeta usa `gancho` de su `meta.ts` y es un link a su página. `contacto`
+  (`EscenaContacto`): el mail (para copiar), LinkedIn, GitHub y el CV.
+- **El viaje por portal entre páginas.** Tocar una tarjeta de la vidriera, "el
+  que sigue" al final de un proyecto, "volver al laboratorio" o un proyecto
+  del menú llama a `viajar(href)` (`components/recorrido/viajes.ts`).
+  `<Viaje>` vive en el layout raíz para sobrevivir al cambio de página y lo
+  hace en dos View Transitions: en la ida, el portal se traga la foto de la
+  pantalla y queda el vacío (`.viaje-vacio`) con el portal girando; mientras,
+  se cambia de página. Cuando la nueva avisa que está armada
+  (`avisarLlegada()` desde `<Recorrido>`), en la vuelta sale girando del
+  portal y el portal se cierra. La tarjeta de la mesa sale del portal recién
+  cuando la página se ve (`cuandoSeVea`). CSS en `globals.css`, "el viaje por
+  portal". La intro de la puerta solo se ve al entrar al sitio.
+- **El salto por portal dentro de una página.** El menú o un capítulo
   (`director.irA`) pasa por `saltar()` en `Recorrido.tsx`. Con View
   Transitions, el navegador fotografía la pantalla entera y, aparte, el portal
   abierto (`view-transition-name: salto-portal`); la página real ya cambia de
@@ -117,9 +133,10 @@ recién al llegar habla. Las mesas lo llevan al banco (`POSICION_MESA` en
   salir el destino. Sin View Transitions, el portal se abre, la pantalla se
   llena de verde y se cambia de lugar. Con "reducir movimiento", se salta
   directo.
-- **Largo.** Cada proyecto tiene a lo sumo tres paradas después de su mesa: lo
-  que se toca, la historia más fuerte y la ficha técnica. Las escenas por
-  pasos duran 1,8 pantallas (unas 0,45 por paso); el recorrido entero, unas 37.
+- **Largo.** La principal mide unas 5 pantallas de scroll. Cada proyecto tiene
+  a lo sumo tres paradas después de su mesa: lo que se toca, la historia más
+  fuerte y la ficha técnica; las escenas por pasos duran 1,8 pantallas (unas
+  0,45 por paso).
 - Las escenas reservan espacio en celular para los botones fijos (arriba) y el
   personaje (abajo).
 - La `Cortina` es la intro (el científico empuja la puerta). Se ve una vez por
@@ -146,20 +163,22 @@ recién al llegar habla. Las mesas lo llevan al banco (`POSICION_MESA` en
 - **Experimentos desbloqueados.** `logros.ts` guarda en el navegador qué
   artefactos usó el visitante y qué objetos descubrió (`desbloquear(id)` desde
   cada artefacto, `registrarObjeto(id)` desde los objetos). `Repisa` muestra
-  el conteo y avisa cada desbloqueo; la salida lista lo que falta con el
-  camino a cada uno.
+  el conteo y avisa cada desbloqueo.
 
 ## Sumar un proyecto
 
 1. Crear `proyectos/<slug>/meta.ts` (con su `gancho` de una línea para la
    vidriera) y registrarlo en `proyectos/index.ts`. Con eso ya aparece su
-   tarjeta en la vidriera y su mesa en el laboratorio.
+   tarjeta en la vidriera y su página (`/proyectos/<slug>`) con su mesa.
 2. Cuando tenga experiencia propia, crear `proyectos/<slug>/escenas.tsx` que
    exporte `Escenas`, `guion` y `dimensiones` (ver `futbol-necochea/` o
-   `zona-fria/`), y anotarlo en `modulos` dentro de `app/page.tsx`.
+   `zona-fria/`), y anotarlo en `modulos` dentro de
+   `app/proyectos/[slug]/page.tsx`.
 
 Los ids de escena van con el slug adelante (`zona-fria-calculadora`); la mesa
-es `mesa-<slug>`. `/proyectos/<slug>` redirige a `/#mesa-<slug>`.
+es `mesa-<slug>`. Los links viejos de cuando todo era una página
+(`/#mesa-<slug>`, `/#<slug>-<escena>`) llevan a la página del proyecto
+(`AnclasViejas`).
 
 En `meta.ts`, `probar` (dónde se usa de verdad) y `codigo` (repo) son los dos
 botones grandes de la ficha técnica; `queHice` y `resultado` son las filas que
@@ -175,14 +194,14 @@ muestran hasta nueve. Las fuentes de datos (INDEC, USGS…) van enteras, con un
 Para sumar un logo: guardar el SVG original en `public/logos/<archivo>.svg` y
 anotar el nombre en `LOGOS` de `lib/tecnologias.ts` (en minúsculas y sin
 versión: "Laravel 12" busca "laravel"). Lo que no tiene logo lleva un tubo de
-ensayo. La caja "con qué trabajo" de la salida y del modo directo sale de
-`herramientas` en `lib/perfil.ts`.
+ensayo. La caja "con qué trabajo" del modo directo y los lenguajes de "quién
+soy" salen de `herramientas` en `lib/perfil.ts`.
 
 ### CV descargable
 
 Poner el PDF en `public/cv-fermin-hernando.pdf` y cambiar `cv` en
 `lib/perfil.ts` a `"/cv-fermin-hernando.pdf"`. Con eso aparece el botón "CV"
-arriba a la izquierda y "descargar CV" en la salida.
+arriba a la izquierda y "descargar CV" en el contacto.
 
 ## Rendimiento
 

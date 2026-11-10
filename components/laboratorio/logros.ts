@@ -25,7 +25,7 @@ export const LOGROS: Logro[] = [
   { id: "consulta", nombre: "Le preguntaste al modelo por los sismos", pista: "Movelé los meses a la consulta", escena: "ypf-consulta" },
   { id: "curioso", nombre: "Descubriste tres objetos del laboratorio", pista: "Hay cosas en la pared y en la mesada que se tocan" },
   { id: "coleccionista", nombre: "Descubriste todos los objetos", pista: "Cuadros, kimono, tabla, estante, pan…" },
-  { id: "salida", nombre: "Llegaste al final del recorrido", pista: "Seguí bajando", escena: "salida" },
+  { id: "salida", nombre: "Llegaste hasta el contacto", pista: "Bajá hasta el final del laboratorio", escena: "contacto" },
 ];
 
 /** Objetos del laboratorio que se pueden descubrir (los define objetos.ts). */

@@ -11,11 +11,6 @@ const nextConfig: NextConfig = {
       new URL("https://dataene.com.ar/uploads/**"),
     ],
   },
-  // Todo el portfolio vive en una sola página: los links viejos por proyecto
-  // llevan a la mesa correspondiente.
-  async redirects() {
-    return [{ source: "/proyectos/:slug", destination: "/#mesa-:slug", permanent: true }];
-  },
 };
 
 export default nextConfig;

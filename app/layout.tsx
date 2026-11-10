@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Bricolage_Grotesque, Martian_Mono, Patrick_Hand } from "next/font/google";
+import { Viaje } from "@/components/recorrido/Viaje";
 import "./globals.css";
 
 // Tres voces, ninguna de plantilla:
@@ -17,10 +18,10 @@ const patrick = Patrick_Hand({ variable: "--font-patrick", subsets: ["latin"], w
 
 export const metadata: Metadata = {
   title: {
-    default: "Laboratorio | Programador y Data Analyst",
-    template: "%s | Laboratorio",
+    default: "Portafolio de Fermín Hernando | Programador y Data Analyst",
+    template: "%s | Portafolio de Fermín Hernando",
   },
-  description: "Portfolio interactivo: cada proyecto vive y se puede usar acá.",
+  description: "Portafolio interactivo de Fermín Hernando, programador y data analyst: cada proyecto se puede tocar.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -29,7 +30,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="es"
       className={`${bricolage.variable} ${martian.variable} ${patrick.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col font-sans">{children}</body>
+      <body className="min-h-full flex flex-col font-sans">
+        {children}
+        {/* el portal entre páginas: vive acá para sobrevivir al cambio de página */}
+        <Viaje />
+      </body>
     </html>
   );
 }

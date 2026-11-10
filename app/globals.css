@@ -257,6 +257,50 @@ html.salto-portal::view-transition-old(salto-portal) {
   100% { transform: scale(0) rotate(560deg); }
 }
 
+/* El viaje por portal entre páginas (Viaje.tsx), en dos View Transitions:
+   - ida: el portal se abre y se traga la foto de la pantalla; debajo queda el
+     vacío (.viaje-vacio, la capa real, con el mismo fondo que la transición);
+   - vuelta: la página nueva sale girando del centro y el portal se cierra. */
+.viaje-vacio,
+html.viaje-ida::view-transition,
+html.viaje-vuelta::view-transition {
+  background: radial-gradient(circle at 50% var(--centro-salto), #2a5a22 0%, #0c1d1f 42%, #050a0c 100%);
+}
+html.viaje-ida::view-transition-group(root),
+html.viaje-vuelta::view-transition-group(root) { animation: none; }
+/* una foto encima de la otra, sin la mezcla que el navegador usa para fundir */
+html.salto-portal::view-transition-old(root),
+html.salto-portal::view-transition-new(root),
+html.viaje-ida::view-transition-old(root),
+html.viaje-ida::view-transition-new(root),
+html.viaje-vuelta::view-transition-old(root),
+html.viaje-vuelta::view-transition-new(root) { mix-blend-mode: normal; }
+html.viaje-ida::view-transition-old(root) {
+  transform-origin: 50% var(--centro-salto);
+  animation: salto-tragado 0.7s cubic-bezier(0.55, 0, 0.85, 0.35) 0.12s both;
+}
+html.viaje-ida::view-transition-new(root) { animation: viaje-aparece 0.15s linear 0.75s both; }
+html.viaje-ida::view-transition-new(viaje-portal) { animation: viaje-portal-abre 0.5s cubic-bezier(0.34, 1.4, 0.64, 1) both; }
+html.viaje-vuelta::view-transition-old(root) { animation: none; }
+html.viaje-vuelta::view-transition-new(root) {
+  transform-origin: 50% var(--centro-salto);
+  animation: salto-emerge 0.65s cubic-bezier(0.16, 0.85, 0.3, 1) both;
+}
+html.viaje-vuelta::view-transition-old(viaje-portal) { animation: viaje-portal-cierra 0.7s cubic-bezier(0.45, 0, 0.4, 1) both; }
+@keyframes viaje-aparece {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes viaje-portal-abre {
+  from { transform: scale(0) rotate(-160deg); }
+  to { transform: none; }
+}
+@keyframes viaje-portal-cierra {
+  0% { transform: none; }
+  30% { transform: scale(1.18) rotate(90deg); }
+  100% { transform: scale(0) rotate(420deg); }
+}
+
 /* Sin View Transitions: el portal se abre, la pantalla se llena de verde, se
    cambia de lugar y el portal se cierra. */
 .salto-destello {

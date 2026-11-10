@@ -2,38 +2,48 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useDirector, useEscenaActual } from "@/components/recorrido";
+import { useDirector, useEscenaActual, viajar } from "@/components/recorrido";
 
+/**
+ * A dónde lleva una línea del menú: a una escena de esta página (`escena`) o
+ * a otra página, pasando por el portal (`href`). Sin ninguno de los dos es un
+ * título que agrupa a sus `hijos`.
+ */
 export interface Destino {
-  escena: string;
   etiqueta: string;
-  /** Las dimensiones de un proyecto. */
-  hijos?: { escena: string; etiqueta: string }[];
+  escena?: string;
+  href?: string;
+  /** Las paradas de un proyecto, o los proyectos de la vidriera. */
+  hijos?: Destino[];
 }
 
 // Atajo para quien no quiere hacer el recorrido completo:
-// un menú fijo que lleva directo a cualquier mesa o dimensión.
+// un menú fijo que lleva directo a cualquier parada o proyecto.
 export function MenuLaboratorio({ destinos }: { destinos: Destino[] }) {
   const director = useDirector();
   const actual = useEscenaActual();
   const [abierto, setAbierto] = useState(false);
 
-  const ir = (escena: string) => {
+  const ir = (d: Destino) => {
     setAbierto(false);
-    director.irA(escena);
+    if (d.escena) director.irA(d.escena);
+    else if (d.href) viajar(d.href);
   };
 
-  const boton = (escena: string, etiqueta: string, hijo = false) => (
-    <button
-      type="button"
-      onClick={() => ir(escena)}
-      className={`w-full rounded-lg px-3 py-1.5 text-left transition-colors hover:bg-lab-borde ${
-        hijo ? "pl-6 text-xs text-lab-tenue hover:text-lab-texto" : ""
-      } ${actual === escena ? "text-lab-portal" : ""}`}
-    >
-      {etiqueta}
-    </button>
-  );
+  const boton = (d: Destino, hijo = false) =>
+    d.escena || d.href ? (
+      <button
+        type="button"
+        onClick={() => ir(d)}
+        className={`w-full rounded-lg px-3 py-1.5 text-left transition-colors hover:bg-lab-borde ${
+          hijo ? "pl-6 text-xs text-lab-tenue hover:text-lab-texto" : ""
+        } ${d.escena && actual === d.escena ? "text-lab-portal" : ""}`}
+      >
+        {d.etiqueta}
+      </button>
+    ) : (
+      <p className="px-3 pt-2 pb-1 text-[10px] tracking-wider text-lab-tenue uppercase">{d.etiqueta}</p>
+    );
 
   return (
     <nav className="fixed top-4 right-4 z-50 flex flex-col items-end gap-2">
@@ -52,10 +62,10 @@ export function MenuLaboratorio({ destinos }: { destinos: Destino[] }) {
             data-lenis-prevent
           >
             {destinos.map((d) => (
-              <li key={d.escena}>
-                {boton(d.escena, d.etiqueta)}
+              <li key={d.escena ?? d.href ?? d.etiqueta}>
+                {boton(d)}
                 {d.hijos?.map((h) => (
-                  <div key={h.escena}>{boton(h.escena, h.etiqueta, true)}</div>
+                  <div key={h.escena ?? h.href ?? h.etiqueta}>{boton(h, true)}</div>
                 ))}
               </li>
             ))}
