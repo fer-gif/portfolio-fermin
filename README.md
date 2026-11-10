@@ -100,6 +100,15 @@ recién al llegar habla. Las mesas lo llevan al banco (`POSICION_MESA` en
 - Cada escena dice dónde aterriza un salto (`data-llegada`): el menú, la barra
   de capítulos y los enlaces `#escena` llevan a ese punto, con el contenido ya
   a la vista, y no al borde (donde la escena todavía está vacía).
+- **La vidriera.** La primera escena (`EscenaEntrada`) muestra el nombre y
+  todos los proyectos como tarjetas sobre una mesada (en celular, una lista).
+  Cada tarjeta usa `gancho` de su `meta.ts`. Tocarla, igual que el menú y los
+  capítulos, hace un **salto por portal** (`Recorrido.tsx`): el portal se
+  abre, la pantalla se llena de verde, se cambia de lugar sin desfilar por las
+  escenas del medio y el portal se cierra sobre el destino.
+- **Largo.** Cada proyecto tiene a lo sumo tres paradas después de su mesa: lo
+  que se toca, la historia más fuerte y la ficha técnica. Las escenas por
+  pasos duran 1,8 pantallas (unas 0,45 por paso); el recorrido entero, unas 35.
 - Las escenas reservan espacio en celular para los botones fijos (arriba) y el
   personaje (abajo).
 - La `Cortina` es la intro (el científico empuja la puerta). Se ve una vez por
@@ -131,8 +140,9 @@ recién al llegar habla. Las mesas lo llevan al banco (`POSICION_MESA` en
 
 ## Sumar un proyecto
 
-1. Crear `proyectos/<slug>/meta.ts` y registrarlo en `proyectos/index.ts`.
-   Con eso ya aparece su mesa en el laboratorio.
+1. Crear `proyectos/<slug>/meta.ts` (con su `gancho` de una línea para la
+   vidriera) y registrarlo en `proyectos/index.ts`. Con eso ya aparece su
+   tarjeta en la vidriera y su mesa en el laboratorio.
 2. Cuando tenga experiencia propia, crear `proyectos/<slug>/escenas.tsx` que
    exporte `Escenas`, `guion` y `dimensiones` (ver `futbol-necochea/` o
    `zona-fria/`), y anotarlo en `modulos` dentro de `app/page.tsx`.

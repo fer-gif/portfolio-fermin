@@ -207,7 +207,26 @@ html.intro-lista .aparece-tras-intro { opacity: 1; }
 .portal.abierto .portal-remolino,
 .portal.abierto .portal-borde { animation-play-state: running; }
 
+/* La vidriera del principio: cuando se corre la puerta, los experimentos se
+   apoyan uno atrás del otro sobre la mesada. */
+@keyframes vidriera-entra {
+  from { opacity: 0; transform: translateY(22px) rotate(-1.5deg); }
+  to { opacity: 1; transform: none; }
+}
+.tarjeta-vidriera { opacity: 0; }
+html.intro-lista .tarjeta-vidriera {
+  animation: vidriera-entra 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--i, 0) * 90ms + 150ms);
+}
+
+/* El salto del menú o de la vidriera: el portal se abre, la pantalla se llena
+   de verde, se cambia de lugar y el portal se cierra. */
+.salto-destello {
+  background: radial-gradient(circle at 50% 50%, #f4ffd6 0%, #c6f36a 28%, #97ce4c 58%, #3f7a25 100%);
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .tarjeta-vidriera, html.intro-lista .tarjeta-vidriera { opacity: 1; animation: none; }
   .luz, .mota, .burbuja-tubo, .pantalla, .capa-lampara, .capa-kimono, .portal-remolino, .portal-borde, .objeto, .repisa-aviso { animation: none; }
   .objeto, .pan-tocable, .aparece-tras-intro { transition: none; }
 }

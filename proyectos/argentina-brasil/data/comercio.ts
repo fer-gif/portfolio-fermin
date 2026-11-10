@@ -16,17 +16,6 @@ export const RESUMEN_1S26 = {
   comercio2025: 31195,
 };
 
-/** La asimetría: tamaño de las economías y qué pasaría si el comercio se congela. */
-export const ASIMETRIA = {
-  pbiBrasilBillones: 2.2,
-  vecesMasGrande: 5,
-  congelamiento: {
-    brasilComercio: 4,
-    argentinaExportaciones: 16,
-    argentinaImportacionesClave: 21.5,
-  },
-};
-
 export interface Categoria {
   codigo: string;
   nombre: string;
@@ -56,34 +45,6 @@ export const SERIE_ANUAL = {
   exportaciones: [4800, 5600, 8100, 13300, 14400, 16400, 13900, 9000, 9300, 10400, 11800, 11874, 13611, 12771],
   importaciones: [2400, 7500, 11700, 17700, 17900, 18000, 14300, 13700, 18000, 10100, 12400, 17346, 14348, 18417],
   saldo: [2400, -1900, -3600, -4400, -3500, -1600, -400, -4700, -8700, 300, -600, -5472, -737, -5646],
-};
-
-/** Socios comerciales de Argentina, 1S 2026, participación en %. */
-export const SOCIOS = {
-  exportaciones: {
-    total: 49454,
-    variacion: 24.4,
-    partes: [
-      { nombre: "Brasil", pct: 12.6 },
-      { nombre: "China", pct: 9.9 },
-      { nombre: "EE.UU.", pct: 9.8 },
-      { nombre: "Chile", pct: 6.6 },
-      { nombre: "India", pct: 6.3 },
-      { nombre: "Resto", pct: 54.7 },
-    ],
-  },
-  importaciones: {
-    total: 35531,
-    variacion: -3.9,
-    partes: [
-      { nombre: "China", pct: 22.5 },
-      { nombre: "Brasil", pct: 21.5 },
-      { nombre: "EE.UU.", pct: 9.2 },
-      { nombre: "Paraguay", pct: 6.8 },
-      { nombre: "Alemania", pct: 4.3 },
-      { nombre: "Resto", pct: 35.7 },
-    ],
-  },
 };
 
 /** Un sector del dependómetro. */
@@ -195,6 +156,3 @@ export const SECTORES: Sector[] = [
     destino: "Consumo masivo e industria sazonadora",
   },
 ];
-
-export const millones = (n: number) =>
-  (n < 0 ? "−" : "") + "USD " + Math.abs(n).toLocaleString("es-AR") + " M";

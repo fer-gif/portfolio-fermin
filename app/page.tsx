@@ -42,7 +42,7 @@ const modulos: Record<string, ModuloProyecto> = {
 // PENDIENTE: revisar el tono con Fermín.
 const guionBase: Record<string, Linea> = {
   entrada: {
-    texto: "Acá adentro cada proyecto es un experimento que podés tocar. Vení, te muestro.",
+    texto: "Cada proyecto es un experimento que se puede tocar. Elegí uno y te llevo, o bajá y te los muestro de a uno.",
     pose: "senalando",
   },
   salida: {
@@ -104,7 +104,7 @@ export default function Laboratorio() {
       <Personaje guion={guion} esperarIntro />
 
       <Escena id="entrada" duracion={0.7} solapar={false}>
-        <EscenaEntrada nombre={perfil.nombre} titulo={perfil.titulo} />
+        <EscenaEntrada nombre={perfil.nombre} titulo={perfil.titulo} proyectos={proyectos} />
       </Escena>
 
       {proyectos.map((proyecto, i) => {
@@ -112,7 +112,7 @@ export default function Laboratorio() {
         return (
           <div key={proyecto.slug} className="contents">
             {/* cada proyecto llega por un portal */}
-            <Escena id={`mesa-${proyecto.slug}`} duracion={1.4} entrada="portal">
+            <Escena id={`mesa-${proyecto.slug}`} duracion={1} entrada="portal">
               <Mesa proyecto={proyecto} numero={i + 1} tieneEscenas={Boolean(modulo)} />
             </Escena>
             {modulo && <modulo.Escenas />}

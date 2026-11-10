@@ -12,6 +12,7 @@ export const meta: Proyecto = {
     "Armé el informe web con gráficos interactivos por sector.",
   ],
   creditos: "Muove · Investigación & Datos",
+  gancho: "Cuánto depende la Argentina de Brasil, sector por sector.",
   resumen:
     "Informe interactivo sobre la dependencia comercial bilateral, con datos del INDEC y la Bolsa de Comercio de Rosario.",
   artefacto: "Elegir un sector (trigo, autos, autopartes, peras…) y ver cuánto pesa Brasil en él.",

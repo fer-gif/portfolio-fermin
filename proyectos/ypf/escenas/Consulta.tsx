@@ -3,8 +3,14 @@
 import { useRef, useState } from "react";
 import { useEscena, useGSAP } from "@/components/recorrido";
 import { desbloquear } from "@/components/laboratorio/logros";
-import { HISTORIAL, MEDIANA_MENSUAL, MESES } from "../data/sismos";
+import { HISTORIAL, MEDIANA_MENSUAL, MESES, MODELOS } from "../data/sismos";
 import { proyectar } from "../modelo";
+
+// El resultado honesto de la carrera de modelos (antes era una parada aparte):
+// en los 12 meses de prueba, la regresión lineal contra el modelo de referencia.
+const TONTO = MODELOS.find((m) => m.clave === "dummy") ?? MODELOS[0];
+const LINEAL = MODELOS.find((m) => m.clave === "lineal") ?? MODELOS[1];
+const n1 = (v: number) => v.toLocaleString("es-AR", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 
 const MESES_CORTOS = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
 const [ANIO_FIN, MES_FIN] = MESES[MESES.length - 1];
@@ -114,6 +120,11 @@ export function Consulta() {
             <p className="mt-3 text-[10px] leading-snug text-lab-tenue/80">
               Regresión lineal entrenada con 113 meses (octubre 2016 – agosto 2026), con el pico de agosto de 2021 reemplazado por la mediana.
               Cada mes estimado se suma al historial para estimar el siguiente. Es una estimación estadística: no predice sismos individuales.
+            </p>
+            <p className="mt-3 border-t border-lab-borde pt-3 text-[11px] leading-snug text-lab-tenue">
+              <span className="text-lab-texto">El resultado honesto:</span> en 12 meses que nunca vio, erró {n1(LINEAL.maeTest)} sismos por
+              mes en promedio; el modelo de referencia, que siempre dice el promedio, erró {n1(TONTO.maeTest)}. Fue el mejor de los cuatro modelos en la validación, pero todavía no le gana
+              de forma consistente al más simple.
             </p>
           </div>
         </div>

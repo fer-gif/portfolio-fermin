@@ -2,15 +2,14 @@ import { EscenaLab as Escena } from "@/components/laboratorio/EscenaLab";
 import type { Linea } from "@/components/personaje/guion";
 import type { Destino } from "@/components/laboratorio/MenuLaboratorio";
 import { FichaTecnica } from "@/components/laboratorio/FichaTecnica";
-import { Construccion } from "./escenas/Construccion";
 import { Hallazgos } from "./escenas/Hallazgos";
-import { LineaDeTiempo } from "./escenas/LineaDeTiempo";
 import { Sandbox } from "./escenas/Sandbox";
-import { PASOS_CONSTRUCCION, PASOS_HALLAZGOS, PASOS_LINEA } from "./data/pasos";
+import { PASOS_HALLAZGOS } from "./data/pasos";
 import { meta } from "./meta";
 
-// FutbolShop: de cero a producción, la copia de juguete del inventario, de las
-// planillas al sistema y tres bugs con datos reales. PENDIENTE: revisar el guion con Fermín.
+// FutbolShop: la copia de juguete del inventario y tres bugs que solo
+// aparecieron con los datos reales. Los números de cómo está hecho van en la
+// ficha (resultado). PENDIENTE: revisar el guion con Fermín.
 
 const P = meta.slug;
 
@@ -19,19 +18,9 @@ export const guion: Record<string, Linea> = {
     texto: "Una tienda que llevaba todo en Excel y hoy vende con un sistema a medida. Acá te doy una copia de juguete para que la rompas tranquilo.",
     pose: "senalando",
   },
-  [`${P}-linea`]: {
-    texto: "Del primer commit al cierre de las 84 tareas pasaron seis días.",
-    pose: "senalando",
-    pasos: PASOS_LINEA.map((p) => ({ texto: p.dice, pose: p.pose })),
-  },
   [`${P}-sandbox`]: {
     texto: "Buscá, tildá varios, subiles el precio, tocá un nombre y ajustá el stock. Los datos son inventados: rompé todo.",
     pose: "senalando",
-  },
-  [`${P}-construccion`]: {
-    texto: "Antes: cinco planillas que no se hablaban entre sí.",
-    pose: "senalando",
-    pasos: PASOS_CONSTRUCCION.map((p) => ({ texto: p.dice, pose: p.pose })),
   },
   [`${P}-hallazgos`]: {
     texto: "Decía «guardado» y era mentira.",
@@ -45,33 +34,23 @@ export const guion: Record<string, Linea> = {
 };
 
 export const dimensiones: NonNullable<Destino["hijos"]> = [
-  { escena: `${P}-linea`, etiqueta: "1 · De cero a producción" },
-  { escena: `${P}-sandbox`, etiqueta: "2 · El inventario, para jugar" },
-  { escena: `${P}-construccion`, etiqueta: "3 · De las planillas al sistema" },
-  { escena: `${P}-hallazgos`, etiqueta: "4 · Tres bugs con datos reales" },
+  { escena: `${P}-sandbox`, etiqueta: "1 · El inventario, para jugar" },
+  { escena: `${P}-hallazgos`, etiqueta: "2 · Tres bugs con datos reales" },
   { escena: `${P}-ficha`, etiqueta: "Ficha técnica" },
 ];
 
 export function Escenas() {
   return (
     <>
-      <Escena id={`${P}-linea`} duracion={3.2}>
-        <LineaDeTiempo />
-      </Escena>
-
-      <Escena id={`${P}-sandbox`} duracion={1.6}>
+      <Escena id={`${P}-sandbox`} duracion={1}>
         <Sandbox />
       </Escena>
 
-      <Escena id={`${P}-construccion`} duracion={3.2}>
-        <Construccion />
-      </Escena>
-
-      <Escena id={`${P}-hallazgos`} duracion={3.2}>
+      <Escena id={`${P}-hallazgos`} duracion={1.8}>
         <Hallazgos />
       </Escena>
 
-      <Escena id={`${P}-ficha`} duracion={0.8}>
+      <Escena id={`${P}-ficha`} duracion={0.6}>
         <FichaTecnica
           proyecto={meta}
           filasExtra={[

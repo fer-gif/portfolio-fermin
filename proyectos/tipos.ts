@@ -37,6 +37,8 @@ export interface Proyecto {
   /** Organizaciones o personas que participaron o respaldaron el proyecto. */
   creditos?: string;
   resumen: string;
+  /** Una línea para la tarjeta de la vidriera del principio. */
+  gancho: string;
   /** Qué puede hacer el visitante con el artefacto vivo. */
   artefacto: string;
   stack: string[];

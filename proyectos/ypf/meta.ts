@@ -18,6 +18,7 @@ export const meta: Proyecto = {
   resultado:
     "El análisis exploratorio identificó las tres zonas sísmicas del país y un pico de actividad en 2021.",
   creditos: "Programa de Fundación YPF · con Carina Dellasanta y Sergio Mamani",
+  gancho: "Diez años de sismos en Argentina y un modelo que estima los próximos.",
   resumen:
     "Diez años de sismos del USGS (2016–2026), recortados al territorio argentino con capas del IGN: análisis exploratorio, limpieza y un modelo que estima cuántos sismos habrá en los próximos meses.",
   artefacto:

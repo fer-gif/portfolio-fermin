@@ -18,6 +18,7 @@ export const meta: Proyecto = {
   resultado:
     "En producción desde el 08/09/2026 en una tienda real con dos locales: 400 productos y 995 variantes cargados por el cliente. 1.969 pruebas de PHP, 2.403 de front y 56 recorridos e2e. 21 planes y tres despliegues en dos meses.",
   creditos: "Agencia Muove, para la tienda FutbolShop (Necochea y Quequén)",
+  gancho: "Caja e inventario a medida para una tienda real, en uso desde septiembre.",
   resumen:
     "FutbolShop manejaba todo el negocio con planillas de Excel. Le hicimos un sistema a medida de caja e inventario: catálogo con variantes, stock, compras, vendedores, clientes y dos locales. En producción desde septiembre de 2026.",
   artefacto:

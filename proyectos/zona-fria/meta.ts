@@ -12,6 +12,7 @@ export const meta: Proyecto = {
     "Armé el set de datos que usó mi compañero para publicar el cruce en el sitio.",
   ],
   creditos: "Análisis de Agencia Muove, publicado en el sitio de Valeria Arata",
+  gancho: "Cuánto más pagaría de gas un hogar de Junín sin Zona Fría.",
   resumen:
     "Cruce de datos climáticos históricos con cuadros tarifarios para calcular el impacto de la quita de Zona Fría en los hogares de Junín.",
   artefacto: "Describir tu casa y ver cuánto más pagarías de gas sin Zona Fría.",

@@ -3,7 +3,7 @@
 import { useRef, useState } from "react";
 import { useEscena, useGSAP } from "@/components/recorrido";
 import { desbloquear } from "@/components/laboratorio/logros";
-import { ENDPOINTS, type Goleador, type Partido, type Posicion } from "../api";
+import { ENDPOINTS, type Goleador, type Noticia, type Partido, type Posicion } from "../api";
 import { Goleadores } from "../componentes/Goleadores";
 import { TablaPosiciones } from "../componentes/TablaPosiciones";
 import { UltimaFecha } from "../componentes/UltimaFecha";
@@ -25,8 +25,9 @@ const PESTANAS: { id: Pestana; etiqueta: string }[] = [
   { id: "json", etiqueta: "{ JSON }" },
 ];
 
-// Dimensión API: el monitor donde se ven los datos reales, en vivo.
-export function MonitorAPI({ datos }: { datos: DatosAPI }) {
+// Dimensión API: el monitor donde se ven los datos reales, en vivo. Al pie,
+// las últimas notas de los diarios que usan estos datos.
+export function MonitorAPI({ datos, noticias = [] }: { datos: DatosAPI; noticias?: Noticia[] }) {
   const { linea } = useEscena();
   const ref = useRef<HTMLDivElement>(null);
   const [pestana, setPestana] = useState<Pestana>("posiciones");
@@ -87,6 +88,23 @@ export function MonitorAPI({ datos }: { datos: DatosAPI }) {
             </div>
           )}
         </div>
+
+        {noticias.length > 0 && (
+          <footer className="border-t border-lab-borde px-4 py-3">
+            <p className="font-mono text-[10px] uppercase tracking-wider text-lab-tenue">la usan los diarios</p>
+            {/* en celular entra una nota; en pantalla ancha, dos */}
+            <ul className="mt-1.5 grid gap-1.5 sm:grid-cols-2 [&>*:nth-child(n+2)]:hidden sm:[&>*:nth-child(2)]:block">
+              {noticias.slice(0, 2).map((n) => (
+                <li key={n.id}>
+                  <a href={n.url} target="_blank" rel="noopener noreferrer" className="group flex items-baseline gap-2 text-xs">
+                    <span className="shrink-0 font-mono text-[10px] text-lab-portal">{n.siteName}</span>
+                    <span className="line-clamp-1 group-hover:text-lab-portal">{n.title.replace(/ - Data eNe$/, "")} ↗</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </footer>
+        )}
       </div>
     </div>
   );

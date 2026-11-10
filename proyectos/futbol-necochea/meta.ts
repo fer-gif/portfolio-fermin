@@ -15,6 +15,7 @@ export const meta: Proyecto = {
   resultado:
     "Más de 30 partidos cargados con goleadores, asistentes y tabla de posiciones dinámica, en el widget creado para Data eNe.",
   creditos: "Data eNe y Muove, con respaldo de VorkNews",
+  gancho: "La primera API del fútbol de Necochea: hoy la usan los diarios de la zona.",
   resumen:
     "No existían datos digitales del fútbol local. Diseñé la recopilación, limpieza y normalización, y armé la primera API centralizada.",
   artefacto:

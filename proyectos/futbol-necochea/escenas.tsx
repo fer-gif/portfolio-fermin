@@ -2,15 +2,14 @@ import { EscenaLab as Escena } from "@/components/laboratorio/EscenaLab";
 import type { Linea } from "@/components/personaje/guion";
 import type { Destino } from "@/components/laboratorio/MenuLaboratorio";
 import { obtenerClubes, obtenerGoleadores, obtenerNoticias, obtenerPosiciones, obtenerUltimaFecha } from "./api";
-import { Caos } from "./escenas/Caos";
-import { Diarios } from "./escenas/Diarios";
 import { Ficha } from "./escenas/Ficha";
 import { MonitorAPI } from "./escenas/MonitorAPI";
 import { Multiverso } from "./escenas/Multiverso";
 import { meta } from "./meta";
 
-// Fútbol de Necochea: un viaje por cuatro dimensiones, dentro del laboratorio.
-// La mesa del proyecto es el portal; estas escenas vienen justo después.
+// Fútbol de Necochea: del caos de nombres a la API que usan los diarios, en
+// dos paradas. El caos vive al principio del Multiverso (las versiones de un
+// club desordenadas) y los diarios, al pie del monitor de la API.
 // PENDIENTE: revisar el guion con Fermín.
 
 const P = meta.slug;
@@ -20,30 +19,20 @@ export const guion: Record<string, Linea> = {
     texto: "Mi experimento favorito. El fútbol de Necochea no existía en ninguna computadora. Bajá, que te muestro de dónde salió.",
     pose: "senalando",
   },
-  [`${P}-caos`]: {
-    texto: "Esto es lo que había. Resultados en fotos borrosas, nombres escritos como a cada uno se le cantaba. Ningún sistema puede leer esto.",
-    pose: "sorprendido",
-  },
   [`${P}-multiverso`]: {
-    texto: "En el multiverso de los datos un club existe en muchas versiones. Mi trabajo fue convencerlas de que son la misma. Probá vos.",
+    texto: "Los resultados vivían en fotos y planillas, y cada club estaba escrito como a cada uno se le cantaba. Mi trabajo fue convencer a todas esas versiones de que son la misma. Probá vos.",
     pose: "senalando",
   },
   [`${P}-api`]: {
-    texto: "Y esto es lo que antes no existía: el fútbol de Necochea, ordenado y disponible para cualquiera que lo pida.",
+    texto: "Y esto es lo que antes no existía: el fútbol de Necochea ordenado y en vivo. Abajo, las notas de los diarios que lo usan.",
     pose: "eureka",
-  },
-  [`${P}-diarios`]: {
-    texto: "Muove llevó estos datos a los diarios de la zona. Hoy los lee gente que no tiene idea de que existió el caos.",
-    pose: "quieto",
   },
   [`${P}-ficha`]: { texto: "La letra chica, por si sos de los que la leen.", pose: "quieto" },
 };
 
 export const dimensiones: NonNullable<Destino["hijos"]> = [
-  { escena: `${P}-caos`, etiqueta: "1 · Caos" },
-  { escena: `${P}-multiverso`, etiqueta: "2 · Multiverso" },
-  { escena: `${P}-api`, etiqueta: "3 · API en vivo" },
-  { escena: `${P}-diarios`, etiqueta: "4 · Diarios" },
+  { escena: `${P}-multiverso`, etiqueta: "1 · Del caos al orden" },
+  { escena: `${P}-api`, etiqueta: "2 · La API en vivo" },
   { escena: `${P}-ficha`, etiqueta: "Ficha técnica" },
 ];
 
@@ -58,15 +47,11 @@ export async function Escenas() {
 
   return (
     <>
-      <Escena id={`${P}-caos`} duracion={1.8}>
-        <Caos />
-      </Escena>
-
-      <Escena id={`${P}-multiverso`} duracion={3}>
+      <Escena id={`${P}-multiverso`} duracion={1.8}>
         <Multiverso clubes={clubes} />
       </Escena>
 
-      <Escena id={`${P}-api`} duracion={1.4}>
+      <Escena id={`${P}-api`} duracion={1}>
         <MonitorAPI
           datos={{
             liga: posiciones?.ligaNombre ?? null,
@@ -75,14 +60,11 @@ export async function Escenas() {
             ultimaFecha,
             goleadores: goleadores ?? [],
           }}
+          noticias={noticias}
         />
       </Escena>
 
-      <Escena id={`${P}-diarios`} duracion={1.4}>
-        <Diarios noticias={noticias} />
-      </Escena>
-
-      <Escena id={`${P}-ficha`} duracion={0.8}>
+      <Escena id={`${P}-ficha`} duracion={0.6}>
         <Ficha proyecto={meta} />
       </Escena>
     </>

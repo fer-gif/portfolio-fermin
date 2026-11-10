@@ -4,7 +4,18 @@ import { useRef, useState } from "react";
 import { useEscena, useGSAP } from "@/components/recorrido";
 import { desbloquear } from "@/components/laboratorio/logros";
 import { calcular, estimarConsumo, pesos } from "../calcular";
-import { CONSUMO_BASE_JUNIN, DESCUENTOS, FACTORES } from "../data/tarifas";
+import { CONSUMO_BASE_JUNIN, DESCUENTOS, FACTORES, JUNIN } from "../data/tarifas";
+
+const n = (v: number, decimales = 0) =>
+  v.toLocaleString("es-AR", { minimumFractionDigits: decimales, maximumFractionDigits: decimales });
+
+// Lo que da para todo el partido de Junín (antes era una parada aparte).
+const CIFRAS = [
+  { valor: n(JUNIN.hogaresConGas), etiqueta: "hogares con gas de red pierden el subsidio" },
+  { valor: n(JUNIN.personasAfectadas), etiqueta: `personas afectadas, de ${n(JUNIN.poblacion)}` },
+  { valor: `+$${n(JUNIN.aumentoHogar)}`, etiqueta: "por mes para el hogar testigo (280 m³ en julio)" },
+  { valor: `$${n(JUNIN.sobrecostoTotal / 1e6, 1)} M`, etiqueta: "de sobrecosto en Junín en julio, el mes pico" },
+];
 
 type Modo = "estimador" | "manual";
 
@@ -38,8 +49,9 @@ function Pildoras<T extends number>({
   );
 }
 
-// La calculadora: el visitante describe su casa (o pone los m³ a mano)
-// y ve cuánto paga de gas en julio con y sin Zona Fría.
+// La calculadora: arriba, las cifras de todo Junín; abajo, el visitante
+// describe su casa (o pone los m³ a mano) y ve cuánto paga de gas en julio con
+// y sin Zona Fría.
 export function Calculadora() {
   const { linea } = useEscena();
   const ref = useRef<HTMLDivElement>(null);
@@ -68,7 +80,20 @@ export function Calculadora() {
 
   return (
     <div ref={ref} className="grid h-full place-items-center px-4">
-      <div className="panel flex max-h-full w-full max-w-3xl flex-col overflow-hidden rounded-xl border border-lab-borde bg-lab-panel">
+      <div className="flex max-h-full w-full max-w-3xl flex-col gap-3">
+      <div className="panel">
+        <p className="mb-1.5 font-mono text-[10px] uppercase tracking-wider text-lab-tenue">Partido de Junín · invierno sin Zona Fría</p>
+        {/* en celular, las dos primeras */}
+        <ul className="grid grid-cols-2 gap-2 sm:grid-cols-4 [&>*:nth-child(n+3)]:hidden sm:[&>*:nth-child(n+3)]:block">
+          {CIFRAS.map((c) => (
+            <li key={c.etiqueta} className="rounded-lg border border-lab-borde bg-lab-panel px-3 py-2">
+              <span className="block font-mono text-base font-bold tabular-nums text-lab-portal sm:text-xl">{c.valor}</span>
+              <span className="mt-0.5 block text-[10px] leading-tight text-lab-tenue sm:text-[11px]">{c.etiqueta}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className="panel flex min-h-0 w-full flex-col overflow-hidden rounded-xl border border-lab-borde bg-lab-panel">
         <header className="flex items-center gap-2 border-b border-lab-borde px-4 py-2 font-mono text-xs uppercase tracking-wider text-lab-portal">
           <span className="size-2 rounded-full bg-lab-portal" aria-hidden />
           ¿Cuánto vas a pagar de gas?
@@ -154,6 +179,7 @@ export function Calculadora() {
             <p className="mt-2 text-[10px] text-lab-tenue/70">Incluye IVA 21% y tasa provincial 4%. Sin tasas municipales.</p>
           </div>
         </div>
+      </div>
       </div>
     </div>
   );
