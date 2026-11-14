@@ -77,6 +77,7 @@ export default function Laboratorio() {
       </Escena>
       <Escena id="quien-soy" duracion={0.8}>
         <EscenaPresentacion
+          nombre={perfil.nombre}
           sobreMi={perfil.sobreMi}
           lenguajes={perfil.herramientas.find((h) => h.grupo === "lenguajes")?.items ?? []}
         />

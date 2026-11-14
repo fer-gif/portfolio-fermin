@@ -53,7 +53,10 @@ rive/cientifico/              ← el personaje como proyecto Rive CLI (archivo, 
 ## El personaje
 
 El científico es Fermín versión laboratorio: el retrato de "quién soy"
-(`public/retrato/fermin-cientifico.webp`, hecho por él a partir de una foto) y
+(`public/retrato/fermin-cientifico.webp`, hecho por él a partir de una foto;
+sus ojos siguen al mouse con `RetratoConOjos`: una máscara con lo blanco de
+cada ojo, `ojos-mascara.png`, tapa las pupilas dibujadas y encima se mueven
+otras, solo a los costados y hacia abajo) y
 el muñeco que guía el recorrido, con los mismos rasgos (pelo castaño
 despeinado, cejas gruesas, barba de pocos días, guardapolvo y remera
 turquesa).

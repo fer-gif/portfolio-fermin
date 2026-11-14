@@ -1,10 +1,10 @@
 "use client";
 
 import { useRef } from "react";
-import Image from "next/image";
 import { useEscena, useGSAP } from "@/components/recorrido";
 import { tecnologia } from "@/lib/tecnologias";
 import { ChipStack, EtiquetaLogo } from "./LogoStack";
+import { RetratoConOjos } from "./RetratoConOjos";
 
 export interface SobreMi {
   saludo: string;
@@ -14,9 +14,9 @@ export interface SobreMi {
 
 // La segunda pantalla, "quién soy": unas pocas líneas y el retrato de Fermín
 // en versión científico (lo hizo él a partir de una foto suya), pegado como
-// una foto sobre la pared del laboratorio.
+// una foto sobre la pared del laboratorio, con los ojos siguiendo al mouse.
 // El retrato va a la derecha: el científico, abajo a la izquierda, lo señala.
-export function EscenaPresentacion({ sobreMi, lenguajes }: { sobreMi: SobreMi; lenguajes: string[] }) {
+export function EscenaPresentacion({ nombre, sobreMi, lenguajes }: { nombre: string; sobreMi: SobreMi; lenguajes: string[] }) {
   const { linea } = useEscena();
   const ref = useRef<HTMLDivElement>(null);
   const logos = lenguajes.map(tecnologia);
@@ -39,21 +39,14 @@ export function EscenaPresentacion({ sobreMi, lenguajes }: { sobreMi: SobreMi; l
         <figure className="retrato mx-auto w-[min(40vw,24svh)] sm:order-last sm:w-[min(28vw,50svh)]">
           <div className="relative rounded-[12px] bg-[#eef3ea] p-2 pb-0 shadow-[0_22px_40px_-18px_rgba(0,0,0,0.85)] sm:p-3 sm:pb-0">
             {/* la cinta que la sostiene contra la pared */}
-            <span aria-hidden className="absolute -top-3 left-1/2 h-6 w-20 -translate-x-1/2 -rotate-3 rounded-[3px] bg-lab-amarillo/70 sm:w-24" />
+            <span aria-hidden className="absolute -top-3 left-1/2 z-10 h-6 w-20 -translate-x-1/2 -rotate-3 rounded-[3px] bg-lab-amarillo/70 sm:w-24" />
             <div className="overflow-hidden rounded-[7px]">
-              {/* se carga de una (y no al aparecer): la escena está oculta hasta que llega */}
-              <Image
-                src="/retrato/fermin-cientifico.webp"
-                width={710}
-                height={887}
-                loading="eager"
-                sizes="(min-width: 640px) 28vw, 40vw"
-                alt="Fermín dibujado como científico: pelo castaño despeinado, barba de pocos días, guardapolvo y los brazos cruzados"
-                className="block h-auto w-full"
+              <RetratoConOjos
+                alt={`${nombre} dibujado como científico: pelo castaño despeinado, barba de pocos días, guardapolvo y los brazos cruzados`}
               />
             </div>
             <figcaption className="py-1 text-center font-mano text-base leading-tight text-[#1f3a42] sm:py-2 sm:text-xl">
-              yo, versión laboratorio
+              {nombre} en el laboratorio
             </figcaption>
           </div>
         </figure>
