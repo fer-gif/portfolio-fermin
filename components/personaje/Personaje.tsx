@@ -5,7 +5,7 @@ import { useDicho, useDirector, useEscenaActual, usePasoActual } from "@/compone
 import { desbloquear } from "@/components/laboratorio/logros";
 import { fraseDelCientifico } from "@/components/laboratorio/objetos";
 import type { Guion, Linea, Pose } from "./guion";
-import { PersonajeRive } from "./PersonajeRive";
+import { Cientifico } from "./Cientifico";
 import { useMaquinaDeEscribir, useReducirMovimiento } from "./useMaquinaDeEscribir";
 import { useReacciones } from "./useReacciones";
 import "./personaje.css";
@@ -175,7 +175,7 @@ export function Personaje({ guion, esperarIntro = false }: { guion: Guion; esper
           }}
           className="personaje-figura pointer-events-auto cursor-pointer rounded-full outline-none focus-visible:ring-2 focus-visible:ring-lab-portal"
         >
-          <PersonajeRive pose={pose} direccion={direccion} className="h-24 sm:h-44" />
+          <Cientifico pose={pose} direccion={direccion} className="h-24 sm:h-44" />
         </div>
         {texto && (
           <div ref={globoRef} className={globo}>

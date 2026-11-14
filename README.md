@@ -21,14 +21,14 @@ app/globals.css               ← paleta del laboratorio, ajustes de cada tipogr
 components/
 ├─ recorrido/                 ← motor del scrollytelling: Recorrido, Escena, Director, barra
 ├─ laboratorio/               ← la carcasa: Cortina (intro), EscenaPortada, EscenaPresentacion
-│                                (con RetratoCientifico), EscenaVidriera, EscenaContacto, Mesa,
+│                                EscenaVidriera, EscenaContacto, Mesa,
 │                                EscenaSiguiente (el final de cada proyecto),
 │                                MenuLaboratorio ("saltar a"), ContactoFijo (mail/LinkedIn/
 │                                GitHub/CV arriba a la izquierda), BarraCapitulos (puntos a la
 │                                derecha), FichaTecnica (con "probarlo" y "ver el código"),
 │                                Ambiente, y la escenografía: EscenaLab (escena con pared y piso), Escenografia
 │                                (estante y lámpara), Banco (la mesada con tubos y monitor)
-└─ personaje/                 ← el científico: SVG v0, poses, globo de diálogo, tipo Guion
+└─ personaje/                 ← el científico: Cientifico (SVG y poses), globo de diálogo, tipo Guion
 
 proyectos/                    ← un módulo por proyecto
 ├─ tipos.ts · index.ts        ← ficha de cada proyecto y registro central (orden de las mesas)
@@ -42,41 +42,32 @@ lib/perfil.ts                 ← nombre, presentación, contactos, repo, ruta d
 lib/tecnologias.ts            ← qué logo lleva cada tecnología (nombre → archivo de public/logos/)
 public/logos/                 ← logos originales de cada tecnología (Devicon v2.17.0, MIT)
 public/proyectos/<slug>/      ← imágenes de cada proyecto
-public/personaje/cientifico.riv ← el personaje compilado (sale de rive/cientifico)
+public/retrato/               ← el retrato de "quién soy"
 
-rive/cientifico/              ← el personaje como proyecto Rive CLI
+rive/cientifico/              ← el personaje como proyecto Rive CLI (archivo, ya no se usa)
 ├─ generar.mjs                ← genera scene.rml (geometría, animaciones, poses, view model)
 ├─ scene.rml                  ← el archivo Rive en texto (RML), generado
 └─ rive.yaml · AGENTS.md      ← config del CLI e instrucciones para agentes
 ```
 
-## El personaje en Rive
+## El personaje
 
-El científico es un archivo Rive escrito como texto (RML) y compilado con el
-[Rive CLI](https://rive.app/docs/cli). `generar.mjs` construye la escena:
-cuerpo que respira, pelo que se mece, párpados que parpadean, burbujas en el
-frasco, cuatro poses fijas (quieto, señalando, sorprendido, eureka) y una en
-loop (caminando: piernas con pivote en la cadera, braceo y rebote), mezcladas
-por una máquina de estados que lee la propiedad `pose` del view model
-`Personaje`. El sitio la cambia con `useViewModelInstanceEnum` en
-`components/personaje/PersonajeRive.tsx`; mientras el `.riv` carga se ve el
-SVG de `PersonajeSVG.tsx`. La intro (`Cortina`) sigue usando el dibujo SVG
-de la pose de empuje.
+El científico es Fermín versión laboratorio: el retrato de "quién soy"
+(`public/retrato/fermin-cientifico.webp`, hecho por él a partir de una foto) y
+el muñeco que guía el recorrido, con los mismos rasgos (pelo castaño
+despeinado, cejas gruesas, barba de pocos días, guardapolvo y remera
+turquesa).
 
-Para tocar el personaje (requiere el CLI: `irm https://releases.rive.app/cli/install.ps1 | iex`):
+El muñeco es un SVG (`components/personaje/Cientifico.tsx`) con sus poses en
+CSS (`personaje.css`, según la clase `pose-*`): quieto, señalando,
+sorprendido, eureka y caminando (piernas con pivote en la cadera, braceo y
+rebote). Parpadea, respira moviendo el dibujo entero (sin repintarlo) y sigue
+al mouse con los ojos (`--mx`, `--my`). La intro (`Cortina`) usa otro dibujo,
+el de la pose de empuje (`PersonajeEmpujando.tsx`).
 
-```bash
-cd rive/cientifico
-node generar.mjs                                  # escribe scene.rml
-rive . --verify && rive inspect . --summary       # compila y lista problemas
-rive . --screenshot=build/eureka.png --data=pose=eureka --advance=40 --viewport=800x680 --fit=contain
-rive . --once && cp build/cientifico.riv ../../public/personaje/cientifico.riv
-```
-
-El motor WASM de Rive se sirve desde `public/personaje/rive.wasm` (copia de
-`node_modules/@rive-app/canvas/rive.wasm`): al actualizar el paquete, volver a
-copiarlo. Al cambiar el `.riv`, subir `VERSION` en `PersonajeRive.tsx` para
-que el navegador no use la copia en caché.
+Antes era un archivo Rive. `rive/cientifico/` queda como archivo (ya con la
+cara nueva): con la cuenta gratis de Rive, el CLI 1.9 le pone al `.riv` una
+pantalla con la marca de Rive y para sacarla hay que pagar un plan.
 
 ## Cómo funciona el recorrido
 
@@ -109,7 +100,7 @@ recién al llegar habla. Las mesas lo llevan al banco (`POSICION_MESA` en
   portafolio de Fermín, Programador y Data Analyst", nada más. `quien-soy`
   (`EscenaPresentacion`): el saludo y dos frases de `perfil.sobreMi`, los
   lenguajes con su logo y el retrato de Fermín en versión científico
-  (`RetratoCientifico`, un SVG). `experimentos` (`EscenaVidriera`): todos los
+  (`public/retrato/fermin-cientifico.webp`). `experimentos` (`EscenaVidriera`): todos los
   proyectos como tarjetas sobre una mesada (en celular, una lista); cada
   tarjeta usa `gancho` de su `meta.ts` y es un link a su página. `contacto`
   (`EscenaContacto`): el mail (para copiar), LinkedIn, GitHub y el CV.
@@ -221,8 +212,8 @@ cuenta. Lo que se aprendió midiendo (scroll de punta a punta con Chrome):
   su contenido se apaga con `autoAlpha` (no se pinta ni recibe clics).
 - Sin `backdrop-blur` sobre contenido que se mueve, sin `mix-blend-mode` a
   pantalla completa y sin filtros SVG de ruido: el grano es `public/grano.png`.
-- Rive dibuja a 30 cuadros por segundo (`limitarCuadros` en
-  `PersonajeRive.tsx`) y su motor (2 MB) se pide recién terminada la intro.
+- El científico respira moviendo el SVG entero (una capa que no se repinta);
+  adentro del dibujo solo se anima el parpadeo, y la caminata mientras camina.
 - Lenis ya suaviza el scroll: las escenas usan `scrub: true`.
 
 ## Desarrollo

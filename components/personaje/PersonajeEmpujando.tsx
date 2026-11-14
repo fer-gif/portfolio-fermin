@@ -1,5 +1,5 @@
 // El científico en plena pose de empuje: inclinado, brazos rectos, zancada,
-// gotas de sudor. Es un dibujo aparte del PersonajeSVG porque la pose cambia
+// gotas de sudor. Es un dibujo aparte del de Cientifico.tsx porque la pose cambia
 // toda la silueta (piernas, torso), no solo los brazos.
 export function PersonajeEmpujando({ className = "" }: { className?: string }) {
   return (
@@ -22,7 +22,7 @@ export function PersonajeEmpujando({ className = "" }: { className?: string }) {
       {/* guardapolvo, inclinado hacia adelante */}
       <path d="M78 50 L116 58 L98 114 L56 106 Z" fill="#e9eef2" />
       <path d="M78 50 L96 54 L82 108 Z" fill="#d5dde3" />
-      <path d="M96 54 L106 56 L96 86 Z" fill="#97ce4c" />
+      <path d="M96 54 L106 56 L96 86 Z" fill="#6fc3c1" />
 
       {/* brazos rectos hacia la puerta */}
       <path d="M110 62 L154 52" stroke="#e9eef2" strokeWidth="12" strokeLinecap="round" />
@@ -33,18 +33,23 @@ export function PersonajeEmpujando({ className = "" }: { className?: string }) {
 
       {/* cabeza, mirando la puerta */}
       <g>
+        {/* pelo despeinado: el volumen atrás, el flequillo adelante */}
         <path
           className="pelo"
-          d="M84 40 L56 14 L82 26 L74 0 L94 20 L104 -4 L110 20 L126 2 L122 26 L142 12 L132 36 L150 34 L130 46 Z"
-          fill="#bbd1ea"
+          d="M82.5 36.3 L78.6 33 L82.9 31.9 L75.8 24.8 L85.3 26 L76.7 13.8 L90.3 20.3 L84.5 1.8 L97.6 16.2 L100.4 -0.3 L106.2 14.4 L116.5 -4.5 L115 15.2 L130.9 2.5 L123 18.4 L140.8 12.7 L129.1 23.7 L143.5 24.8 L132.6 30.1 L139.6 34.7 L133.5 35.9 Z"
+          fill="#3f2719"
         />
+        <ellipse cx="85" cy="37" rx="3.6" ry="5.4" fill="#dfae8a" />
         <ellipse cx="108" cy="36" rx="24" ry="25" fill="#f1c9a5" />
-        {/* anteojos en la frente */}
-        <rect x="86" y="14" width="42" height="5" rx="2" fill="#3a4a3f" transform="rotate(8 107 16)" />
-        <circle cx="98" cy="17" r="6" fill="#97ce4c" stroke="#3a4a3f" strokeWidth="2" />
-        <circle cx="118" cy="20" r="6" fill="#97ce4c" stroke="#3a4a3f" strokeWidth="2" />
-        {/* uniceja fruncida */}
-        <path d="M94 27 L108 31 L120 30 L130 26" stroke="#3a4a3f" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+        {/* barba de pocos días */}
+        <ellipse cx="117" cy="56" rx="9" ry="3" fill="#553524" opacity="0.22" />
+        <path
+          d="M82.5 29.6 L81 18.6 L85 11 L93.7 6.3 L104.9 4.6 L116.2 5.5 L126.4 8.9 L133.5 15.6 L134.5 24.6 L130.9 20.3 L128.9 24.1 L124.8 18.6 L118.7 22 L115.1 16.9 L108.5 20.7 L104.4 16.1 L98.3 19.9 L94.7 15.2 L88.6 19.5 L86.1 23.3 L84.5 27.1 Z"
+          fill="#573826"
+        />
+        {/* cejas fruncidas */}
+        <path d="M94 29 L101 30 L107 32" stroke="#2e1b12" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+        <path d="M115 31 L122 29 L129 27" stroke="#2e1b12" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none" />
         {/* nariz */}
         <path d="M114 36 L121 46 L112 46 Z" fill="#dfae8a" />
         {/* ojos mirando a la derecha */}

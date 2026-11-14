@@ -58,9 +58,12 @@ function arco(nombre, [a, m, b], color, grosor, curva = 10, extra = "") {
 }
 
 // ---------- colores ----------
-const PIEL = "FFF1C9A5", PIEL_SOMBRA = "FFDFAE8A", OJERA = "FFC9956F";
-const BATA = "FFE9EEF2", BATA_SOMBRA = "FFD5DDE3", CAMISA = "FFCFE3F5", VERDE = "FF97CE4C";
-const PELO = "FFBBD1EA", OSCURO = "FF3A4A3F", PANTALON = "FF2B3640", ZAPATO = "FF15191D", CINTO = "FF1F262C";
+const PIEL = "FFF1C9A5", PIEL_SOMBRA = "FFDFAE8A";
+// Fermín versión laboratorio (el retrato de public/retrato/): pelo castaño
+// despeinado, cejas gruesas, barba de pocos días y remera turquesa.
+const BATA = "FFE9EEF2", BATA_SOMBRA = "FFD5DDE3", CAMISA = "FF6FC3C1", VERDE = "FF97CE4C";
+const PELO = "FF3F2719", PELO_CLARO = "FF573826", CEJA = "FF2E1B12", BARBA = "38553524";
+const PANTALON = "FF2B3640", ZAPATO = "FF15191D", CINTO = "FF1F262C";
 const BOCA = "FF6E4034", BLANCO = "FFFFFFFF", NEGRO = "FF1A1A1A", VIDRIO = "D9CFE9FF", BURBUJA = "FFE6FFE0";
 
 // ---------- ids que se referencian ----------
@@ -87,11 +90,12 @@ const POSES = [
 ];
 for (const p of POSES) { p.valorId = id(); p.animId = id(); p.estadoId = id(); }
 
-// ---------- el pelo: puntas barridas hacia la derecha ----------
-// Centro de la cabeza en coordenadas del nodo Cabeza: (0,-50).
+// ---------- el pelo: despeinado, con volumen arriba ----------
+// Centro de la cabeza en coordenadas del nodo Cabeza: (0,-50). Atrás de la
+// cara van mechones cortos y desparejos (el volumen); adelante, el flequillo.
 function pelo() {
-  const cx = 0, cy = -50, base = 44;
-  const puntas = [[-170, 68], [-152, 86], [-132, 100], [-110, 110], [-88, 108], [-66, 100], [-45, 92], [-25, 80], [-6, 66]];
+  const cx = 0, cy = -50, base = 50;
+  const puntas = [[-178, 58], [-162, 68], [-144, 80], [-124, 92], [-104, 86], [-84, 96], [-64, 90], [-44, 84], [-24, 74], [-6, 62]];
   const punto = (ang, r) => [cx + r * Math.cos(rad(ang)), cy + r * Math.sin(rad(ang))];
   const pts = [punto(-182, base)];
   puntas.forEach(([ang, r], i) => {
@@ -102,11 +106,19 @@ function pelo() {
   return poligono("Pelo", pts, PELO);
 }
 
+// El flequillo: cubre la frente y termina en mechones que caen desparejos.
+const FLEQUILLO = [
+  [-50, -64], [-53, -90], [-45, -108], [-28, -119], [-6, -123], [16, -121], [36, -113], [50, -97], [52, -76],
+  [45, -86], [41, -77], [33, -90], [21, -82], [14, -94], [1, -85], [-7, -96], [-19, -87], [-26, -98], [-38, -88], [-43, -79], [-46, -70],
+];
+
 // ---------- la cabeza ----------
 const cabeza = `
 <Node x="120" y="150" name="Cabeza" id="${ID.cabeza}">
+  ${poligono("Flequillo", FLEQUILLO, PELO_CLARO, { radio: 2 })}
   <Node name="Cejas" id="${ID.cejas}">
-    ${trazo("Uniceja", [[-40, -74], [-20, -70], [0, -66], [20, -70], [40, -74]], OSCURO, 5.5, 6)}
+    ${trazo("Ceja izq", [[-36, -72], [-24, -77], [-9, -74]], CEJA, 6, 6)}
+    ${trazo("Ceja der", [[9, -75], [22, -81], [36, -77]], CEJA, 6, 6)}
   </Node>
   <Node y="-50" name="Ojos" id="${ID.ojos}">
     ${rect("Párpado izq", -20, -15, 32, 31, PIEL, 0, ` id="${ID.parpadoIzq}"`, true)}
@@ -117,8 +129,6 @@ const cabeza = `
     ${elipse("Pupila der", 24, 3, 8, 8, NEGRO, ` id="${ID.pupilaDer}"`)}
     ${elipse("Ojo izq", -20, 0, 29, 29, BLANCO)}
     ${elipse("Ojo der", 20, 0, 29, 29, BLANCO)}
-    ${trazo("Ojera izq", [[-30, 16], [-20, 19], [-10, 16]], OJERA, 2.2, 4)}
-    ${trazo("Ojera der", [[10, 16], [20, 19], [30, 16]], OJERA, 2.2, 4)}
   </Node>
   ${poligono("Nariz", [[-1, -44], [10, -26], [-8, -24]], PIEL_SOMBRA, { radio: 4 })}
   <Solo y="-12" activeComponentId="${ID.bocaPlana}" name="Boca" id="${ID.boca}">
@@ -126,10 +136,11 @@ const cabeza = `
     ${elipse("O", 0, 4, 14, 18, BOCA, ` id="${ID.bocaO}"`)}
     ${arco("Sonrisa", [[-20, -2], [0, 10], [20, -2]], BOCA, 4.2, 12, ` id="${ID.bocaSonrisa}"`)}
   </Solo>
-  ${elipse("Lente izq", -22, -94, 26, 26, VERDE, "", fill(VERDE) + stroke(OSCURO, 4))}
-  ${elipse("Lente der", 22, -94, 26, 26, VERDE, "", fill(VERDE) + stroke(OSCURO, 4))}
-  ${rect("Anteojos", 0, -93, 88, 10, OSCURO, 4)}
-  ${elipse("Cara", 0, -50, 98, 114, PIEL)}
+  ${trazo("Bigote", [[-14, -20], [0, -22], [14, -20]], BARBA, 4.5, 6)}
+  ${elipse("Barba", 0, 1, 36, 12, BARBA)}
+  ${elipse("Cara", 0, -49, 94, 118, PIEL)}
+  ${elipse("Oreja izq", -47, -48, 14, 22, PIEL_SOMBRA)}
+  ${elipse("Oreja der", 47, -48, 14, 22, PIEL_SOMBRA)}
   <Node y="-62" name="Pelo" id="${ID.pelo}">
     <Node y="62">${pelo()}</Node>
   </Node>

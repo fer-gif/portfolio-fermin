@@ -1,83 +1,101 @@
-/* Personaje: vida, poses y movimiento por la pantalla. */
+/* Personaje: vida, poses y movimiento por la pantalla. El dibujo es
+   Cientifico.tsx; las piezas que giran (brazos, piernas, cabeza, ojos) traen
+   su punto de giro en coordenadas del lienzo (400×340). */
 
-.personaje-svg * {
-  transform-box: fill-box;
-}
+.personaje-svg .brazo,
+.personaje-svg .pierna,
+.personaje-svg .cabeza,
+.personaje-svg .ojos { transform-box: view-box; }
 
 /* --- vida: pasa aunque nadie scrollee --- */
+/* Respira moviendo el dibujo entero: una capa que el navegador corre sin
+   volver a pintarla. */
 @keyframes personaje-respirar {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-1.5px); }
+  50% { transform: translateY(-0.9%); }
 }
+.personaje-svg { animation: personaje-respirar 4s ease-in-out infinite; will-change: transform; }
+
+/* Parpadea cada 4,6 s (casi todo el tiempo el párpado está quieto, arriba). */
 @keyframes personaje-parpadear {
   0%, 90%, 100% { transform: scaleY(0); }
-  94% { transform: scaleY(1); }
+  92%, 94% { transform: scaleY(1); }
 }
-@keyframes personaje-pelo {
-  0%, 100% { transform: rotate(-1.5deg); }
-  50% { transform: rotate(1.5deg); }
-}
-@keyframes personaje-burbuja {
-  from { transform: translateY(0); opacity: 0.9; }
-  to { transform: translateY(-14px); opacity: 0; }
-}
+.personaje-svg .parpado,
+.personaje-svg .parpado-pesado { transform-box: fill-box; transform-origin: top; }
+.personaje-svg .parpado { transform: scaleY(0); animation: personaje-parpadear 4.6s infinite; }
 
-.personaje-svg .cuerpo { animation: personaje-respirar 3.2s ease-in-out infinite; }
-.personaje-svg .parpado {
-  transform-origin: top;
-  transform: scaleY(0);
-  animation: personaje-parpadear 4.6s infinite;
-}
-.personaje-svg .pelo {
-  transform-origin: bottom center;
-  animation: personaje-pelo 4s ease-in-out infinite;
-}
-.personaje-svg .burbuja-frasco { animation: personaje-burbuja 1.8s linear infinite; }
-.personaje-svg .burbuja-frasco:nth-child(odd) { animation-delay: 0.9s; }
+/* La mirada: las pupilas y apenas la cabeza siguen al mouse (--mx y --my van
+   de -1 a 1 y los pone Cientifico.tsx). */
+.personaje-svg .pupilas { transform: translate(calc(var(--mx, 0) * 8px), calc(var(--my, 0) * 6px)); }
+.personaje-svg .cabeza { transform: rotate(calc(var(--mx, 0) * 2.5deg)); }
 
-/* --- poses (del SVG de respaldo) --- */
-.personaje-svg .brazo-senala,
-.personaje-svg .brazo-frasco {
-  transform-origin: top center;
-  transition: transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
+/* --- poses: de una a otra con una transición corta --- */
+.personaje-svg .brazo,
 .personaje-svg .ojos,
-.personaje-svg .ceja {
-  transform-origin: center;
-  transition: transform 0.3s ease;
-}
-.personaje-svg .boca-o { opacity: 0; transition: opacity 0.2s; }
-.personaje-svg .boca-sonrisa { transition: opacity 0.2s; }
+.personaje-svg .cejas,
+.personaje-svg .parpado-pesado { transition: transform 0.35s cubic-bezier(0.42, 0, 0.58, 1); }
+.personaje-svg .boca > * { opacity: 0; transition: opacity 0.2s; }
 
+/* quieto: ojos a media asta, boca de costado */
+.personaje-svg .parpado-pesado { transform: scaleY(0.42); }
+.personaje-svg .boca-plana { opacity: 1; }
+
+/* señalando (y caminando): más despierto, sonríe */
 .personaje-svg.pose-senalando .brazo-senala { transform: rotate(-105deg); }
+.personaje-svg.pose-senalando .parpado-pesado,
+.personaje-svg.pose-caminando .parpado-pesado { transform: scaleY(0.3); }
+.personaje-svg.pose-senalando .cejas,
+.personaje-svg.pose-caminando .cejas { transform: translateY(-2px); }
 
-.personaje-svg.pose-sorprendido .ojos,
-.personaje-svg.pose-eureka .ojos { transform: scale(1.25); }
-.personaje-svg.pose-sorprendido .ceja,
-.personaje-svg.pose-eureka .ceja { transform: translateY(-3px); }
-.personaje-svg.pose-sorprendido .boca-o,
-.personaje-svg.pose-eureka .boca-o { opacity: 1; }
-.personaje-svg.pose-sorprendido .boca-sonrisa,
-.personaje-svg.pose-eureka .boca-sonrisa { opacity: 0; }
-
+/* sorprendido y eureka: ojos grandes y bien abiertos, cejas arriba */
+.personaje-svg.pose-sorprendido .ojos { transform: scale(1.2); }
+.personaje-svg.pose-eureka .ojos { transform: scale(1.15); }
+.personaje-svg.pose-sorprendido .parpado-pesado,
+.personaje-svg.pose-eureka .parpado-pesado { transform: scaleY(0); }
+.personaje-svg.pose-sorprendido .cejas { transform: translateY(-9px); }
+.personaje-svg.pose-eureka .cejas { transform: translateY(-7px); }
 .personaje-svg.pose-eureka .brazo-senala { transform: rotate(-160deg); }
 .personaje-svg.pose-eureka .brazo-frasco { transform: rotate(160deg); }
 
-/* empujando: inclinado hacia adelante, los dos brazos extendidos, cara de esfuerzo */
-.personaje-svg.pose-empujando { transform: rotate(14deg); transform-origin: bottom center; }
-.personaje-svg.pose-empujando .brazo-senala { transform: rotate(-80deg); }
-.personaje-svg.pose-empujando .brazo-frasco { transform: rotate(-100deg); }
-.personaje-svg.pose-empujando .frasco { opacity: 0; }
-.personaje-svg.pose-empujando .ceja { transform: translateY(2px); }
-.personaje-svg.pose-empujando .boca-o { opacity: 1; }
-.personaje-svg.pose-empujando .boca-sonrisa { opacity: 0; }
+/* la boca de cada pose */
+.personaje-svg.pose-senalando .boca-plana,
+.personaje-svg.pose-eureka .boca-plana,
+.personaje-svg.pose-caminando .boca-plana,
+.personaje-svg.pose-sorprendido .boca-plana { opacity: 0; }
+.personaje-svg.pose-senalando .boca-sonrisa,
+.personaje-svg.pose-eureka .boca-sonrisa,
+.personaje-svg.pose-caminando .boca-sonrisa,
+.personaje-svg.pose-sorprendido .boca-o { opacity: 1; }
 
-/* El SVG de respaldo no tiene ciclo de caminata: mientras camina, se bambolea. */
-@keyframes personaje-bamboleo {
-  0%, 100% { transform: rotate(-3deg) translateY(0); }
-  50% { transform: rotate(3deg) translateY(-3px); }
+/* caminando: dos pasos en 0,67 s. Cada pierna se levanta al ir hacia
+   adelante, cada brazo va al revés que la pierna de su lado y el cuerpo
+   rebota en cada paso. Rotación negativa = hacia adelante (mira a la derecha). */
+@keyframes personaje-pierna-izq {
+  0% { transform: translateY(0) rotate(16deg); }
+  25% { transform: translateY(-9px) rotate(0deg); }
+  50% { transform: translateY(0) rotate(-16deg); }
+  100% { transform: translateY(0) rotate(16deg); }
 }
-.personaje-svg.pose-caminando { transform-origin: bottom center; animation: personaje-bamboleo 0.33s ease-in-out infinite; }
+@keyframes personaje-pierna-der {
+  0% { transform: translateY(0) rotate(-16deg); }
+  50% { transform: translateY(0) rotate(16deg); }
+  75% { transform: translateY(-9px) rotate(0deg); }
+  100% { transform: translateY(0) rotate(-16deg); }
+}
+@keyframes personaje-braceo {
+  0%, 100% { transform: rotate(16deg); }
+  50% { transform: rotate(-16deg); }
+}
+@keyframes personaje-rebote {
+  0%, 50%, 100% { transform: translateY(0); }
+  25%, 75% { transform: translateY(-6px); }
+}
+.personaje-svg.pose-caminando .pierna-izq { animation: personaje-pierna-izq 0.67s ease-in-out infinite; }
+.personaje-svg.pose-caminando .pierna-der { animation: personaje-pierna-der 0.67s ease-in-out infinite; }
+.personaje-svg.pose-caminando .brazo-senala { animation: personaje-braceo 0.67s ease-in-out infinite; }
+.personaje-svg.pose-caminando .brazo-frasco { animation: personaje-braceo 0.67s ease-in-out infinite reverse; }
+.personaje-svg.pose-caminando .cuerpo { animation: personaje-rebote 0.67s ease-in-out infinite; }
 
 /* La pose de empuje (dibujo aparte) tiembla un poco: esfuerzo. */
 @keyframes personaje-esfuerzo {

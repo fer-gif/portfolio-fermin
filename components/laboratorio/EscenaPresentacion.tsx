@@ -1,10 +1,10 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import { useEscena, useGSAP } from "@/components/recorrido";
 import { tecnologia } from "@/lib/tecnologias";
 import { ChipStack, EtiquetaLogo } from "./LogoStack";
-import { RetratoCientifico } from "./RetratoCientifico";
 
 export interface SobreMi {
   saludo: string;
@@ -13,7 +13,8 @@ export interface SobreMi {
 }
 
 // La segunda pantalla, "quién soy": unas pocas líneas y el retrato de Fermín
-// en versión científico, pegado como una foto sobre la pared del laboratorio.
+// en versión científico (lo hizo él a partir de una foto suya), pegado como
+// una foto sobre la pared del laboratorio.
 // El retrato va a la derecha: el científico, abajo a la izquierda, lo señala.
 export function EscenaPresentacion({ sobreMi, lenguajes }: { sobreMi: SobreMi; lenguajes: string[] }) {
   const { linea } = useEscena();
@@ -40,7 +41,16 @@ export function EscenaPresentacion({ sobreMi, lenguajes }: { sobreMi: SobreMi; l
             {/* la cinta que la sostiene contra la pared */}
             <span aria-hidden className="absolute -top-3 left-1/2 h-6 w-20 -translate-x-1/2 -rotate-3 rounded-[3px] bg-lab-amarillo/70 sm:w-24" />
             <div className="overflow-hidden rounded-[7px]">
-              <RetratoCientifico className="block h-auto w-full" />
+              {/* se carga de una (y no al aparecer): la escena está oculta hasta que llega */}
+              <Image
+                src="/retrato/fermin-cientifico.webp"
+                width={710}
+                height={887}
+                loading="eager"
+                sizes="(min-width: 640px) 28vw, 40vw"
+                alt="Fermín dibujado como científico: pelo castaño despeinado, barba de pocos días, guardapolvo y los brazos cruzados"
+                className="block h-auto w-full"
+              />
             </div>
             <figcaption className="py-1 text-center font-mano text-base leading-tight text-[#1f3a42] sm:py-2 sm:text-xl">
               yo, versión laboratorio
