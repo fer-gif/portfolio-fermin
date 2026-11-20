@@ -40,9 +40,6 @@ const modulos: Record<string, ModuloProyecto> = {
   futbolshop,
 };
 
-/** En la mesa el científico camina hasta el banco (al lado del pan, para no pisar los frascos). */
-const POSICION_MESA = 0.46;
-
 type Props = { params: Promise<{ slug: string }> };
 
 export const dynamicParams = false;
@@ -72,7 +69,6 @@ export default async function PaginaProyecto({ params }: Props) {
     ...modulo?.guion,
     siguiente: { texto: "¿Seguimos? Tocá el que sigue y te llevo por el portal.", pose: "senalando" },
   };
-  if (escenas[mesa] && escenas[mesa].posicion === undefined) escenas[mesa] = { ...escenas[mesa], posicion: POSICION_MESA };
   const guion: Guion = { inicial: escenas[mesa], escenas };
 
   const destinos: Destino[] = [

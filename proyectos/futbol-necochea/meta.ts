@@ -6,24 +6,22 @@ export const meta: Proyecto = {
   categoria: "principal",
   estado: "publicado",
   autoria: "individual",
-  rol: "Recopilación, limpieza, normalización de datos y diseño de la API",
+  rol: "Desarrollo integral: recolección y normalización de datos, base de datos, API, paneles y widget embebible",
   queHice: [
-    "Recopilé los resultados que solo existían en fotos, planillas y PDFs.",
-    "Limpié y normalicé los nombres de clubes y jugadores (una máquina de normalización).",
-    "Diseñé la API centralizada que hoy consumen los diarios con un widget.",
+    "Relevé y normalicé los datos de la Liga Necochea (16 clubes en dos zonas), que antes solo existían como texto plano en notas y planillas.",
+    "Diseñé la base PostgreSQL en Supabase (14 tablas, RLS, trigger SQL para el Prode y métricas) junto con los endpoints cacheados en Next.js.",
+    "Desarrollé el widget embebible <futbol-widget> (Web Component con Shadow DOM), los paneles con carga móvil en vivo desde la cancha y el Prode.",
   ],
   resultado:
-    "Más de 30 partidos cargados con goleadores, asistentes y tabla de posiciones dinámica, en el widget creado para Data eNe.",
+    "En producción en Data eNe con los 16 clubes de la Liga Necochea (Zonas A y B): tabla de posiciones calculada automáticamente desde partidos finalizados, widget embebible sin dependencias, carga en vivo desde la cancha y Prode con ligas privadas.",
   creditos: "Data eNe y Muove, con respaldo de VorkNews",
-  gancho: "La primera API del fútbol de Necochea: hoy la usan los diarios de la zona.",
+  gancho: "Plataforma, API y widget en vivo del fútbol de Necochea, hoy en producción en Data eNe.",
   resumen:
-    "No existían datos digitales del fútbol local. Diseñé la recopilación, limpieza y normalización, y armé la primera API centralizada.",
+    "Los datos del fútbol de Necochea solo existían en los diarios locales en formato de texto, planillas sueltas y desordenadas. Armé un sistema para acomodar y administrar todos los datos del Fútbol de Necochea, a través de base de datos, creación de API, partidos en vivo y el widget embebible que usa Data eNe.",
   artefacto:
-    "El antes y el después (captura original contra registro normalizado) y el widget real funcionando.",
-  // PENDIENTE: que Fermín complete el stack real (lenguaje, base de datos, cómo se cargan los datos).
-  stack: ["API REST · Vercel", "JSON", "Widget embebible"],
-  probar: "https://widget-futbol-muove.vercel.app/api/goleadores",
-  // Repo privado (Data eNe / Muove): no hay link de código público.
+    "Comparar cómo se veía antes en los diarios y cómo se ve ahora, probar cómo administré los nombres de los equipos y consultar la API en vivo.",
+  stack: ["Next.js 16 · React 19", "TypeScript", "Tailwind 4", "Web Components", "PostgreSQL · Supabase", "Vercel"],
+  codigo: "https://github.com/fer-gif/widget-futbol-muove",
   enlaces: [],
   orden: 1,
 };

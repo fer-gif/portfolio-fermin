@@ -37,9 +37,38 @@
   font-weight: 400;
 }
 
+html {
+  color-scheme: dark;
+}
+
 body {
   background: var(--color-lab-fondo);
   color: var(--color-lab-texto);
+}
+
+/* Scrollbars finas acopladas al laboratorio (sin fondo blanco ni flechas nativas). */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(156, 191, 179, 0.28) transparent;
+}
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: rgba(156, 191, 179, 0.24);
+  border-radius: 9999px;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(151, 206, 76, 0.55);
+}
+*::-webkit-scrollbar-button {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 /* Títulos grandes con el brillo del portal detrás. */

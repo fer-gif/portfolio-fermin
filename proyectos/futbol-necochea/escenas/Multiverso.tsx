@@ -5,7 +5,7 @@ import { gsap, useEscena, useGSAP } from "@/components/recorrido";
 import { desbloquear } from "@/components/laboratorio/logros";
 import type { Club } from "../api";
 import { Escudo } from "../componentes/Escudo";
-import { clubFusionado, variantes } from "../data/contenido";
+import { clubFusionado, EJEMPLOS_REALES, variantes } from "../data/contenido";
 import { normalizar } from "../normalizar";
 
 const POSICIONES = [
@@ -84,9 +84,24 @@ export function Multiverso({ clubes }: { clubes: Club[] }) {
             setEntrada(e.target.value);
             if (e.target.value.trim()) desbloquear("multiverso");
           }}
-          placeholder="ej: VDV, indep de loberia, sp. san cayetano"
+          placeholder="ej: Defensores (PQ), Independiente (SC), VDV"
           className="mt-3 w-full rounded-lg border border-lab-borde bg-lab-fondo px-3 py-2 text-sm outline-none focus:border-lab-portal"
         />
+        <div className="mt-2 flex flex-wrap gap-1">
+          {EJEMPLOS_REALES.map((ej) => (
+            <button
+              key={ej}
+              type="button"
+              onClick={() => {
+                setEntrada(ej);
+                desbloquear("multiverso");
+              }}
+              className="rounded-full border border-lab-borde px-2 py-0.5 font-mono text-[10px] text-lab-tenue transition-colors hover:border-lab-portal hover:text-lab-portal"
+            >
+              {ej}
+            </button>
+          ))}
+        </div>
         <div className="mt-3 min-h-12 text-sm">
           {!clubes.length && <p className="text-lab-tenue">La máquina está sin conexión con la API.</p>}
           {clubes.length > 0 && entrada.trim() && resultados.length === 0 && (

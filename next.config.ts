@@ -7,6 +7,7 @@ const nextConfig: NextConfig = {
       new URL(
         "https://estclirfknhzlqxhiafn.supabase.co/storage/v1/object/public/club-logos/**",
       ),
+      new URL("https://widget-futbol-muove.vercel.app/escudos_necochea/**"),
       // Imágenes de las notas de Data eNe (dimensión Diarios)
       new URL("https://dataene.com.ar/uploads/**"),
     ],

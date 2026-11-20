@@ -39,6 +39,7 @@ export interface Posicion {
   diferenciaGol: number;
   puntos: number;
   zona: string;
+  racha?: string[];
 }
 
 export interface Goleador {
@@ -69,6 +70,8 @@ interface RespuestaPosiciones {
   ligaNombre: string;
   zonaA: Posicion[];
   zonaB: Posicion[];
+  clasifican?: number | null;
+  hasta?: string | null;
 }
 
 async function pedir<T>(url: string): Promise<T | null> {

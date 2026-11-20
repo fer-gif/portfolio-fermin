@@ -18,6 +18,9 @@ export function Mesa({ proyecto, numero, tieneEscenas }: { proyecto: Proyecto; n
   const director = useDirector();
   const ref = useRef<HTMLDivElement>(null);
   const enProceso = proyecto.estado === "en-proceso";
+  const etiquetaEstado = [proyecto.autoria === "equipo" ? "en equipo" : null, enProceso ? "en proceso" : null]
+    .filter(Boolean)
+    .join(" · ");
   const frascos = frascosDelStack(proyecto.stack).slice(0, 9);
 
   useGSAP(
@@ -79,20 +82,58 @@ export function Mesa({ proyecto, numero, tieneEscenas }: { proyecto: Proyecto; n
   );
 
   return (
-    <div ref={ref} className="relative flex h-full items-end justify-center px-4 pb-[11svh] sm:justify-end sm:pr-[8vw] sm:pb-[19svh]">
-      {/* el banco sobre el que se apoya la ficha */}
+    <div ref={ref} className="relative flex h-full items-center justify-center px-4 pb-[8svh] sm:pb-[16svh]">
+      {/* el banco de fondo, al pie del laboratorio */}
       <Banco
         className="absolute inset-x-0 bottom-[2svh] mx-auto h-[26svh] w-full max-w-5xl sm:bottom-[4svh]"
         onPan={() => tocarObjeto("pan", director)}
       />
 
-      {/* los frascos con las tecnologías, apilados sobre la mesada (a la
-          izquierda de la ficha; en celular van en una línea dentro de la ficha).
-          El banco mide 26svh de alto y 800/240 de eso de ancho; su mesada
-          queda a 130/240 de arriba. */}
-      {frascos.length > 0 && (
-        <div aria-hidden className="pointer-events-none absolute bottom-[16.2svh] left-1/2 hidden w-[86.67svh] -translate-x-1/2 sm:block">
-          <ul className="absolute bottom-0 left-[5%] flex w-[46%] flex-wrap-reverse items-end gap-x-1.5 gap-y-1">
+      <div className="relative z-10 flex w-full max-w-2xl flex-col items-center">
+        <article className="ficha relative w-full rounded-2xl border border-lab-borde bg-lab-panel p-6 shadow-[0_24px_40px_-20px_rgba(0,0,0,0.8),0_0_60px_-20px_rgba(151,206,76,0.45)] sm:p-8">
+          {/* la etiqueta del frasco: número a mano */}
+          <header className="flex items-center justify-between font-mono text-[10px] uppercase tracking-wider text-lab-tenue">
+            <span className="rounded-full border border-lab-portal bg-lab-fondo px-3 py-0.5 font-mano text-lg normal-case tracking-normal text-lab-portal sm:absolute sm:-top-4 sm:left-6">
+              experimento {String(numero).padStart(2, "0")}
+            </span>
+            <span>{ETIQUETA_CATEGORIA[proyecto.categoria]}</span>
+          </header>
+
+          <h2 className="font-display mt-2 text-3xl font-extrabold tracking-tight sm:text-4xl">{proyecto.titulo}</h2>
+
+          <p className="detalle mt-3 text-sm text-lab-tenue sm:text-base">{proyecto.resumen}</p>
+
+          <p className="detalle mt-4 border-l-2 border-lab-portal pl-3 text-xs sm:text-sm">
+            <span className="font-mano text-lg text-lab-portal">podés </span>
+            {proyecto.artefacto}
+          </p>
+
+          {/* en celular no hay lugar para los frascos: los logos van en fila */}
+          {frascos.length > 0 && (
+            <ul aria-label="Tecnologías" className="detalle mt-3 flex flex-wrap items-center gap-1 sm:hidden">
+              {frascos.map((tec) => (
+                <li key={tec.etiqueta} title={tec.etiqueta}>
+                  <EtiquetaLogo tec={tec} className="size-6" />
+                  <span className="sr-only">{tec.etiqueta}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+
+          <footer className="detalle mt-6 flex items-center justify-between gap-3 font-mono text-xs">
+            {etiquetaEstado ? <span className="text-lab-tenue">{etiquetaEstado}</span> : <span />}
+            <span className="font-mano text-lg leading-tight text-lab-portal">
+              {tieneEscenas ? "seguí bajando para entrar ↓" : "experimento en construcción"}
+            </span>
+          </footer>
+        </article>
+
+        {/* los frascos con las tecnologías caen y rebotan centrados debajo de la ficha */}
+        {frascos.length > 0 && (
+          <ul
+            aria-label="Tecnologías"
+            className="mt-4 hidden flex-wrap justify-center gap-1.5 sm:flex"
+          >
             {frascos.map((tec) => (
               <li
                 key={tec.etiqueta}
@@ -105,48 +146,8 @@ export function Mesa({ proyecto, numero, tieneEscenas }: { proyecto: Proyecto; n
               </li>
             ))}
           </ul>
-        </div>
-      )}
-      <article className="ficha relative w-full max-w-xl rounded-2xl border border-lab-borde bg-lab-panel p-6 shadow-[0_24px_40px_-20px_rgba(0,0,0,0.8),0_0_60px_-20px_rgba(151,206,76,0.45)] sm:p-8">
-        {/* la etiqueta del frasco: número a mano */}
-        <header className="flex items-center justify-between font-mono text-[10px] uppercase tracking-wider text-lab-tenue">
-          <span className="rounded-full border border-lab-portal bg-lab-fondo px-3 py-0.5 font-mano text-lg normal-case tracking-normal text-lab-portal sm:absolute sm:-top-4 sm:left-6">
-            experimento {String(numero).padStart(2, "0")}
-          </span>
-          <span>{ETIQUETA_CATEGORIA[proyecto.categoria]}</span>
-        </header>
-
-        <h2 className="font-display mt-2 text-3xl font-extrabold tracking-tight sm:text-4xl">{proyecto.titulo}</h2>
-
-        <p className="detalle mt-3 text-sm text-lab-tenue sm:text-base">{proyecto.resumen}</p>
-
-        <p className="detalle mt-4 border-l-2 border-lab-portal pl-3 text-xs sm:text-sm">
-          <span className="font-mano text-lg text-lab-portal">podés </span>
-          {proyecto.artefacto}
-        </p>
-
-        {/* en celular no hay lugar para los frascos: los logos van en fila */}
-        {frascos.length > 0 && (
-          <ul aria-label="Tecnologías" className="detalle mt-3 flex flex-wrap items-center gap-1 sm:hidden">
-            {frascos.map((tec) => (
-              <li key={tec.etiqueta} title={tec.etiqueta}>
-                <EtiquetaLogo tec={tec} className="size-6" />
-                <span className="sr-only">{tec.etiqueta}</span>
-              </li>
-            ))}
-          </ul>
         )}
-
-        <footer className="detalle mt-6 flex items-center justify-between gap-3 font-mono text-xs">
-          <span className="text-lab-tenue">
-            {proyecto.autoria === "equipo" ? "en equipo" : "individual"}
-            {enProceso && " · en proceso"}
-          </span>
-          <span className="font-mano text-lg leading-tight text-lab-portal">
-            {tieneEscenas ? "seguí bajando para entrar ↓" : "experimento en construcción"}
-          </span>
-        </footer>
-      </article>
+      </div>
     </div>
   );
 }

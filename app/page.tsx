@@ -87,11 +87,9 @@ export default function Laboratorio() {
       </Escena>
       <Escena id="contacto" duracion={0.6} cubierta={false}>
         <EscenaContacto
-          frase={perfil.contacto}
           email={perfil.email}
           enlaces={perfil.enlaces}
           cv={perfil.cv}
-          repositorio={perfil.repositorio}
         />
       </Escena>
     </Recorrido>

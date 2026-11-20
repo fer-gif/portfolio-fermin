@@ -17,6 +17,12 @@ export interface Tecnologia {
 
 // nombre en minúsculas, sin versión → archivo del logo
 const LOGOS: Record<string, string> = {
+  "next.js": "nextjs",
+  nextjs: "nextjs",
+  react: "react",
+  postgresql: "postgresql",
+  postgres: "postgresql",
+  supabase: "supabase",
   laravel: "laravel",
   php: "php",
   vue: "vue",

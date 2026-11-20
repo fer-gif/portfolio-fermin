@@ -10,6 +10,7 @@ import { UltimaFecha } from "../componentes/UltimaFecha";
 
 export interface DatosAPI {
   liga: string | null;
+  clasifican?: number;
   zonaA: Posicion[];
   zonaB: Posicion[];
   ultimaFecha: { jornada: string; partidos: Partido[] } | null;
@@ -73,17 +74,33 @@ export function MonitorAPI({ datos, noticias = [] }: { datos: DatosAPI; noticias
           )}
           {pestana === "posiciones" && datos.zonaA.length > 0 && (
             <div className="grid gap-8 md:grid-cols-2">
-              <TablaPosiciones zona="A" filas={datos.zonaA} />
-              <TablaPosiciones zona="B" filas={datos.zonaB} />
+              <TablaPosiciones zona="A" filas={datos.zonaA} clasifican={datos.clasifican} />
+              <TablaPosiciones zona="B" filas={datos.zonaB} clasifican={datos.clasifican} />
             </div>
           )}
           {pestana === "fecha" && datos.ultimaFecha && <UltimaFecha {...datos.ultimaFecha} />}
-          {pestana === "goleadores" && <Goleadores goleadores={datos.goleadores.slice(0, 8)} />}
+          {pestana === "goleadores" &&
+            (datos.goleadores.length > 0 ? (
+              <Goleadores goleadores={datos.goleadores.slice(0, 8)} />
+            ) : (
+              <p className="text-sm text-lab-tenue">
+                Todavía no hay goleadores cargados para el torneo actual en la API.
+              </p>
+            ))}
           {pestana === "json" && (
             <div>
-              <p className="mb-2 font-mono text-xs text-lab-portal">GET {ENDPOINTS.goleadores}</p>
+              <p className="mb-2 font-mono text-xs text-lab-portal">GET {ENDPOINTS.posiciones}</p>
               <pre className="overflow-x-auto font-mono text-xs text-lab-tenue">
-                {JSON.stringify({ success: true, goleadores: datos.goleadores.slice(0, 2) }, null, 2)}
+                {JSON.stringify(
+                  {
+                    success: true,
+                    ligaNombre: datos.liga,
+                    clasifican: datos.clasifican ?? 4,
+                    zonaA: datos.zonaA.slice(0, 2),
+                  },
+                  null,
+                  2,
+                )}
               </pre>
             </div>
           )}
@@ -91,7 +108,7 @@ export function MonitorAPI({ datos, noticias = [] }: { datos: DatosAPI; noticias
 
         {noticias.length > 0 && (
           <footer className="border-t border-lab-borde px-4 py-3">
-            <p className="font-mono text-[10px] uppercase tracking-wider text-lab-tenue">la usan los diarios</p>
+            <p className="font-mono text-[10px] uppercase tracking-wider text-lab-tenue">en producción en Data eNe</p>
             {/* en celular entra una nota; en pantalla ancha, dos */}
             <ul className="mt-1.5 grid gap-1.5 sm:grid-cols-2 [&>*:nth-child(n+2)]:hidden sm:[&>*:nth-child(2)]:block">
               {noticias.slice(0, 2).map((n) => (
