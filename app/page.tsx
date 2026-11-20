@@ -8,7 +8,6 @@ import { ContactoFijo } from "@/components/laboratorio/ContactoFijo";
 import { Cortina } from "@/components/laboratorio/Cortina";
 import { EscenaLab as Escena } from "@/components/laboratorio/EscenaLab";
 import { EscenaContacto } from "@/components/laboratorio/EscenaContacto";
-import { EscenaPortada } from "@/components/laboratorio/EscenaPortada";
 import { EscenaPresentacion } from "@/components/laboratorio/EscenaPresentacion";
 import { EscenaVidriera } from "@/components/laboratorio/EscenaVidriera";
 import { FondoLaboratorio } from "@/components/laboratorio/FondoLaboratorio";
@@ -17,15 +16,14 @@ import { Repisa } from "@/components/laboratorio/Repisa";
 import { perfil } from "@/lib/perfil";
 import { proyectos } from "@/proyectos";
 
-// La página principal es corta: portada → quién soy → los experimentos →
-// contacto. Cada experimento vive en su propia página (app/proyectos/[slug]),
-// a la que se llega por el portal.
+// La página principal es corta: presentación → los experimentos → contacto.
+// Cada experimento vive en su propia página (app/proyectos/[slug]), a la que
+// se llega por el portal.
 
 // Lo que dice el científico en cada pantalla.
 // PENDIENTE: revisar el tono con Fermín.
 const escenas: Record<string, Linea> = {
-  entrada: { texto: `Hola, soy ${perfil.nombre}. Bienvenido a mi laboratorio.` },
-  "quien-soy": { texto: "El de la foto soy yo, versión laboratorio.", pose: "senalando" },
+  entrada: { texto: "El de la foto soy yo, versión laboratorio.", pose: "senalando" },
   experimentos: {
     texto: "Cada proyecto es un experimento que se puede tocar. Elegí uno y te llevo por el portal.",
     pose: "senalando",
@@ -34,13 +32,12 @@ const escenas: Record<string, Linea> = {
 };
 
 const guion: Guion = {
-  inicial: { texto: `Hola, soy ${perfil.nombre}. Bienvenido a mi laboratorio.` },
+  inicial: escenas.entrada,
   escenas,
 };
 
 const destinos: Destino[] = [
   { escena: "entrada", etiqueta: "Inicio" },
-  { escena: "quien-soy", etiqueta: "Quién soy" },
   {
     escena: "experimentos",
     etiqueta: "Experimentos",
@@ -51,7 +48,6 @@ const destinos: Destino[] = [
 
 const capitulos: Capitulo[] = [
   { escena: "entrada", etiqueta: "Inicio" },
-  { escena: "quien-soy", etiqueta: "Quién soy" },
   { escena: "experimentos", etiqueta: "Experimentos" },
   { escena: "contacto", etiqueta: "Contacto" },
 ];
@@ -72,12 +68,10 @@ export default function Laboratorio() {
       <Repisa />
       <Personaje guion={guion} esperarIntro />
 
-      <Escena id="entrada" duracion={0.5} solapar={false}>
-        <EscenaPortada nombre={perfil.nombre} titulo={perfil.titulo} />
-      </Escena>
-      <Escena id="quien-soy" duracion={0.8}>
+      <Escena id="entrada" duracion={0.6} solapar={false}>
         <EscenaPresentacion
           nombre={perfil.nombre}
+          titulo={perfil.titulo}
           sobreMi={perfil.sobreMi}
           lenguajes={perfil.herramientas.find((h) => h.grupo === "lenguajes")?.items ?? []}
         />

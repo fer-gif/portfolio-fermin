@@ -36,9 +36,9 @@ export const perfil = {
    * PENDIENTE: que Fermín confirme la lista (sumar o sacar lo que haga falta).
    */
   herramientas: [
-    { grupo: "lenguajes", items: ["Python", "JavaScript", "TypeScript", "PHP", "HTML", "CSS"] },
-    { grupo: "datos", items: ["Pandas", "GeoPandas", "Matplotlib", "scikit-learn", "Jupyter", "MySQL", "Chart.js"] },
-    { grupo: "desarrollo", items: ["Laravel", "Vue", "Tailwind", "Vite", "Three.js", "Playwright"] },
-    { grupo: "y además", items: ["Git", "GitHub", "Vercel"] },
+    { grupo: "lenguajes", items: ["Python", "JavaScript", "TypeScript", "PHP", "PostgreSQL", "MySQL"] },
+    { grupo: "datos", items: ["Pandas", "GeoPandas", "Matplotlib", "scikit-learn", "Jupyter", "Chart.js"] },
+    { grupo: "desarrollo", items: ["Next.js", "React", "Laravel", "Vue", "Tailwind", "Vite", "Three.js", "Playwright"] },
+    { grupo: "y además", items: ["Supabase", "Git", "GitHub", "Vercel"] },
   ],
 };

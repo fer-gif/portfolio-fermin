@@ -12,31 +12,39 @@ export interface SobreMi {
   fueraDelLab: string;
 }
 
-// La segunda pantalla, "quién soy": unas pocas líneas y el retrato de Fermín
-// en versión científico (lo hizo él a partir de una foto suya), pegado como
-// una foto sobre la pared del laboratorio, con los ojos siguiendo al mouse.
-// El retrato va a la derecha: el científico, abajo a la izquierda, lo señala.
-export function EscenaPresentacion({ nombre, sobreMi, lenguajes }: { nombre: string; sobreMi: SobreMi; lenguajes: string[] }) {
+// La primera pantalla del laboratorio: presentación con el título profesional,
+// unas pocas líneas, lenguajes/bases de datos y el retrato de Fermín versión
+// científico con los ojos siguiendo al mouse.
+export function EscenaPresentacion({
+  nombre,
+  titulo,
+  sobreMi,
+  lenguajes,
+}: {
+  nombre: string;
+  titulo: string;
+  sobreMi: SobreMi;
+  lenguajes: string[];
+}) {
   const { linea } = useEscena();
   const ref = useRef<HTMLDivElement>(null);
   const logos = lenguajes.map(tecnologia);
 
   useGSAP(
     () => {
-      // Entra con el relevo: la foto cae girando a su lugar y el texto sube
-      // línea por línea. Todo listo antes del punto donde aterriza un salto.
+      // Al ser la primera pantalla, entra ya visible detrás de la puerta; al
+      // bajar se apaga la pista y el conjunto se aleja apenas antes del relevo.
       linea
-        .fromTo(".retrato", { opacity: 0, y: -30, rotation: 9 }, { opacity: 1, y: 0, rotation: 2.5, duration: 0.26, ease: "back.out(1.4)" }, 0)
-        .from(".bio > *", { opacity: 0, y: 18, duration: 0.16, stagger: 0.02, ease: "power2.out" }, 0.04)
-        .to({}, { duration: 0.7 });
+        .to(".pista", { opacity: 0, duration: 0.3 })
+        .to(".presentacion", { scale: 0.96, y: -14, duration: 1, ease: "power1.in" }, 0);
     },
     { scope: ref },
   );
 
   return (
-    <div ref={ref} className="flex h-full items-center justify-center px-5 sm:px-10 sm:pb-[7svh]">
-      <div className="grid w-full max-w-5xl items-center gap-4 sm:grid-cols-[1fr_auto] sm:gap-[6vw]">
-        <figure className="retrato mx-auto w-[min(40vw,24svh)] sm:order-last sm:w-[min(28vw,50svh)]">
+    <div ref={ref} className="relative flex h-full flex-col items-center justify-center px-5 sm:px-10 sm:pb-[7svh]">
+      <div className="presentacion grid w-full max-w-5xl items-center gap-4 sm:grid-cols-[1fr_auto] sm:gap-[6vw]">
+        <figure className="retrato mx-auto w-[min(40vw,24svh)] rotate-[2.5deg] sm:order-last sm:w-[min(28vw,50svh)]">
           <div className="relative rounded-[12px] bg-[#eef3ea] p-2 pb-0 shadow-[0_22px_40px_-18px_rgba(0,0,0,0.85)] sm:p-3 sm:pb-0">
             {/* la cinta que la sostiene contra la pared */}
             <span aria-hidden className="absolute -top-3 left-1/2 z-10 h-6 w-20 -translate-x-1/2 -rotate-3 rounded-[3px] bg-lab-amarillo/70 sm:w-24" />
@@ -52,8 +60,8 @@ export function EscenaPresentacion({ nombre, sobreMi, lenguajes }: { nombre: str
         </figure>
 
         <div className="bio text-center sm:text-left">
-          <p className="font-mano text-xl text-lab-portal sm:text-2xl">quién soy</p>
-          <h2 className="font-display text-[8.5vw] leading-[0.95] font-extrabold sm:text-[min(4.6vw,8svh)]">{sobreMi.saludo}</h2>
+          <p className="font-mano text-xl text-lab-portal sm:text-2xl">{titulo}</p>
+          <h1 className="font-display text-[8.5vw] leading-[0.95] font-extrabold sm:text-[min(4.6vw,8svh)]">{sobreMi.saludo}</h1>
           {sobreMi.parrafos.map((p) => (
             <p key={p} className="mx-auto mt-2.5 max-w-md text-[15px] leading-snug text-lab-texto/85 sm:mx-0 sm:mt-4 sm:max-w-lg sm:text-lg">
               {p}
@@ -78,6 +86,10 @@ export function EscenaPresentacion({ nombre, sobreMi, lenguajes }: { nombre: str
           <p className="mt-3 font-mano text-lg leading-tight text-lab-tenue sm:mt-5 sm:text-xl">{sobreMi.fueraDelLab}</p>
         </div>
       </div>
+
+      <p className="pista mt-4 font-mano text-lg text-lab-tenue sm:absolute sm:bottom-[4svh] sm:mt-0 sm:text-xl">
+        bajá <span className="flecha-pista inline-block">↓</span>
+      </p>
     </div>
   );
 }
